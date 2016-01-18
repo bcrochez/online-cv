@@ -3,11 +3,20 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
     <navigation-rule>
-        <from-view-id>/index.html</from-view-id>
+        <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>case1</from-outcome>
+            <from-outcome>signup</from-outcome>
             <to-view-id>/signup.html</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>signin</from-outcome>
+            <to-view-id>/signin.html</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
