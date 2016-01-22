@@ -8,7 +8,7 @@
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>signup</from-outcome>
-            <to-view-id>/signup.html</to-view-id>
+            <to-view-id>/signup.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
@@ -16,7 +16,13 @@
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>signin</from-outcome>
-            <to-view-id>/signin.html</to-view-id>
+            <to-view-id>/signin.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <managed-bean>
+        <managed-bean-name>userManagedBean</managed-bean-name>
+        <managed-bean-class>fr.upem.onlinecv.bean.UserManagedBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

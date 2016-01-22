@@ -1,5 +1,6 @@
 package fr.upem.onlinecv.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +13,7 @@ import javax.persistence.*;
     @NamedQuery(name = "User.findByName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName OR u.lastName = :lastName")
 })
 
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
