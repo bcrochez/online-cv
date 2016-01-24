@@ -11,20 +11,33 @@
         <link rel="stylesheet" href="../css/style.css"/>
     </head>
     <body>
-        <div id="date">
-            <h:outputText value="#{date.now()}" />
-        </div>
-        
+        <header>
+            <h:form>
+                <div id="date">
+                    <h:outputText value="#{date.now()}" />
+                </div>
+
+                <c:choose>
+                    <c:when test="#{userManagedBean.isLogin()}">
+                        <h:outputText value="Bonjour #{userManagedBean.firstName} #{userManagedBean.lastName}" />
+                        <h:commandButton action="#{userManagedBean.logOut()}" value="Sign out" />
+
+                    </c:when>
+                    <c:otherwise>
+                        <div>
+                            <h:button outcome="signup" value="Sign Up"/>
+                            <h:button outcome="signin" value="Sign In"/>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </h:form>
+        </header>
         <div id="search">
             <form>
                 <label for="search-query">Rechercher</label>
                 <input type="text" name="query" id="search-query" autocomplete="on" />
                 <input type="submit" value="OK" />
             </form>
-        </div>
-        <div>
-            <h:button outcome="signup" value="Sign Up"/>
-            <h:button outcome="signin" value="Sign In"/>
         </div>
     </body>
 </html>
