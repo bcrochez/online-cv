@@ -75,16 +75,41 @@ public class UserManagedBean implements Serializable {
     public void logOut() {
         if(isLogin) {
             isLogin = false;
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+            redirectToIndex();
         }
 
     }
 
     public void checkLogin() {
         if (isLogin) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+            redirectToIndex();
         }
+    }
+    
+    public void signUp() {
+        System.out.println("First name = "+firstName+" - Last name = "+lastName+" - email = "+email+" - password = "+password);
+        
+        // TODO tester que l'adresse email n'est pas déjà utilisée
+        
+        // l'utilisateur est maintenant connecté
+        isLogin = true;
+        redirectToIndex();
+    }
+    
+    public void signIn() {
+        System.out.println(" email = "+email+" - password = "+password);
+        
+        // TODO vérifier que l'adresse mail existe et que le mot de passe est correct
+        
+        // TODO récupérer le prénom et le nom
+        
+        // l'utilisateur est maintenant connecté
+        isLogin = true;
+        redirectToIndex();
+    }
+    
+    private void redirectToIndex() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
     }
 }

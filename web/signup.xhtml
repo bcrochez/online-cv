@@ -22,13 +22,14 @@ and open the template in the editor.
             <div id="formHeader">
                 Sign Up
             </div>
-            <form>
-                <input type="text" name="firstname" placeholder="First Name" /><br/>
-                <input type="text" name="lastname" placeholder="Last Name" /><br/>
-                <input type="email" name="email" placeholder="Email" /><br/>
-                <input type="password" name="password" placeholder="Password" /><br/>
-                <input type="submit" id="submit" value="Sign Up" /><br/>
-            </form>
+            <h:form>
+                <!-- TODO remplacer les placeholder par des label -->
+                <h:inputText value="#{userManagedBean.firstName}" placeholder="First Name" required="true" requiredMessage="Please enter your first name" /><br/>
+                <h:inputText value="#{userManagedBean.lastName}" placeholder="Last Name" required="true" requiredMessage="Please enter your last name" /><br/>
+                <h:inputText type="email" value="#{userManagedBean.email}" placeholder="Email" required="true" requiredMessage="You must enter a valid email"/><br/>
+                <h:inputSecret value="#{userManagedBean.password}" placeholder="Password" required="true" requiredMessage="Please enter a password"/><br/>
+                <h:commandButton type="submit" id="submit" value="Sign Up" actionListener="#{userManagedBean.signUp()}"/><br/>
+            </h:form>
         </div>
 
     </body>

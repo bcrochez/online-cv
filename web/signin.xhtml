@@ -17,11 +17,12 @@
             <div id="formHeader">
                 Sign In
             </div>
-            <form>
-                <input type="email" name="email" placeholder="Email"/><br/>
-                <input type="password" name="password" placeholder="Password"/><br/>
-                <input type="submit" id="submit" value="Sign Up"/><br/>
-            </form>
+            <h:form>
+                <!-- TODO remplacer les placeholder par des label -->
+                <h:inputText type="email" value="#{userManagedBean.email}" placeholder="Email" required="true" requiredMessage="You must enter a valid email"/><br/>
+                <h:inputSecret value="#{userManagedBean.password}" placeholder="Password" required="true" requiredMessage="Please enter your password"/><br/>
+                <h:commandButton type="submit" id="submit" value="Sign In" actionListener="#{userManagedBean.signIn()}"/><br/>
+            </h:form>
         </div>
 
     </body>
