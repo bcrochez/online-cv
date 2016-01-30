@@ -6,17 +6,29 @@
     
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
+        
         <navigation-case>
             <from-outcome>signup</from-outcome>
             <to-view-id>/signup.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        
         <navigation-case>
             <from-outcome>signin</from-outcome>
             <to-view-id>/signin.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>signin</from-outcome>
+            <to-view-id>/signin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/profile.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     

@@ -14,11 +14,11 @@ and open the template in the editor.
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sign Up | OnlineCV</title>
-        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
         
-        <div id="signUpForm">
+        <div id="signForm">
             <div id="formHeader">
                 Sign Up
             </div>
@@ -28,7 +28,7 @@ and open the template in the editor.
                 <h:inputText value="#{userManagedBean.lastName}" placeholder="Last Name" required="true" requiredMessage="Please enter your last name" /><br/>
                 <h:inputText type="email" value="#{userManagedBean.email}" placeholder="Email" required="true" requiredMessage="You must enter a valid email"/><br/>
                 <h:inputSecret value="#{userManagedBean.password}" placeholder="Password" required="true" requiredMessage="Please enter a password"/><br/>
-                <h:commandButton type="submit" id="submit" value="Sign Up" actionListener="#{userManagedBean.signUp()}"/><br/>
+                <h:commandButton type="submit" class="submit" value="Sign Up" actionListener="#{userManagedBean.signUp()}"/><br/>
             </h:form>
         </div>
 

@@ -9,11 +9,11 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sign In | OnlineCV</title>
-        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
         
-        <div id="signUpForm">
+        <div id="signForm">
             <div id="formHeader">
                 Sign In
             </div>
@@ -21,7 +21,7 @@
                 <!-- TODO remplacer les placeholder par des label -->
                 <h:inputText type="email" value="#{userManagedBean.email}" placeholder="Email" required="true" requiredMessage="You must enter a valid email"/><br/>
                 <h:inputSecret value="#{userManagedBean.password}" placeholder="Password" required="true" requiredMessage="Please enter your password"/><br/>
-                <h:commandButton type="submit" id="submit" value="Sign In" actionListener="#{userManagedBean.signIn()}"/><br/>
+                <h:commandButton type="submit" class="submit" value="Sign In" actionListener="#{userManagedBean.signIn()}"/><br/>
             </h:form>
         </div>
 

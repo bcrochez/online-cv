@@ -5,7 +5,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Online CV</title>
+        <title>Profile | Online CV</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/style.css"/>
@@ -17,10 +17,18 @@
                     <h:outputText value="#{date.now()}" />
                 </div>
 
+                <h:button class="submit" outcome="index" value="Index"/>
+                <div id="search">
+                    <!--<form>-->
+                        <label for="search-query">Rechercher</label>
+                        <input type="text" name="query" id="search-query" autocomplete="on" />
+                        <input class="submit" type="submit" value="OK" />
+                    <!--</form>-->
+                </div>
+                
                 <c:choose>
                     <c:when test="#{userManagedBean.isLogin()}">
                         <h:outputText value="Bonjour #{userManagedBean.firstName} #{userManagedBean.lastName}" />
-                        <h:button class="submit" outcome="profile" value="Your Profile"/>
                         <h:commandButton class="submit" action="#{userManagedBean.logOut()}" value="Sign out" />
                     </c:when>
                     <c:otherwise>
@@ -30,15 +38,8 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
-                
+
             </h:form>
         </header>
-        <div id="search">
-            <form>
-                <label for="search-query">Rechercher</label>
-                <input type="text" name="query" id="search-query" autocomplete="on" />
-                <input class="submit" type="submit" value="OK" />
-            </form>
-        </div>
     </body>
 </html>
