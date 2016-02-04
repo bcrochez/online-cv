@@ -4,29 +4,40 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER") 
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM USER u"),
-    @NamedQuery(name = "User.findById", query = "SELECT u FROM USER u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM USER u WHERE u.lastName = :lastName"),
-    @NamedQuery(name = "User.findByName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName OR u.lastName = :lastName")
-})
+@Table(name = "USER_TEST", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ID"),
+        @UniqueConstraint(columnNames = "EMAIL") }) 
+/*@NamedQueries({
+    @NamedQuery(name = "UserEntity.findAll", query = "SELECT u FROM USER u"),
+    @NamedQuery(name = "UserEntity.findById", query = "SELECT u FROM USER u WHERE u.id = :id"),
+    @NamedQuery(name = "UserEntity.findByFirstName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName"),
+    @NamedQuery(name = "UserEntity.findByLastName", query = "SELECT u FROM USER u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "UserEntity.findByName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName OR u.lastName = :lastName")
+})*/
 
-public class User implements Serializable {
+public class UserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", unique = true, nullable = false)
     private Long id;
+    
+    @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
     private String firstName;
+    
+    @Column(name = "LAST_NAME", unique = false, nullable = false, length = 100)
     private String lastName;
+    
+    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
     private String email;
+    
+    @Column(name = "PASSWORD", unique = false, nullable = false, length = 100)
     private String password;
 
-    protected User() {}
+    protected UserEntity() {}
     
-    public User(Long id, String firstName, String lastName, String email, String password) {
-        this.id = id;
+    public UserEntity(String firstName, String lastName, String email, String password) {
+        //this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

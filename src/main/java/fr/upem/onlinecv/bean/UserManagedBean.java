@@ -1,7 +1,7 @@
 package fr.upem.onlinecv.bean;
 
 import fr.upem.onlinecv.model.HibernateUtil;
-import fr.upem.onlinecv.model.User;
+import fr.upem.onlinecv.model.UserEntity;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -95,37 +95,46 @@ public class UserManagedBean implements Serializable {
     public void signUp() {
         System.out.println("First name = " + firstName + " - Last name = " + lastName + " - email = " + email + " - password = " + password);
 
-        // TODO tester que l'adresse email n'est pas déjà utilisée
-        // l'utilisateur est maintenant connecté
-        isLogin = true;
-        redirectToIndex();
+        // on teste que l'adresse email n'est pas déjà utilisée
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        UserEntity user = (UserEntity) session.createCriteria(UserEntity.class).add(Restrictions.eq("email", email)).uniqueResult();
+
+        if (user == null) {
+            // si l'utilisateur n'existe pas c'est bon
+            session.beginTransaction();
+            
+            // on crypte le mot de passe
+            digestPassword();
+            // on insère l'utilisateur dans la base
+            UserEntity newUser = new UserEntity(firstName, lastName, email, password);
+            session.save(newUser);
+            session.getTransaction().commit();
+
+            session.close();
+
+            // l'utilisateur est maintenant connecté
+            isLogin = true;
+            redirectToIndex();
+        } else {
+            // l'utilisateur existe déjà
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cette adresse mail est déjà utilisée.", ""));
+        }
+
     }
 
     public void signIn() {
         System.out.println(" email = " + email + " - password = " + password);
 
-        // TODO vérifier que l'adresse mail existe et que le mot de passe est correct
+        // on vérifie que l'adresse mail existe et que le mot de passe est correct
         Session session = HibernateUtil.getSessionFactory().openSession();
+        UserEntity user = (UserEntity) session.createCriteria(UserEntity.class).add(Restrictions.eq("email", email)).uniqueResult();
 
-        User user = (User) session.createCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult();
-
-        if (user == null) {
-            System.out.println("user null");
-        } else {
-            System.out.println("id : " + user.getId() + " - name : " + user.getFirstName() + " " + user.getLastName() + " - email pw : " + user.getEmail() + " " + user.getPassword());
-        }
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(password.getBytes());
-            password = new String(messageDigest.digest());
-        } catch (NoSuchAlgorithmException ex) {
-
-        }
+        // on crypte le mot de passe
+        digestPassword();
 
         session.close();
 
-        // TODO récupérer le prénom et le nom
+        // on récupére les infos de l'utilisateur
         if (user == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Utilisateur avec l'adresse '" + email + "' n'existe pas.", ""));
         } else if (!user.getPassword().equals(password)) {
@@ -140,6 +149,17 @@ public class UserManagedBean implements Serializable {
             redirectToIndex();
         }
 
+    }
+
+    private void digestPassword() {
+        MessageDigest messageDigest;
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            password = new String(messageDigest.digest());
+        } catch (NoSuchAlgorithmException ex) {
+            
+        }
     }
 
     private void redirectToIndex() {
