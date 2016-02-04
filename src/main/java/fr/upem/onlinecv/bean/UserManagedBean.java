@@ -1,7 +1,14 @@
 package fr.upem.onlinecv.bean;
 
+import fr.upem.onlinecv.model.HibernateUtil;
+import fr.upem.onlinecv.model.User;
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -12,11 +19,11 @@ public class UserManagedBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String firstName = "Bastien";
-    private String lastName = "Crochez";
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
-    private boolean isLogin = true;
+    private boolean isLogin = false;
 
     /**
      * Creates a new instance of UserManagedBean
@@ -73,11 +80,10 @@ public class UserManagedBean implements Serializable {
     }
 
     public void logOut() {
-        if(isLogin) {
+        if (isLogin) {
             isLogin = false;
             redirectToIndex();
         }
-
     }
 
     public void checkLogin() {
@@ -85,29 +91,57 @@ public class UserManagedBean implements Serializable {
             redirectToIndex();
         }
     }
-    
+
     public void signUp() {
-        System.out.println("First name = "+firstName+" - Last name = "+lastName+" - email = "+email+" - password = "+password);
-        
+        System.out.println("First name = " + firstName + " - Last name = " + lastName + " - email = " + email + " - password = " + password);
+
         // TODO tester que l'adresse email n'est pas déjà utilisée
-        
         // l'utilisateur est maintenant connecté
         isLogin = true;
         redirectToIndex();
     }
-    
+
     public void signIn() {
-        System.out.println(" email = "+email+" - password = "+password);
-        
+        System.out.println(" email = " + email + " - password = " + password);
+
         // TODO vérifier que l'adresse mail existe et que le mot de passe est correct
-        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        User user = (User) session.createCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult();
+
+        if (user == null) {
+            System.out.println("user null");
+        } else {
+            System.out.println("id : " + user.getId() + " - name : " + user.getFirstName() + " " + user.getLastName() + " - email pw : " + user.getEmail() + " " + user.getPassword());
+        }
+        MessageDigest messageDigest;
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            password = new String(messageDigest.digest());
+        } catch (NoSuchAlgorithmException ex) {
+
+        }
+
+        session.close();
+
         // TODO récupérer le prénom et le nom
-        
-        // l'utilisateur est maintenant connecté
-        isLogin = true;
-        redirectToIndex();
+        if (user == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Utilisateur avec l'adresse '" + email + "' n'existe pas.", ""));
+        } else if (!user.getPassword().equals(password)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe incorrect.", ""));
+        } else {
+            id = user.getId();
+            firstName = user.getFirstName();
+            lastName = user.getLastName();
+
+            // l'utilisateur est maintenant connecté
+            isLogin = true;
+            redirectToIndex();
+        }
+
     }
-    
+
     private void redirectToIndex() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
