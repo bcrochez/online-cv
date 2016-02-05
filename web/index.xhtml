@@ -33,12 +33,13 @@
                 
             </h:form>
         </header>
+        
         <div id="search">
-            <form>
+            <h:form>
                 <label for="search-query">Rechercher</label>
-                <input type="text" name="query" id="search-query" autocomplete="on" />
+                <h:inputText value='#{searchBean.query}' autocomplete="on" />
                 <h:button class="submit" outcome="search" value="OK" />
-            </form>
+            </h:form>
         </div>
     </body>
 </html>

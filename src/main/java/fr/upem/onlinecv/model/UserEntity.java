@@ -4,15 +4,15 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER_TEST", uniqueConstraints = {
+@Table(name = "USER_CV", uniqueConstraints = {
         @UniqueConstraint(columnNames = "ID"),
         @UniqueConstraint(columnNames = "EMAIL") }) 
 /*@NamedQueries({
-    @NamedQuery(name = "UserEntity.findAll", query = "SELECT u FROM USER u"),
-    @NamedQuery(name = "UserEntity.findById", query = "SELECT u FROM USER u WHERE u.id = :id"),
-    @NamedQuery(name = "UserEntity.findByFirstName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "UserEntity.findByLastName", query = "SELECT u FROM USER u WHERE u.lastName = :lastName"),
-    @NamedQuery(name = "UserEntity.findByName", query = "SELECT u FROM USER u WHERE u.firstName = :firstName OR u.lastName = :lastName")
+    @NamedQuery(name = "UserEntity.findAll", query = "SELECT * FROM USER_CV"),
+    @NamedQuery(name = "UserEntity.findById", query = "SELECT * FROM USER_CV u WHERE u.id = :id"),
+    @NamedQuery(name = "UserEntity.findByFirstName", query = "SELECT * FROM USER_CV u WHERE u.firstName = :firstName"),
+    @NamedQuery(name = "UserEntity.findByLastName", query = "SELECT * FROM USER_CV u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "UserEntity.findByName", query = "SELECT * FROM USER_CV u WHERE u.firstName = :firstName OR u.lastName = :lastName")
 })*/
 
 public class UserEntity implements Serializable {
