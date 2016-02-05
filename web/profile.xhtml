@@ -19,13 +19,11 @@
 
                 <h:button class="submit" outcome="index" value="Index"/>
                 <div id="search">
-                    <!--<form>-->
-                        <label for="search-query">Rechercher</label>
-                        <input type="text" name="query" id="search-query" autocomplete="on" />
-                        <input class="submit" type="submit" value="OK" />
-                    <!--</form>-->
+                    <label for="search-query">Rechercher</label>
+                    <input type="text" name="query" id="search-query" autocomplete="on" />
+                    <h:button class="submit" outcome="search" value="OK" />
                 </div>
-                
+
                 <c:choose>
                     <c:when test="#{userManagedBean.isLogin()}">
                         <h:outputText value="Bonjour #{userManagedBean.firstName} #{userManagedBean.lastName}" />

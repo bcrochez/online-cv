@@ -18,8 +18,27 @@
         </navigation-case>
         
         <navigation-case>
-            <from-outcome>signin</from-outcome>
-            <to-view-id>/signin.xhtml</to-view-id>
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/profile.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>search</from-outcome>
+            <to-view-id>/search.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/search.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/profile.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
@@ -29,6 +48,11 @@
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>search</from-outcome>
+            <to-view-id>/search.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Online CV</title>
+        <title>Search | Online CV</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/style.css"/>
@@ -15,6 +20,13 @@
             <h:form>
                 <div id="date">
                     <h:outputText value="#{date.now()}" />
+                </div>
+
+                <h:button class="submit" outcome="index" value="Index"/>
+                <div id="search">
+                    <label for="search-query">Rechercher</label>
+                    <input type="text" name="query" id="search-query" autocomplete="on" />
+                    <h:button class="submit" outcome="search" value="OK" />
                 </div>
 
                 <c:choose>
@@ -30,15 +42,8 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
-                
+
             </h:form>
         </header>
-        <div id="search">
-            <form>
-                <label for="search-query">Rechercher</label>
-                <input type="text" name="query" id="search-query" autocomplete="on" />
-                <h:button class="submit" outcome="search" value="OK" />
-            </form>
-        </div>
     </body>
 </html>
