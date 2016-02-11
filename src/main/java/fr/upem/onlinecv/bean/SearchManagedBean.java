@@ -19,6 +19,7 @@ public class SearchManagedBean {
     }
     
     public void setQuery(String query) {
+        System.out.println("set query : "+query);
         this.query = query;
     }
 }

@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -17,18 +12,19 @@ and open the template in the editor.
     </head>
     <body>
         <header>
-            <h:form>
-                <div id="date">
-                    <h:outputText value="#{date.now()}" />
-                </div>
+            <div id="date">
+                <h:outputText value="#{date.now()}" />
+            </div>
 
-                <h:button class="submit" outcome="index" value="Index"/>
-                <div id="search">
+            <h:button class="submit" outcome="index" value="Index"/>
+            <div id="search">
+                <h:form>
                     <label for="search-query">Rechercher</label>
                     <h:inputText value='#{searchBean.query}' autocomplete="on" />
                     <h:button class="submit" outcome="search" value="OK" />
-                </div>
-
+                </h:form>
+            </div>
+            <h:form>
                 <c:choose>
                     <c:when test="#{userManagedBean.isLogin()}">
                         <h:outputText value="Bonjour #{userManagedBean.firstName} #{userManagedBean.lastName}" />
@@ -42,8 +38,12 @@ and open the template in the editor.
                         </div>
                     </c:otherwise>
                 </c:choose>
-
             </h:form>
+
         </header>
+
+        <div id="result">
+            <h:outputText value="#{searchBean.query}" />
+        </div>
     </body>
 </html>
