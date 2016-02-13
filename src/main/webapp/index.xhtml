@@ -38,7 +38,7 @@
             <h:form>
                 <label for="search-query">Rechercher</label>
                 <h:inputText value='#{searchBean.query}' autocomplete="on" />
-                <h:button class="submit" outcome="search" value="OK" />
+                <h:commandButton class="submit" value="Search" actionListener="#{searchBean.search()}"/>
             </h:form>
         </div>
     </body>
