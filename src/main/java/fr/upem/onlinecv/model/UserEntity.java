@@ -10,9 +10,9 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "UserEntity.findAll", query = "SELECT u FROM UserEntity u"),
     @NamedQuery(name = "UserEntity.findById", query = "SELECT u FROM UserEntity u WHERE u.id = :id"),
-    @NamedQuery(name = "UserEntity.findByFirstName", query = "SELECT u FROM UserEntity u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "UserEntity.findByLastName", query = "SELECT u FROM UserEntity u WHERE u.lastName = :lastName"),
-    @NamedQuery(name = "UserEntity.findByName", query = "SELECT u FROM UserEntity u WHERE u.firstName = :name OR u.lastName = :name")
+    @NamedQuery(name = "UserEntity.findByFirstName", query = "SELECT u FROM UserEntity u WHERE u.firstName LIKE :firstName"),
+    @NamedQuery(name = "UserEntity.findByLastName", query = "SELECT u FROM UserEntity u WHERE u.lastName LIKE :lastName"),
+    @NamedQuery(name = "UserEntity.findByName", query = "SELECT u FROM UserEntity u WHERE u.firstName LIKE :name OR u.lastName LIKE :name")
 })
 
 public class UserEntity implements Serializable {
@@ -61,11 +61,11 @@ public class UserEntity implements Serializable {
     }
     
     public String getLastName() {
-        return firstName;
+        return lastName;
     }
     
-    public void setLastName(String firstName) {
-        this.firstName = firstName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     
     public String getEmail() {
