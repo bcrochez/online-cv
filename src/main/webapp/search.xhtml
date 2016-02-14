@@ -12,36 +12,8 @@
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
-        <header>
-            <div id="date">
-                <h:outputText value="#{date.now()}" />
-            </div>
-
-            <h:button class="submit" outcome="index" value="Index"/>
-            <div id="search">
-                <h:form>
-                    <label for="search-query">Rechercher</label>
-                    <h:inputText value='#{searchBean.query}' autocomplete="on" />
-                    <h:button class="submit" outcome="search" value="OK" />
-                </h:form>
-            </div>
-            <h:form>
-                <c:choose>
-                    <c:when test="#{userManagedBean.isLogin()}">
-                        <h:outputText value="Bonjour #{userManagedBean.firstName} #{userManagedBean.lastName}" />
-                        <h:button class="submit" outcome="profile" value="Your Profile"/>
-                        <h:commandButton class="submit" action="#{userManagedBean.logOut()}" value="Sign out" />
-                    </c:when>
-                    <c:otherwise>
-                        <div>
-                            <h:button class="submit" outcome="signup" value="Sign Up"/>
-                            <h:button class="submit" outcome="signin" value="Sign In"/>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </h:form>
-
-        </header>
+        
+        <ui:include src="/WEB-INF/include/header.xhtml"/>
 
         <div id="result">
             <ui:repeat var="user" value="#{searchBean.users}">

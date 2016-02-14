@@ -1,0 +1,25 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <header>
+        <h:link outcome="index" value="OnlineCV"/>
+        <h:form>
+            <c:choose>
+                <c:when test="#{userManagedBean.isLogin()}">
+                    <h:link outcome="profile" value="#{userManagedBean.firstName} #{userManagedBean.lastName}">
+                        <f:param name="id" value="#{userManagedBean.id}"/>
+                    </h:link>
+                    <h:commandButton class="submit" action="#{userManagedBean.logOut()}" value="Sign out" />
+                </c:when>
+                <c:otherwise>
+                    <h:button outcome="signup" value="Sign Up"/>
+                    <h:button outcome="signin" value="Sign In"/>
+                </c:otherwise>
+            </c:choose>
+        </h:form>
+    </header>
+</ui:composition>
