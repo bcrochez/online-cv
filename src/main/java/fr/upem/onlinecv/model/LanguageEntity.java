@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,7 +22,12 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "LANGUAGE_CV", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID") }) 
+        @UniqueConstraint(columnNames = "ID") })
+@NamedQueries({
+    @NamedQuery(name = "LanguageEntity.findAll", query = "SELECT l FROM LanguageEntity l"),
+    @NamedQuery(name = "LanguageEntity.findById", query = "SELECT l FROM LanguageEntity l WHERE l.id = :id"),
+    @NamedQuery(name = "LanguageEntity.findByUserId", query = "SELECT l FROM LanguageEntity l WHERE l.userId = :userId")
+})
 public class LanguageEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

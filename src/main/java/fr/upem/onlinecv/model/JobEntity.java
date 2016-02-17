@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -16,7 +18,12 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "JOB", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID") }) 
+        @UniqueConstraint(columnNames = "ID") })
+@NamedQueries({
+    @NamedQuery(name = "JobEntity.findAll", query = "SELECT j FROM JobEntity j"),
+    @NamedQuery(name = "JobEntity.findById", query = "SELECT j FROM JobEntity j WHERE j.id = :id"),
+    @NamedQuery(name = "JobEntity.findByUserId", query = "SELECT j FROM JobEntity j WHERE j.userId = :userId")
+})
 public class JobEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

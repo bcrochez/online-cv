@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,7 +22,12 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "SKILL", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID") }) 
+        @UniqueConstraint(columnNames = "ID") })
+@NamedQueries({
+    @NamedQuery(name = "SkillEntity.findAll", query = "SELECT s FROM SkillEntity s"),
+    @NamedQuery(name = "SkillEntity.findById", query = "SELECT s FROM SkillEntity s WHERE s.id = :id"),
+    @NamedQuery(name = "SkillEntity.findByUserId", query = "SELECT s FROM SkillEntity s WHERE s.userId = :userId")
+})
 public class SkillEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
