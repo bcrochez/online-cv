@@ -107,7 +107,7 @@ public class UserManagedBean implements Serializable {
             digestPassword();
             // on insère l'utilisateur dans la base
             UserEntity newUser = new UserEntity(firstName, lastName, email, password);
-            session.save(newUser);
+            id = (long) session.save(newUser);
             session.getTransaction().commit();
 
             session.close();

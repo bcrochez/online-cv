@@ -31,14 +31,23 @@ public class JobEntity implements Serializable {
     @Column(name = "COMPANY", unique = false, nullable = false, length = 100)
     private String company;
     
+    @Column(name = "LOCATION", unique = false, nullable = true, length = 100)
+    private String location;
+    
+    @Column(name = "DESCRIPTION", unique = false, nullable = true, length = 1000)
+    private String description;
+    
     @Column(name = "START_DATE", unique = false, nullable = true)
     private Date startDate;
     
     @Column(name = "END_DATE", unique = false, nullable = true)
     private Date endDate;
     
-//    @Column(name = "USER_ID", unique = false, nullable = false)
-//    private long userId;
+    @Column(name = "USER_ID", unique = false, nullable = false)
+    private long userId;
+    
+    @Column(name = "TYPE", unique = false, nullable = false)
+    private String type;
 
     public Long getId() {
         return id;
@@ -46,6 +55,14 @@ public class JobEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long id) {
+        this.userId = id;
     }
     
     public String getTitle() {
@@ -64,6 +81,22 @@ public class JobEntity implements Serializable {
         this.company = company;
     }
     
+    public String getLocation() {
+        return location;
+    }
+    
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public Date getStartDate() {
         return startDate;
     }
@@ -78,6 +111,14 @@ public class JobEntity implements Serializable {
     
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
