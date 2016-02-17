@@ -12,12 +12,14 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/style.css"/>
+        <script src="js/profile.js" />
     </head>
     <body>
         <ui:include src="/WEB-INF/include/header.xhtml"/>
         
         <h2>Work Experience</h2>
-        <div id="add-work">
+        <button value="+" name="+" onclick="switchVisibility(addWork)" />
+        <div id="add-work" hidden="true">
             <h:form>
                 <h:inputText pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                 <h:inputText pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
@@ -58,7 +60,8 @@
         </div>
         
         <h2>Education</h2>
-        <div id="add-education">
+        <button value="+" name="+" onclick="switchVisibility(addEducation)" />
+        <div id="add-education" hidden="true">
             <h:form>
                 <h:inputText pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                 <h:inputText pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
@@ -99,11 +102,16 @@
         </div>
         
         <h2>Skills</h2>
+        <button value="+" name="+" onclick="switchVisibility(addSkills)" />
+        <div id="add-skills" hidden="true">
         <h:form>
             <h:inputText pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
         </h:form>
+        </div>
         
         <h2>Languages</h2>
+        <button value="+" name="+" onclick="switchVisibility(addLanguages)" />
+        <div id="add-languages" hidden="true">
         <h:form>
             <h:inputText pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
             <h:selectOneMenu required="true" requiredMessage="Select your proficiency" >
@@ -114,6 +122,7 @@
                 <f:selectItem itemValue="5" itemLabel="Native" />
             </h:selectOneMenu>
         </h:form>
+        </div>
         
     </body>
 </html>
