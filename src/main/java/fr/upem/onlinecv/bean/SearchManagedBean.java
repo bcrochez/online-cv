@@ -1,7 +1,7 @@
 package fr.upem.onlinecv.bean;
 
 import fr.upem.onlinecv.model.HibernateUtil;
-import fr.upem.onlinecv.model.UserEntity;
+import fr.upem.onlinecv.model.UserCv;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,7 +18,7 @@ import org.hibernate.Session;
 public class SearchManagedBean {
 
     private String query;
-    private ArrayList<UserEntity> users = new ArrayList();
+    private ArrayList<UserCv> users = new ArrayList();
 
     /**
      * Creates a new instance of SearchManagedBean
@@ -34,7 +34,7 @@ public class SearchManagedBean {
         this.query = query;
     }
     
-    public ArrayList<UserEntity> getUsers() {
+    public ArrayList<UserCv> getUsers() {
         return users;
     }
     
@@ -42,11 +42,11 @@ public class SearchManagedBean {
         users.clear();
         
         List<String> tokens = query.length() != 0 ? Arrays.asList(query.split(" ")) : Collections.EMPTY_LIST;
-        Set<UserEntity> userSet = new HashSet<>();
+        Set<UserCv> userSet = new HashSet<>();
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         for(String token : tokens) {
-            userSet.addAll(session.getNamedQuery("UserEntity.findByName").setString("name", "%" + token + "%").list());
+            userSet.addAll(session.getNamedQuery("UserCv.findByName").setString("name", "%" + token + "%").list());
         }     
         session.close();
    

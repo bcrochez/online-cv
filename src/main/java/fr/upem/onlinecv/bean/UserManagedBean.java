@@ -1,7 +1,7 @@
 package fr.upem.onlinecv.bean;
 
 import fr.upem.onlinecv.model.HibernateUtil;
-import fr.upem.onlinecv.model.UserEntity;
+import fr.upem.onlinecv.model.UserCv;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -97,7 +97,7 @@ public class UserManagedBean implements Serializable {
 
         // on teste que l'adresse email n'est pas déjà utilisée
         Session session = HibernateUtil.getSessionFactory().openSession();
-        UserEntity user = (UserEntity) session.createCriteria(UserEntity.class).add(Restrictions.eq("email", email)).uniqueResult();
+        UserCv user = (UserCv) session.createCriteria(UserCv.class).add(Restrictions.eq("email", email)).uniqueResult();
 
         if (user == null) {
             // si l'utilisateur n'existe pas c'est bon
@@ -106,12 +106,13 @@ public class UserManagedBean implements Serializable {
             // on crypte le mot de passe
             digestPassword();
             // on insère l'utilisateur dans la base
-            UserEntity newUser = new UserEntity(firstName, lastName, email, password);
-            id = (long) session.save(newUser);
+            UserCv newUser = new UserCv(firstName, lastName, email, password);
+            session.save(newUser);
             session.getTransaction().commit();
 
             session.close();
 
+            id = new Long(newUser.getUserId());
             // l'utilisateur est maintenant connecté
             isLogin = true;
             redirectToIndex();
@@ -127,7 +128,7 @@ public class UserManagedBean implements Serializable {
 
         // on vérifie que l'adresse mail existe et que le mot de passe est correct
         Session session = HibernateUtil.getSessionFactory().openSession();
-        UserEntity user = (UserEntity) session.createCriteria(UserEntity.class).add(Restrictions.eq("email", email)).uniqueResult();
+        UserCv user = (UserCv) session.createCriteria(UserCv.class).add(Restrictions.eq("email", email)).uniqueResult();
 
         // on crypte le mot de passe
         digestPassword();
@@ -140,7 +141,7 @@ public class UserManagedBean implements Serializable {
         } else if (!user.getPassword().equals(password)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe incorrect.", ""));
         } else {
-            id = user.getId();
+            id = new Long(user.getUserId());
             firstName = user.getFirstName();
             lastName = user.getLastName();
 
