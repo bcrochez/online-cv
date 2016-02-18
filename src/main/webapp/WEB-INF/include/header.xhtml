@@ -5,21 +5,27 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:c="http://java.sun.com/jsp/jstl/core">
     
-    <header>
-        <h:link outcome="index" value="OnlineCV"/>
-        <h:form>
-            <c:choose>
-                <c:when test="#{userManagedBean.isLogin()}">
-                    <h:link outcome="profile" value="#{userManagedBean.firstName} #{userManagedBean.lastName}">
-                        <f:param name="id" value="#{userManagedBean.id}"/>
-                    </h:link>
-                    <h:commandButton class="submit" action="#{userManagedBean.logOut()}" value="Sign out" />
-                </c:when>
-                <c:otherwise>
-                    <h:button outcome="signup" value="Sign Up"/>
-                    <h:button outcome="signin" value="Sign In"/>
-                </c:otherwise>
-            </c:choose>
-        </h:form>
+    <header class="container-fluid">
+        <nav class="row">
+            <h:link class="col-xs-3 col-md-2 title" outcome="index" value="OnlineCV"/>
+            <h:form>
+                <c:choose>
+                    <c:when test="#{userManagedBean.isLogin()}">
+                        <h:link class="col-xs-3 col-xs-offset-3 col-md-1 col-md-offset-8" outcome="profile" value="#{userManagedBean.firstName} #{userManagedBean.lastName}">
+                            <f:param name="id" value="#{userManagedBean.id}"/>
+                        </h:link>
+                        <h:commandButton class="col-xs-3 col-md-1" action="#{userManagedBean.logOut()}" value="Sign out" />
+                    </c:when>
+                    <c:otherwise>
+                        <h:button class="col-xs-3 col-xs-offset-3 col-md-1 col-md-offset-8" outcome="signup" value="Sign Up"/>
+                        <h:button class="col-xs-3 col-md-1" outcome="signin" value="Sign In"/>
+                    </c:otherwise>
+                </c:choose>
+            </h:form>
+        </nav>
+                    
+               
+                        
     </header>
+    
 </ui:composition>

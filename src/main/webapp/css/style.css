@@ -3,11 +3,6 @@
     box-sizing: border-box;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-}
-
 body {
     margin: 0;
     background: -webkit-linear-gradient(90deg, #8bbbcc 15%, #f7b7a0 85%);
@@ -17,64 +12,28 @@ body {
     background:         linear-gradient(90deg, #8bbbcc 15%, #f7b7a0 85%);
 }
 
-input {
-    width: 100%;
-    padding: 10px 15px;
-    margin: 10px auto;
-    border: 2px solid #F3F3F3;
-    font-size: 0.9em;
-    color: #5a5959;
-    border-radius: 3px;
-    border-bottom-width: thick;
+header {
+    margin: 0;
+    padding: 0;
 }
-
-input:focus {
-    outline: 0;
-    border-color: #8bbbcc;
-}
-
-#signForm {
-    position: relative;
-    margin: auto;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    width: 350px;
-    background-color: #8bbbcc;
+nav {
+    padding: 15px 10px;
+    background-color: white;
     box-shadow: 0 0 10px -2px #2f2e2e;
 }
 
-.submit {
-    background-color: #f7b7a0;
-    border: 0px solid #e59e83;
-    color: white;
-    font-size: 1.1em;
-    border-bottom-width: thick;
+a {
+    text-decoration: none;
 }
 
-.submit:hover {
-    background-color: #8bbbcc;
-    border: 0px solid #5f8d9d;
-    border-bottom-width: thick;
-}
-
-#formHeader {
-    background-color: #F3F3F3;
-    color: #5a5959;
-    padding: 20px;
-    font-size: 1.3em;
-    text-align: center;
-}
-
-form {
-    padding: 20px 30px;
+#search-box {
+    padding: 15px;
+    width: 300px;
+    margin: 200px auto;
     background-color: white;
 }
 
-.search-result {
-    padding: 10px;
-    margin: 15px;
-    background-color: white;
-    border: 1px solid black;
+#search-box .search-field {
+    margin: auto;
+    width: 78%;
 }
