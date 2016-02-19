@@ -112,6 +112,11 @@
                 <h:inputTextarea pt:placeholder="Description" />
             </h:form>
         </div>
+        <ui:repeat var="formation" value="#{profileBean.user.formationList}">
+            <div class="formation">
+                #{formation.schoolName}
+            </div>
+        </ui:repeat>
         
         <h2>Skills</h2>
         <button value="+" name="+" onclick="switchVisibility(addSkills)" />

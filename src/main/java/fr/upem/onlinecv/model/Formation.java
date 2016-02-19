@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Formation.findByStartYear", query = "SELECT f FROM Formation f WHERE f.startYear = :startYear"),
     @NamedQuery(name = "Formation.findByEndMonth", query = "SELECT f FROM Formation f WHERE f.endMonth = :endMonth"),
     @NamedQuery(name = "Formation.findByEndYear", query = "SELECT f FROM Formation f WHERE f.endYear = :endYear"),
-    @NamedQuery(name = "Formation.findByIsCurrent", query = "SELECT f FROM Formation f WHERE f.isCurrent = :isCurrent")})
+    @NamedQuery(name = "Formation.findByIsCurrent", query = "SELECT f FROM Formation f WHERE f.isCurrent = :isCurrent"),
+    @NamedQuery(name = "Formation.findByUserId", query = "SELECT f FROM Formation f WHERE f.userId.userId = :userId")
+})
 public class Formation implements Serializable {
 
     private static final long serialVersionUID = 1L;
