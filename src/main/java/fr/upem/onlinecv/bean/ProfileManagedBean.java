@@ -2,7 +2,7 @@ package fr.upem.onlinecv.bean;
 
 import fr.upem.onlinecv.model.HibernateUtil;
 import fr.upem.onlinecv.model.UserCv;
-import javax.faces.bean.RequestScoped;
+import java.util.Objects;
 import org.hibernate.Session;
 
 /**
@@ -11,16 +11,18 @@ import org.hibernate.Session;
  */
 public class ProfileManagedBean {
     
-    private String userId;
+    private Integer userId;
     private UserCv user;
+    
+    private UserManagedBean connectedUser;
     
     public ProfileManagedBean() {}
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
     
@@ -31,11 +33,22 @@ public class ProfileManagedBean {
     public void setUser(UserCv user) {
         this.user = user;
     }
+
+    public void setConnectedUser(UserManagedBean connectedUser) {
+        this.connectedUser = connectedUser;
+    }
     
     public void onload() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        user = (UserCv) (session.getNamedQuery("UserCv.findByUserId").setString("userId", userId).uniqueResult());
-        user.setEducationList(session.getNamedQuery("Education.findByUserId").setString("userId", userId).list());
+        user = (UserCv) (session.getNamedQuery("UserCv.findByUserId").setInteger("userId", userId).uniqueResult());
+        user.setEducationList(session.getNamedQuery("Education.findByUserId").setInteger("userId", userId).list());
         session.close();
+    }
+    
+    public boolean isOwnProfile() {
+        if(connectedUser.isLogin()) {
+            return Objects.equals(this.userId, connectedUser.getUser().getUserId());
+        }
+        return false;
     }
 }

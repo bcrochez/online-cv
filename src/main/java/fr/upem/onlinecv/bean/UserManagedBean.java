@@ -18,6 +18,7 @@ public class UserManagedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private UserCv user = null;
     private Long id;
     private String firstName;
     private String lastName;
@@ -31,6 +32,14 @@ public class UserManagedBean implements Serializable {
     public UserManagedBean() {
     }
 
+    public UserCv getUser() {
+        return user;
+    }
+
+    public void setUser(UserCv user) {
+        this.user = user;
+    }
+    
     public long getId() {
         return id;
     }
@@ -74,14 +83,15 @@ public class UserManagedBean implements Serializable {
     public boolean isLogin() {
         return isLogin;
     }
-
-    public void isLogin(boolean b) {
-        isLogin = b;
+    
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
     }
 
     public void logOut() {
         if (isLogin) {
             isLogin = false;
+            user = null;
             redirectToIndex();
         }
     }
@@ -112,6 +122,7 @@ public class UserManagedBean implements Serializable {
 
             session.close();
 
+            this.user = newUser;
             id = new Long(newUser.getUserId());
             // l'utilisateur est maintenant connecté
             isLogin = true;
@@ -141,6 +152,7 @@ public class UserManagedBean implements Serializable {
         } else if (!user.getPassword().equals(password)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe incorrect.", ""));
         } else {
+            this.user = user;
             id = new Long(user.getUserId());
             firstName = user.getFirstName();
             lastName = user.getLastName();

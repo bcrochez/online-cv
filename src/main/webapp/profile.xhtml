@@ -30,94 +30,105 @@
         </div>
 
         <h2>Work Experience</h2>
-        <button value="+" name="+" onclick="switchVisibility(addWork)" />
-        <div id="add-work" hidden="true">
-            <h:form>
-                <h:inputText pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                <h:inputText pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
-                <h:inputText pt:placeholder="Location" />
-                <h:selectOneMenu>
-                    <f:selectItem itemValue="1" itemLabel="January" />
-                    <f:selectItem itemValue="2" itemLabel="February" />
-                    <f:selectItem itemValue="3" itemLabel="March" />
-                    <f:selectItem itemValue="4" itemLabel="April" />
-                    <f:selectItem itemValue="5" itemLabel="May" />
-                    <f:selectItem itemValue="6" itemLabel="June" />
-                    <f:selectItem itemValue="7" itemLabel="July" />
-                    <f:selectItem itemValue="8" itemLabel="August" />
-                    <f:selectItem itemValue="9" itemLabel="September" />
-                    <f:selectItem itemValue="10" itemLabel="October" />
-                    <f:selectItem itemValue="11" itemLabel="November" />
-                    <f:selectItem itemValue="12" itemLabel="December" />
-                </h:selectOneMenu>
-                <h:inputText pt:placeholder="Year" />
-                - 
-                <h:selectOneMenu>
-                    <f:selectItem itemValue="1" itemLabel="January" />
-                    <f:selectItem itemValue="2" itemLabel="February" />
-                    <f:selectItem itemValue="3" itemLabel="March" />
-                    <f:selectItem itemValue="4" itemLabel="April" />
-                    <f:selectItem itemValue="5" itemLabel="May" />
-                    <f:selectItem itemValue="6" itemLabel="June" />
-                    <f:selectItem itemValue="7" itemLabel="July" />
-                    <f:selectItem itemValue="8" itemLabel="August" />
-                    <f:selectItem itemValue="9" itemLabel="September" />
-                    <f:selectItem itemValue="10" itemLabel="October" />
-                    <f:selectItem itemValue="11" itemLabel="November" />
-                    <f:selectItem itemValue="12" itemLabel="December" />
-                </h:selectOneMenu>
-                <h:inputText pt:placeholder="Year" />
-                <h:inputTextarea pt:placeholder="Description" />
-            </h:form>
-        </div>
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <button value="+" name="+" onclick="switchVisibility(addWork)" />
+        </c:if>
+
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <div id="add-work" hidden="true">
+                <h:form>
+                    <h:inputText pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                    <h:inputText pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
+                    <h:inputText pt:placeholder="Location" />
+                    <h:selectOneMenu>
+                        <f:selectItem itemValue="1" itemLabel="January" />
+                        <f:selectItem itemValue="2" itemLabel="February" />
+                        <f:selectItem itemValue="3" itemLabel="March" />
+                        <f:selectItem itemValue="4" itemLabel="April" />
+                        <f:selectItem itemValue="5" itemLabel="May" />
+                        <f:selectItem itemValue="6" itemLabel="June" />
+                        <f:selectItem itemValue="7" itemLabel="July" />
+                        <f:selectItem itemValue="8" itemLabel="August" />
+                        <f:selectItem itemValue="9" itemLabel="September" />
+                        <f:selectItem itemValue="10" itemLabel="October" />
+                        <f:selectItem itemValue="11" itemLabel="November" />
+                        <f:selectItem itemValue="12" itemLabel="December" />
+                    </h:selectOneMenu>
+                    <h:inputText pt:placeholder="Year" />
+                    - 
+                    <h:selectOneMenu>
+                        <f:selectItem itemValue="1" itemLabel="January" />
+                        <f:selectItem itemValue="2" itemLabel="February" />
+                        <f:selectItem itemValue="3" itemLabel="March" />
+                        <f:selectItem itemValue="4" itemLabel="April" />
+                        <f:selectItem itemValue="5" itemLabel="May" />
+                        <f:selectItem itemValue="6" itemLabel="June" />
+                        <f:selectItem itemValue="7" itemLabel="July" />
+                        <f:selectItem itemValue="8" itemLabel="August" />
+                        <f:selectItem itemValue="9" itemLabel="September" />
+                        <f:selectItem itemValue="10" itemLabel="October" />
+                        <f:selectItem itemValue="11" itemLabel="November" />
+                        <f:selectItem itemValue="12" itemLabel="December" />
+                    </h:selectOneMenu>
+                    <h:inputText pt:placeholder="Year" />
+                    <h:inputTextarea pt:placeholder="Description" />
+                </h:form>
+            </div>
+        </c:if>
 
         <h2>Education</h2>
-        <button value="+" name="+" onclick="switchVisibility(addEducation)" />
-        <div id="add-education" hidden="true">
-            <h:form>
-                <p>
-                    <h:inputText value="#{educationManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                    <h:inputText value="#{educationManagedBean.school}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
-                    <h:inputText value="#{educationManagedBean.location}" pt:placeholder="Location" />
-                    <h:selectOneMenu value="#{educationManagedBean.startMonth}">
-                        <f:selectItem itemLabel="Month" />
-                        <f:selectItem itemValue="1" itemLabel="January" />
-                        <f:selectItem itemValue="2" itemLabel="February" />
-                        <f:selectItem itemValue="3" itemLabel="March" />
-                        <f:selectItem itemValue="4" itemLabel="April" />
-                        <f:selectItem itemValue="5" itemLabel="May" />
-                        <f:selectItem itemValue="6" itemLabel="June" />
-                        <f:selectItem itemValue="7" itemLabel="July" />
-                        <f:selectItem itemValue="8" itemLabel="August" />
-                        <f:selectItem itemValue="9" itemLabel="September" />
-                        <f:selectItem itemValue="10" itemLabel="October" />
-                        <f:selectItem itemValue="11" itemLabel="November" />
-                        <f:selectItem itemValue="12" itemLabel="December" />
-                    </h:selectOneMenu>
-                    <h:inputText value="#{educationManagedBean.startYear}" pt:placeholder="Year" />
-                    - 
-                    <h:selectOneMenu value="#{educationManagedBean.endMonth}" >
-                        <f:selectItem itemLabel="Month" />
-                        <f:selectItem itemValue="1" itemLabel="January" />
-                        <f:selectItem itemValue="2" itemLabel="February" />
-                        <f:selectItem itemValue="3" itemLabel="March" />
-                        <f:selectItem itemValue="4" itemLabel="April" />
-                        <f:selectItem itemValue="5" itemLabel="May" />
-                        <f:selectItem itemValue="6" itemLabel="June" />
-                        <f:selectItem itemValue="7" itemLabel="July" />
-                        <f:selectItem itemValue="8" itemLabel="August" />
-                        <f:selectItem itemValue="9" itemLabel="September" />
-                        <f:selectItem itemValue="10" itemLabel="October" />
-                        <f:selectItem itemValue="11" itemLabel="November" />
-                        <f:selectItem itemValue="12" itemLabel="December" />
-                    </h:selectOneMenu>
-                    <h:inputText value="#{educationManagedBean.endYear}" pt:placeholder="Year" />
-                    <h:inputTextarea value="#{educationManagedBean.description}" pt:placeholder="Description" />
-                </p><p>
-                    <h:commandButton action="#{educationManagedBean.addEducation()}" value="Add it !" />
-                </p>
-            </h:form>
-        </div>
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <button value="+" name="+" onclick="switchVisibility(addEducation)" />
+        </c:if>
+
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <div id="add-education" hidden="true">
+                <h:form>
+                    <p>
+                        <h:inputText value="#{educationManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                        <h:inputText value="#{educationManagedBean.school}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
+                        <h:inputText value="#{educationManagedBean.location}" pt:placeholder="Location" />
+                        <h:selectOneMenu value="#{educationManagedBean.startMonth}">
+                            <f:selectItem itemLabel="Month" />
+                            <f:selectItem itemValue="1" itemLabel="January" />
+                            <f:selectItem itemValue="2" itemLabel="February" />
+                            <f:selectItem itemValue="3" itemLabel="March" />
+                            <f:selectItem itemValue="4" itemLabel="April" />
+                            <f:selectItem itemValue="5" itemLabel="May" />
+                            <f:selectItem itemValue="6" itemLabel="June" />
+                            <f:selectItem itemValue="7" itemLabel="July" />
+                            <f:selectItem itemValue="8" itemLabel="August" />
+                            <f:selectItem itemValue="9" itemLabel="September" />
+                            <f:selectItem itemValue="10" itemLabel="October" />
+                            <f:selectItem itemValue="11" itemLabel="November" />
+                            <f:selectItem itemValue="12" itemLabel="December" />
+                        </h:selectOneMenu>
+                        <h:inputText value="#{educationManagedBean.startYear}" pt:placeholder="Year" />
+                        - 
+                        <h:selectOneMenu value="#{educationManagedBean.endMonth}" >
+                            <f:selectItem itemLabel="Month" />
+                            <f:selectItem itemValue="1" itemLabel="January" />
+                            <f:selectItem itemValue="2" itemLabel="February" />
+                            <f:selectItem itemValue="3" itemLabel="March" />
+                            <f:selectItem itemValue="4" itemLabel="April" />
+                            <f:selectItem itemValue="5" itemLabel="May" />
+                            <f:selectItem itemValue="6" itemLabel="June" />
+                            <f:selectItem itemValue="7" itemLabel="July" />
+                            <f:selectItem itemValue="8" itemLabel="August" />
+                            <f:selectItem itemValue="9" itemLabel="September" />
+                            <f:selectItem itemValue="10" itemLabel="October" />
+                            <f:selectItem itemValue="11" itemLabel="November" />
+                            <f:selectItem itemValue="12" itemLabel="December" />
+                        </h:selectOneMenu>
+                        <h:inputText value="#{educationManagedBean.endYear}" pt:placeholder="Year" />
+                        <h:inputTextarea value="#{educationManagedBean.description}" pt:placeholder="Description" />
+                    </p><p>
+                        <h:commandButton action="#{educationManagedBean.addEducation()}" value="Add it !" />
+                    </p>
+                </h:form>
+            </div>
+        </c:if>
+
         <ui:repeat var="education" value="#{profileBean.user.educationList}">
             <div class="education">
                 #{education.title} 
@@ -126,27 +137,39 @@
         </ui:repeat>
 
         <h2>Skills</h2>
-        <button value="+" name="+" onclick="switchVisibility(addSkills)" />
-        <div id="add-skills" hidden="true">
-            <h:form>
-                <h:inputText pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
-            </h:form>
-        </div>
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <button value="+" name="+" onclick="switchVisibility(addSkills)" />
+        </c:if>
+
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <div id="add-skills" hidden="true">
+                <h:form>
+                    <h:inputText pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
+                </h:form>
+            </div>     
+        </c:if>
+
 
         <h2>Languages</h2>
-        <button value="+" name="+" onclick="switchVisibility(addLanguages)" />
-        <div id="add-languages" hidden="true">
-            <h:form>
-                <h:inputText pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
-                <h:selectOneMenu required="true" requiredMessage="Select your proficiency" >
-                    <f:selectItem itemValue="1" itemLabel="Beginner" />
-                    <f:selectItem itemValue="2" itemLabel="Conversational" />
-                    <f:selectItem itemValue="3" itemLabel="Business" />
-                    <f:selectItem itemValue="4" itemLabel="Fluent" />
-                    <f:selectItem itemValue="5" itemLabel="Native" />
-                </h:selectOneMenu>
-            </h:form>
-        </div>
+
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <button value="+" name="+" onclick="switchVisibility(addLanguages)" />
+        </c:if>
+
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <div id="add-languages" hidden="true">
+                <h:form>
+                    <h:inputText pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
+                    <h:selectOneMenu required="true" requiredMessage="Select your proficiency" >
+                        <f:selectItem itemValue="1" itemLabel="Beginner" />
+                        <f:selectItem itemValue="2" itemLabel="Conversational" />
+                        <f:selectItem itemValue="3" itemLabel="Business" />
+                        <f:selectItem itemValue="4" itemLabel="Fluent" />
+                        <f:selectItem itemValue="5" itemLabel="Native" />
+                    </h:selectOneMenu>
+                </h:form>
+            </div>
+        </c:if>
 
     </body>
 </html>
