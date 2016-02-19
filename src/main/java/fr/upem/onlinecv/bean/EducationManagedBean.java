@@ -167,11 +167,7 @@ public class EducationManagedBean {
     public void addEducation() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         
-        Integer startYearTmp = startYear == null || startYear.equals("") ? 0 : Integer.parseInt(startYear);
-        Integer endYearTmp = endYear == null || endYear.equals("") ? 0 : Integer.parseInt(endYear); // FIXME null pointer
-        isCurrent = (endMonth == null || endMonth.equals("")) && (endYear == null || endYear.equals(""));
-        
-        Education education =  new Education(title, school, location, startMonth, startYearTmp, endMonth, endYearTmp, description, isCurrent, profile.getUser());
+        Education education =  new Education(title, school, location, startMonth, startYear, endMonth, endYear, description, isCurrent, profile.getUser());
         
         session.beginTransaction();
         int id = (int) session.save(education);

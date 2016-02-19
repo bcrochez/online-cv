@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Education.findByEndMonth", query = "SELECT e FROM Education e WHERE e.endMonth = :endMonth"),
     @NamedQuery(name = "Education.findByEndYear", query = "SELECT e FROM Education e WHERE e.endYear = :endYear"),
     @NamedQuery(name = "Education.findByIsCurrent", query = "SELECT e FROM Education e WHERE e.isCurrent = :isCurrent"),
-@NamedQuery(name = "Education.findByUserId", query = "SELECT e FROM Education e WHERE e.userId.userId = :userId")
+    @NamedQuery(name = "Education.findByUserId", query = "SELECT e FROM Education e WHERE e.userId.userId = :userId")
 })
 public class Education implements Serializable {
 
@@ -70,13 +70,15 @@ public class Education implements Serializable {
     @Size(max = 25)
     @Column(name = "start_month")
     private String startMonth;
+    @Size(max = 4)
     @Column(name = "start_year")
-    private Integer startYear;
+    private String startYear;
     @Size(max = 25)
     @Column(name = "end_month")
     private String endMonth;
+    @Size(max = 4)
     @Column(name = "end_year")
-    private Integer endYear;
+    private String endYear;
     @Column(name = "is_current")
     private Boolean isCurrent;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -95,8 +97,8 @@ public class Education implements Serializable {
         this.title = title;
         this.schoolName = schoolName;
     }
-    
-    public Education(String title, String schoolName, String location, String startMonth, int startYear, String endMonth, int endYear, String description, boolean isCurrent, UserCv user) {
+
+    public Education(String title, String schoolName, String location, String startMonth, String startYear, String endMonth, String endYear, String description, boolean isCurrent, UserCv user) {
         this.title = title;
         this.schoolName = schoolName;
         this.location = location;
@@ -157,11 +159,11 @@ public class Education implements Serializable {
         this.startMonth = startMonth;
     }
 
-    public Integer getStartYear() {
+    public String getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Integer startYear) {
+    public void setStartYear(String startYear) {
         this.startYear = startYear;
     }
 
@@ -173,11 +175,11 @@ public class Education implements Serializable {
         this.endMonth = endMonth;
     }
 
-    public Integer getEndYear() {
+    public String getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(Integer endYear) {
+    public void setEndYear(String endYear) {
         this.endYear = endYear;
     }
 

@@ -68,13 +68,15 @@ public class Experience implements Serializable {
     @Size(max = 25)
     @Column(name = "start_month")
     private String startMonth;
+    @Size(max = 4)
     @Column(name = "start_year")
-    private Integer startYear;
+    private String startYear;
     @Size(max = 25)
     @Column(name = "end_month")
     private String endMonth;
+    @Size(max = 4)
     @Column(name = "end_year")
-    private Integer endYear;
+    private String endYear;
     @Column(name = "is_current")
     private Boolean isCurrent;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -142,11 +144,11 @@ public class Experience implements Serializable {
         this.startMonth = startMonth;
     }
 
-    public Integer getStartYear() {
+    public String getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Integer startYear) {
+    public void setStartYear(String startYear) {
         this.startYear = startYear;
     }
 
@@ -158,11 +160,11 @@ public class Experience implements Serializable {
         this.endMonth = endMonth;
     }
 
-    public Integer getEndYear() {
+    public String getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(Integer endYear) {
+    public void setEndYear(String endYear) {
         this.endYear = endYear;
     }
 
