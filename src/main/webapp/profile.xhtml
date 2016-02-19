@@ -16,7 +16,18 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
     </head>
     <body>
+        <f:metadata>
+            <f:viewParam name="id" value="#{profileBean.userId}" />
+            <f:viewAction action="#{profileBean.onload}" />
+        </f:metadata>
+        
         <ui:include src="/WEB-INF/include/header.xhtml"/>
+        
+        <div id="user-infos">
+            #{profileBean.user.firstName} 
+            #{profileBean.user.lastName} 
+            #{profileBean.user.email}
+        </div>
         
         <h2>Work Experience</h2>
         <button value="+" name="+" onclick="switchVisibility(addWork)" />
