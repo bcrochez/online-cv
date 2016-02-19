@@ -112,9 +112,10 @@
                 <h:inputTextarea pt:placeholder="Description" />
             </h:form>
         </div>
-        <ui:repeat var="formation" value="#{profileBean.user.formationList}">
-            <div class="formation">
-                #{formation.schoolName}
+        <ui:repeat var="education" value="#{profileBean.user.educationList}">
+            <div class="education">
+                #{education.title} 
+                #{education.schoolName}
             </div>
         </ui:repeat>
         

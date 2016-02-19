@@ -27,28 +27,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mdamis
  */
 @Entity
-@Table(name = "FORMATION")
+@Table(name = "EDUCATION")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Formation.findAll", query = "SELECT f FROM Formation f"),
-    @NamedQuery(name = "Formation.findByFormationId", query = "SELECT f FROM Formation f WHERE f.formationId = :formationId"),
-    @NamedQuery(name = "Formation.findBySchoolName", query = "SELECT f FROM Formation f WHERE f.schoolName = :schoolName"),
-    @NamedQuery(name = "Formation.findByLocation", query = "SELECT f FROM Formation f WHERE f.location = :location"),
-    @NamedQuery(name = "Formation.findByStartMonth", query = "SELECT f FROM Formation f WHERE f.startMonth = :startMonth"),
-    @NamedQuery(name = "Formation.findByStartYear", query = "SELECT f FROM Formation f WHERE f.startYear = :startYear"),
-    @NamedQuery(name = "Formation.findByEndMonth", query = "SELECT f FROM Formation f WHERE f.endMonth = :endMonth"),
-    @NamedQuery(name = "Formation.findByEndYear", query = "SELECT f FROM Formation f WHERE f.endYear = :endYear"),
-    @NamedQuery(name = "Formation.findByIsCurrent", query = "SELECT f FROM Formation f WHERE f.isCurrent = :isCurrent"),
-    @NamedQuery(name = "Formation.findByUserId", query = "SELECT f FROM Formation f WHERE f.userId.userId = :userId")
+    @NamedQuery(name = "Education.findAll", query = "SELECT e FROM Education e"),
+    @NamedQuery(name = "Education.findByEducationId", query = "SELECT e FROM Education e WHERE e.educationId = :educationId"),
+    @NamedQuery(name = "Education.findByTitle", query = "SELECT e FROM Education e WHERE e.title = :title"),
+    @NamedQuery(name = "Education.findBySchoolName", query = "SELECT e FROM Education e WHERE e.schoolName = :schoolName"),
+    @NamedQuery(name = "Education.findByLocation", query = "SELECT e FROM Education e WHERE e.location = :location"),
+    @NamedQuery(name = "Education.findByStartMonth", query = "SELECT e FROM Education e WHERE e.startMonth = :startMonth"),
+    @NamedQuery(name = "Education.findByStartYear", query = "SELECT e FROM Education e WHERE e.startYear = :startYear"),
+    @NamedQuery(name = "Education.findByEndMonth", query = "SELECT e FROM Education e WHERE e.endMonth = :endMonth"),
+    @NamedQuery(name = "Education.findByEndYear", query = "SELECT e FROM Education e WHERE e.endYear = :endYear"),
+    @NamedQuery(name = "Education.findByIsCurrent", query = "SELECT e FROM Education e WHERE e.isCurrent = :isCurrent"),
+@NamedQuery(name = "Education.findByUserId", query = "SELECT e FROM Education e WHERE e.userId.userId = :userId")
 })
-public class Formation implements Serializable {
+public class Education implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "formation_id")
-    private Integer formationId;
+    @Column(name = "education_id")
+    private Integer educationId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "title")
+    private String title;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -77,24 +83,33 @@ public class Formation implements Serializable {
     @ManyToOne(optional = false)
     private UserCv userId;
 
-    public Formation() {
+    public Education() {
     }
 
-    public Formation(Integer formationId) {
-        this.formationId = formationId;
+    public Education(Integer educationId) {
+        this.educationId = educationId;
     }
 
-    public Formation(Integer formationId, String schoolName) {
-        this.formationId = formationId;
+    public Education(Integer educationId, String title, String schoolName) {
+        this.educationId = educationId;
+        this.title = title;
         this.schoolName = schoolName;
     }
 
-    public Integer getFormationId() {
-        return formationId;
+    public Integer getEducationId() {
+        return educationId;
     }
 
-    public void setFormationId(Integer formationId) {
-        this.formationId = formationId;
+    public void setEducationId(Integer educationId) {
+        this.educationId = educationId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getSchoolName() {
@@ -172,18 +187,18 @@ public class Formation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (formationId != null ? formationId.hashCode() : 0);
+        hash += (educationId != null ? educationId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Formation)) {
+        if (!(object instanceof Education)) {
             return false;
         }
-        Formation other = (Formation) object;
-        if ((this.formationId == null && other.formationId != null) || (this.formationId != null && !this.formationId.equals(other.formationId))) {
+        Education other = (Education) object;
+        if ((this.educationId == null && other.educationId != null) || (this.educationId != null && !this.educationId.equals(other.educationId))) {
             return false;
         }
         return true;
@@ -191,7 +206,7 @@ public class Formation implements Serializable {
 
     @Override
     public String toString() {
-        return "fr.upem.onlinecv.model.Formation[ formationId=" + formationId + " ]";
+        return "fr.upem.onlinecv.model.Education[ educationId=" + educationId + " ]";
     }
     
 }

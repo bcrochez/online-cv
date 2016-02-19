@@ -6,6 +6,8 @@
 package fr.upem.onlinecv.model;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,17 +27,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Speaks.findAll", query = "SELECT s FROM Speaks s"),
+    @NamedQuery(name = "Speaks.findByProficiency", query = "SELECT s FROM Speaks s WHERE s.proficiency = :proficiency"),
     @NamedQuery(name = "Speaks.findByUserId", query = "SELECT s FROM Speaks s WHERE s.speaksPK.userId = :userId"),
-    @NamedQuery(name = "Speaks.findByLanguageId", query = "SELECT s FROM Speaks s WHERE s.speaksPK.languageId = :languageId"),
-    @NamedQuery(name = "Speaks.findByProficiencyId", query = "SELECT s FROM Speaks s WHERE s.speaksPK.proficiencyId = :proficiencyId")})
+    @NamedQuery(name = "Speaks.findByLanguageId", query = "SELECT s FROM Speaks s WHERE s.speaksPK.languageId = :languageId")})
 public class Speaks implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SpeaksPK speaksPK;
-    @JoinColumn(name = "proficiency_id", referencedColumnName = "proficiency_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Proficiency proficiency;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "proficiency")
+    private int proficiency;
     @JoinColumn(name = "language_id", referencedColumnName = "language_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Language language;
@@ -49,8 +53,13 @@ public class Speaks implements Serializable {
         this.speaksPK = speaksPK;
     }
 
-    public Speaks(int userId, int languageId, int proficiencyId) {
-        this.speaksPK = new SpeaksPK(userId, languageId, proficiencyId);
+    public Speaks(SpeaksPK speaksPK, int proficiency) {
+        this.speaksPK = speaksPK;
+        this.proficiency = proficiency;
+    }
+
+    public Speaks(int userId, int languageId) {
+        this.speaksPK = new SpeaksPK(userId, languageId);
     }
 
     public SpeaksPK getSpeaksPK() {
@@ -61,11 +70,11 @@ public class Speaks implements Serializable {
         this.speaksPK = speaksPK;
     }
 
-    public Proficiency getProficiency() {
+    public int getProficiency() {
         return proficiency;
     }
 
-    public void setProficiency(Proficiency proficiency) {
+    public void setProficiency(int proficiency) {
         this.proficiency = proficiency;
     }
 

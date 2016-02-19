@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Experience.findAll", query = "SELECT e FROM Experience e"),
     @NamedQuery(name = "Experience.findByExperienceId", query = "SELECT e FROM Experience e WHERE e.experienceId = :experienceId"),
+    @NamedQuery(name = "Experience.findByTitle", query = "SELECT e FROM Experience e WHERE e.title = :title"),
     @NamedQuery(name = "Experience.findByCompanyName", query = "SELECT e FROM Experience e WHERE e.companyName = :companyName"),
     @NamedQuery(name = "Experience.findByLocation", query = "SELECT e FROM Experience e WHERE e.location = :location"),
     @NamedQuery(name = "Experience.findByStartMonth", query = "SELECT e FROM Experience e WHERE e.startMonth = :startMonth"),
@@ -49,42 +50,33 @@ public class Experience implements Serializable {
     private Integer experienceId;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "title")
+    private String title;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "company_name")
     private String companyName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "location")
     private String location;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
+    @Size(max = 25)
     @Column(name = "start_month")
     private String startMonth;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "start_year")
-    private int startYear;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
+    private Integer startYear;
+    @Size(max = 25)
     @Column(name = "end_month")
     private String endMonth;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "end_year")
-    private int endYear;
-    @Basic(optional = false)
-    @NotNull
+    private Integer endYear;
     @Column(name = "is_current")
-    private boolean isCurrent;
+    private Boolean isCurrent;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private UserCv userId;
@@ -96,16 +88,10 @@ public class Experience implements Serializable {
         this.experienceId = experienceId;
     }
 
-    public Experience(Integer experienceId, String companyName, String location, String description, String startMonth, int startYear, String endMonth, int endYear, boolean isCurrent) {
+    public Experience(Integer experienceId, String title, String companyName) {
         this.experienceId = experienceId;
+        this.title = title;
         this.companyName = companyName;
-        this.location = location;
-        this.description = description;
-        this.startMonth = startMonth;
-        this.startYear = startYear;
-        this.endMonth = endMonth;
-        this.endYear = endYear;
-        this.isCurrent = isCurrent;
     }
 
     public Integer getExperienceId() {
@@ -114,6 +100,14 @@ public class Experience implements Serializable {
 
     public void setExperienceId(Integer experienceId) {
         this.experienceId = experienceId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCompanyName() {
@@ -148,11 +142,11 @@ public class Experience implements Serializable {
         this.startMonth = startMonth;
     }
 
-    public int getStartYear() {
+    public Integer getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(int startYear) {
+    public void setStartYear(Integer startYear) {
         this.startYear = startYear;
     }
 
@@ -164,19 +158,19 @@ public class Experience implements Serializable {
         this.endMonth = endMonth;
     }
 
-    public int getEndYear() {
+    public Integer getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(int endYear) {
+    public void setEndYear(Integer endYear) {
         this.endYear = endYear;
     }
 
-    public boolean getIsCurrent() {
+    public Boolean getIsCurrent() {
         return isCurrent;
     }
 
-    public void setIsCurrent(boolean isCurrent) {
+    public void setIsCurrent(Boolean isCurrent) {
         this.isCurrent = isCurrent;
     }
 

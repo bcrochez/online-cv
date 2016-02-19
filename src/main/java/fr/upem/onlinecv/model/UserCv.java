@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UserCv.findByName", query = "SELECT u FROM UserCv u WHERE u.firstName LIKE :name OR u.lastName LIKE :name")
 })
 public class UserCv implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,12 +91,12 @@ public class UserCv implements Serializable {
     private Integer languagesPrivacy;
     @ManyToMany(mappedBy = "userCvList")
     private List<Skill> skillList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private List<Formation> formationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
     private List<Speaks> speaksList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Experience> experienceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Education> educationList;
 
     public UserCv() {
     }
@@ -112,7 +112,7 @@ public class UserCv implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+    
     public UserCv(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -238,15 +238,6 @@ public class UserCv implements Serializable {
     }
 
     @XmlTransient
-    public List<Formation> getFormationList() {
-        return formationList;
-    }
-
-    public void setFormationList(List<Formation> formationList) {
-        this.formationList = formationList;
-    }
-
-    @XmlTransient
     public List<Speaks> getSpeaksList() {
         return speaksList;
     }
@@ -262,6 +253,15 @@ public class UserCv implements Serializable {
 
     public void setExperienceList(List<Experience> experienceList) {
         this.experienceList = experienceList;
+    }
+
+    @XmlTransient
+    public List<Education> getEducationList() {
+        return educationList;
+    }
+
+    public void setEducationList(List<Education> educationList) {
+        this.educationList = educationList;
     }
 
     @Override

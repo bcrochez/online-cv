@@ -26,18 +26,13 @@ public class SpeaksPK implements Serializable {
     @NotNull
     @Column(name = "language_id")
     private int languageId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "proficiency_id")
-    private int proficiencyId;
 
     public SpeaksPK() {
     }
 
-    public SpeaksPK(int userId, int languageId, int proficiencyId) {
+    public SpeaksPK(int userId, int languageId) {
         this.userId = userId;
         this.languageId = languageId;
-        this.proficiencyId = proficiencyId;
     }
 
     public int getUserId() {
@@ -56,20 +51,11 @@ public class SpeaksPK implements Serializable {
         this.languageId = languageId;
     }
 
-    public int getProficiencyId() {
-        return proficiencyId;
-    }
-
-    public void setProficiencyId(int proficiencyId) {
-        this.proficiencyId = proficiencyId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) userId;
         hash += (int) languageId;
-        hash += (int) proficiencyId;
         return hash;
     }
 
@@ -86,15 +72,12 @@ public class SpeaksPK implements Serializable {
         if (this.languageId != other.languageId) {
             return false;
         }
-        if (this.proficiencyId != other.proficiencyId) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "fr.upem.onlinecv.model.SpeaksPK[ userId=" + userId + ", languageId=" + languageId + ", proficiencyId=" + proficiencyId + " ]";
+        return "fr.upem.onlinecv.model.SpeaksPK[ userId=" + userId + ", languageId=" + languageId + " ]";
     }
     
 }
