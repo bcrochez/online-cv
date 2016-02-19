@@ -9,7 +9,6 @@ import org.hibernate.Session;
  *
  * @author mdamis
  */
-@RequestScoped
 public class ProfileManagedBean {
     
     private String userId;

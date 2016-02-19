@@ -1,3 +1,5 @@
+"use strict";
+
 var addWork;
 var addEducation;
 var addSkills;
@@ -11,6 +13,6 @@ window.onload = function() {
 };
         
         
-switchVisibility = function (div) {
+var switchVisibility = function (div) {
     div.hidden = !div.hidden;
 };

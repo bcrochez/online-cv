@@ -74,6 +74,15 @@
     <managed-bean>
         <managed-bean-name>profileBean</managed-bean-name>
         <managed-bean-class>fr.upem.onlinecv.bean.ProfileManagedBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>educationManagedBean</managed-bean-name>
+        <managed-bean-class>fr.upem.onlinecv.bean.EducationManagedBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>profile</property-name>
+            <value>#{profileBean}</value>
+        </managed-property>
     </managed-bean>
 </faces-config>

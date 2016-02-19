@@ -95,6 +95,19 @@ public class Education implements Serializable {
         this.title = title;
         this.schoolName = schoolName;
     }
+    
+    public Education(String title, String schoolName, String location, String startMonth, int startYear, String endMonth, int endYear, String description, boolean isCurrent, UserCv user) {
+        this.title = title;
+        this.schoolName = schoolName;
+        this.location = location;
+        this.startMonth = startMonth;
+        this.startYear = startYear;
+        this.endMonth = endMonth;
+        this.endYear = endYear;
+        this.description = description;
+        this.isCurrent = isCurrent;
+        this.userId = user;
+    }
 
     public Integer getEducationId() {
         return educationId;
