@@ -89,7 +89,7 @@ public class UserCv implements Serializable {
     private Integer skillsPrivacy;
     @Column(name = "languages_privacy")
     private Integer languagesPrivacy;
-    @ManyToMany(mappedBy = "userCvList")
+    @ManyToMany(mappedBy = "userCvSet")
     private List<Skill> skillList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
     private List<Speaks> speaksList;

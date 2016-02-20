@@ -6,7 +6,8 @@
 package fr.upem.onlinecv.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +53,7 @@ public class Skill implements Serializable {
         @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
     @ManyToMany
-    private List<UserCv> userCvList;
+    private Set<UserCv> userCvSet;
 
     public Skill() {
     }
@@ -64,6 +65,12 @@ public class Skill implements Serializable {
     public Skill(Integer skillId, String label) {
         this.skillId = skillId;
         this.label = label;
+    }
+
+    public Skill(String label, UserCv user) {
+        this.label = label;
+        this.userCvSet = new HashSet<>();
+        userCvSet.add(user);
     }
 
     public Integer getSkillId() {
@@ -83,12 +90,16 @@ public class Skill implements Serializable {
     }
 
     @XmlTransient
-    public List<UserCv> getUserCvList() {
-        return userCvList;
+    public Set<UserCv> getUserCvSet() {
+        return userCvSet;
     }
 
-    public void setUserCvList(List<UserCv> userCvList) {
-        this.userCvList = userCvList;
+    public void setUserCvSet(Set<UserCv> userCvSet) {
+        this.userCvSet = userCvSet;
+    }
+
+    public void addUser(UserCv user) {
+        userCvSet.add(user);
     }
 
     @Override
@@ -115,5 +126,5 @@ public class Skill implements Serializable {
     public String toString() {
         return "fr.upem.onlinecv.model.Skill[ skillId=" + skillId + " ]";
     }
-    
+
 }

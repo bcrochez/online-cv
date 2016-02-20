@@ -165,10 +165,19 @@
             <c:if test="#{profileBean.isOwnProfile()}">
                 <div id="add-skills" hidden="true">
                     <h:form>
-                        <h:inputText pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
+                        <h:inputText value="#{skillManagedBean.label}" pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
+                        <p>
+                            <h:commandButton action="#{skillManagedBean.addSkill()}" value="Add it !" />
+                        </p>
                     </h:form>
                 </div>     
             </c:if>
+            
+            <ui:repeat var="skill" value="#{profileBean.user.skillList}">
+                <div class="skill">
+                    #{skill.label}
+                </div>
+            </ui:repeat>
         </c:if>
 
         <c:if test="#{profileBean.canSeeSection('Languages')}">

@@ -3,21 +3,24 @@ package fr.upem.onlinecv.bean;
 import fr.upem.onlinecv.model.HibernateUtil;
 import fr.upem.onlinecv.model.Privacy;
 import fr.upem.onlinecv.model.UserCv;
+import java.io.Serializable;
 import java.util.Objects;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 /**
  *
  * @author mdamis
  */
-public class ProfileManagedBean {
-    
+public class ProfileManagedBean implements Serializable {
+
     private Integer userId;
     private UserCv user;
-    
+
     private UserManagedBean connectedUser;
-    
-    public ProfileManagedBean() {}
+
+    public ProfileManagedBean() {
+    }
 
     public Integer getUserId() {
         return userId;
@@ -26,7 +29,7 @@ public class ProfileManagedBean {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-    
+
     public UserCv getUser() {
         return user;
     }
@@ -38,15 +41,17 @@ public class ProfileManagedBean {
     public void setConnectedUser(UserManagedBean connectedUser) {
         this.connectedUser = connectedUser;
     }
-    
+
     public void onload() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         user = (UserCv) (session.getNamedQuery("UserCv.findByUserId").setInteger("userId", userId).uniqueResult());
-        user.setEducationList(session.getNamedQuery("Education.findByUserId").setInteger("userId", userId).list());
-        user.setExperienceList(session.getNamedQuery("Experience.findByUserId").setInteger("userId", userId).list());
+        Hibernate.initialize(user);
+        Hibernate.initialize(user.getExperienceList());
+        Hibernate.initialize(user.getEducationList());
+        Hibernate.initialize(user.getSkillList());
         session.close();
     }
-    
+
     public boolean canSeeSection(String sessionName) {
         int privacy;
         switch (sessionName) {
@@ -65,8 +70,8 @@ public class ProfileManagedBean {
             default:
                 return false;
         }
-        
-        if(privacy == Privacy.PRIVATE.getValue()) {
+
+        if (privacy == Privacy.PRIVATE.getValue()) {
             return isOwnProfile();
         } else if (privacy == Privacy.USERS.getValue()) {
             return connectedUser.isLogin();
@@ -74,9 +79,9 @@ public class ProfileManagedBean {
             return true;
         }
     }
-    
+
     public boolean isOwnProfile() {
-        if(connectedUser.isLogin()) {
+        if (connectedUser.isLogin()) {
             return Objects.equals(this.userId, connectedUser.getUser().getUserId());
         }
         return false;
