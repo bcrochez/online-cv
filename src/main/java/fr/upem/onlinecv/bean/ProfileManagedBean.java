@@ -43,6 +43,7 @@ public class ProfileManagedBean {
         Session session = HibernateUtil.getSessionFactory().openSession();
         user = (UserCv) (session.getNamedQuery("UserCv.findByUserId").setInteger("userId", userId).uniqueResult());
         user.setEducationList(session.getNamedQuery("Education.findByUserId").setInteger("userId", userId).list());
+        user.setExperienceList(session.getNamedQuery("Experience.findByUserId").setInteger("userId", userId).list());
         session.close();
     }
     

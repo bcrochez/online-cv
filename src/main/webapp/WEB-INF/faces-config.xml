@@ -89,4 +89,13 @@
             <value>#{profileBean}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>experienceManagedBean</managed-bean-name>
+        <managed-bean-class>fr.upem.onlinecv.bean.ExperienceManagedBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>profile</property-name>
+            <value>#{profileBean}</value>
+        </managed-property>
+    </managed-bean>
 </faces-config>

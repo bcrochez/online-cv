@@ -41,7 +41,7 @@ public class SearchManagedBean {
     public void search() {
         users.clear();
         
-        List<String> tokens = query.length() != 0 ? Arrays.asList(query.split(" ")) : Collections.EMPTY_LIST;
+        List<String> tokens = query.length() != 0 ? Arrays.asList(query.split(" ")) : Collections.EMPTY_LIST; // FIXME if query is empty shows nothing
         Set<UserCv> userSet = new HashSet<>();
         
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -51,6 +51,7 @@ public class SearchManagedBean {
         session.close();
    
         users.addAll(userSet);
+        query = "";
         
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/search.xhtml?faces-redirect=true");

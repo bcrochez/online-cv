@@ -39,7 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Experience.findByStartYear", query = "SELECT e FROM Experience e WHERE e.startYear = :startYear"),
     @NamedQuery(name = "Experience.findByEndMonth", query = "SELECT e FROM Experience e WHERE e.endMonth = :endMonth"),
     @NamedQuery(name = "Experience.findByEndYear", query = "SELECT e FROM Experience e WHERE e.endYear = :endYear"),
-    @NamedQuery(name = "Experience.findByIsCurrent", query = "SELECT e FROM Experience e WHERE e.isCurrent = :isCurrent")})
+    @NamedQuery(name = "Experience.findByIsCurrent", query = "SELECT e FROM Experience e WHERE e.isCurrent = :isCurrent"),
+    @NamedQuery(name = "Experience.findByUserId", query = "SELECT e FROM Experience e WHERE e.userId.userId = :userId")
+})
 public class Experience implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -94,6 +96,19 @@ public class Experience implements Serializable {
         this.experienceId = experienceId;
         this.title = title;
         this.companyName = companyName;
+    }
+    
+    public Experience(String title, String company, String location, String startMonth, String startYear, String endMonth, String endYear, String description, boolean isCurrent, UserCv user) {
+        this.title = title;
+        this.companyName = company;
+        this.location = location;
+        this.startMonth = startMonth;
+        this.startYear = startYear;
+        this.endMonth = endMonth;
+        this.endYear = endYear;
+        this.description = description;
+        this.isCurrent = isCurrent;
+        this.userId = user;
     }
 
     public Integer getExperienceId() {
