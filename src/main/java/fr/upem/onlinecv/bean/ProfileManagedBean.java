@@ -49,6 +49,7 @@ public class ProfileManagedBean implements Serializable {
         Hibernate.initialize(user.getExperienceList());
         Hibernate.initialize(user.getEducationList());
         Hibernate.initialize(user.getSkillList());
+        Hibernate.initialize(user.getSpeaksList());
         session.close();
     }
 

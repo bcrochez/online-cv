@@ -61,6 +61,11 @@ public class Speaks implements Serializable {
     public Speaks(int userId, int languageId) {
         this.speaksPK = new SpeaksPK(userId, languageId);
     }
+    
+    public Speaks(int proficiency, int userId, int languageId) {
+        this.proficiency = proficiency;
+        this.speaksPK = new SpeaksPK(userId, languageId);
+    }
 
     public SpeaksPK getSpeaksPK() {
         return speaksPK;

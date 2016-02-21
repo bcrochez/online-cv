@@ -189,17 +189,29 @@
             <c:if test="#{profileBean.isOwnProfile()}">
                 <div id="add-languages" hidden="true">
                     <h:form>
-                        <h:inputText pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
-                        <h:selectOneMenu required="true" requiredMessage="Select your proficiency" >
+                        <h:inputText value="#{languageManagedBean.label}" pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
+                        <h:selectOneMenu value="#{languageManagedBean.proficiency}" required="true" requiredMessage="Select your proficiency" >
                             <f:selectItem itemValue="1" itemLabel="Beginner" />
                             <f:selectItem itemValue="2" itemLabel="Conversational" />
                             <f:selectItem itemValue="3" itemLabel="Business" />
                             <f:selectItem itemValue="4" itemLabel="Fluent" />
                             <f:selectItem itemValue="5" itemLabel="Native" />
                         </h:selectOneMenu>
+                        <p>
+                            <h:commandButton action="#{languageManagedBean.addLanguage()}" value="Add it !" />
+                        </p>
                     </h:form>
                 </div>
             </c:if>
+            
+            <ui:repeat var="speaks" value="#{profileBean.user.speaksList}">
+                <div class="skill">
+                    #{speaks.language.label}
+                    <script>
+                       document.write(proficiencyIdToString(#{speaks.proficiency}));
+                    </script>
+                </div>
+            </ui:repeat>
         </c:if>
     </body>
 </html>

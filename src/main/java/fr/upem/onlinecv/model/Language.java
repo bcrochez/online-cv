@@ -62,6 +62,10 @@ public class Language implements Serializable {
         this.label = label;
     }
 
+    public Language(String label) {
+        this.label = label;
+    }
+
     public Integer getLanguageId() {
         return languageId;
     }

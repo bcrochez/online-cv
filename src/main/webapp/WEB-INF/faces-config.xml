@@ -107,4 +107,13 @@
             <value>#{profileBean}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>languageManagedBean</managed-bean-name>
+        <managed-bean-class>fr.upem.onlinecv.bean.LanguageManagedBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>profile</property-name>
+            <value>#{profileBean}</value>
+        </managed-property>
+    </managed-bean>
 </faces-config>
