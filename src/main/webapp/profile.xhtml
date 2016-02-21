@@ -29,10 +29,64 @@
             #{profileBean.user.email}
         </div>
 
+
+        <c:choose>
+            <c:when test="#{not empty profileBean.user.description}">
+                #{profileBean.user.description}
+            </c:when>
+            <c:otherwise>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                No description set
+                </c:if>
+            </c:otherwise>
+        </c:choose>
+        
+        <div id="personal-infos">
+            <div id="address">
+                <c:choose>
+            <c:when test="#{not empty profileBean.user.address}">
+                #{profileBean.user.address}
+            </c:when>
+            <c:otherwise>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                No address set
+                </c:if>
+            </c:otherwise>
+        </c:choose>
+            </div>
+            
+            <div id="telephone">
+                <c:choose>
+            <c:when test="#{not empty profileBean.user.telephoneNumber}">
+                #{profileBean.user.telephoneNumber}
+            </c:when>
+            <c:otherwise>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                No telephone number set
+                </c:if>
+            </c:otherwise>
+        </c:choose>
+            </div>
+        
+            <div id="gender">
+                <c:choose>
+            <c:when test="#{not empty profileBean.user.gender}">
+                #{profileBean.user.gender}
+            </c:when>
+            <c:otherwise>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                No gender set
+                </c:if>
+            </c:otherwise>
+        </c:choose>
+            </div>
+        </div>
+        
+      
         <c:if test="#{profileBean.canSeeSection('Experience')}">
             <h2>Work Experience</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <button value="+" name="+" onclick="switchVisibility(addWork)" />
+                <button value="+" name="+" onclick="switchVisibility(addWork)">+</button>
             </c:if>
 
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -83,7 +137,7 @@
                     </h:form>
                 </div>
             </c:if>
-            
+
             <ui:repeat var="experience" value="#{profileBean.user.experienceList}">
                 <div class="education">
                     #{experience.title} 
@@ -95,7 +149,7 @@
         <c:if test="#{profileBean.canSeeSection('Education')}">
             <h2>Education</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <button value="+" name="+" onclick="switchVisibility(addEducation)" />
+                <button value="+" name="+" onclick="switchVisibility(addEducation)">+</button>
             </c:if>
 
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -159,7 +213,7 @@
         <c:if test="#{profileBean.canSeeSection('Skills')}">
             <h2>Skills</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <button value="+" name="+" onclick="switchVisibility(addSkills)" />
+                <button value="+" name="+" onclick="switchVisibility(addSkills)">+</button>
             </c:if>
 
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -172,7 +226,7 @@
                     </h:form>
                 </div>     
             </c:if>
-            
+
             <ui:repeat var="skill" value="#{profileBean.user.skillList}">
                 <div class="skill">
                     #{skill.label}
@@ -183,7 +237,7 @@
         <c:if test="#{profileBean.canSeeSection('Languages')}">
             <h2>Languages</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <button value="+" name="+" onclick="switchVisibility(addLanguages)" />
+                <button value="+" name="+" onclick="switchVisibility(addLanguages)">+</button>
             </c:if>
 
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -203,12 +257,12 @@
                     </h:form>
                 </div>
             </c:if>
-            
+
             <ui:repeat var="speaks" value="#{profileBean.user.speaksList}">
                 <div class="skill">
                     #{speaks.language.label}
                     <script>
-                       document.write(proficiencyIdToString(#{speaks.proficiency}));
+                        document.write(proficiencyIdToString(#{speaks.proficiency}));
                     </script>
                 </div>
             </ui:repeat>
