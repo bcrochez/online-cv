@@ -177,10 +177,23 @@ public class ExperienceManagedBean implements Serializable {
         session.getTransaction().commit();
         session.close();
         
-        // TODO put id somewhere
-        
+        redirectToProfile();
+
+    }
+
+    private void redirectToProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id="+profile.getUserId());
-
+    }
+    
+    public void removeExperience(Experience experience) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        session.beginTransaction();
+        session.delete(experience);
+        session.getTransaction().commit();
+        session.close();
+        
+        redirectToProfile();
     }
 }

@@ -174,11 +174,24 @@ public class EducationManagedBean {
         session.getTransaction().commit();
         session.close();
         
-        // TODO put id somewhere
+        redirectToProfile();
+
+    }
+    
+    public void removeEducation(Education education) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         
+        session.beginTransaction();
+        session.delete(education);
+        session.getTransaction().commit();
+        session.close();
+        
+        redirectToProfile();
+    }
+
+    private void redirectToProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id="+profile.getUserId());
-
     }
     
 }

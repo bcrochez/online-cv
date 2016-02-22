@@ -81,6 +81,21 @@ public class LanguageManagedBean {
         session.getTransaction().commit();
         session.close();
 
+        redirectToProfile();
+    }
+    
+    public void removeLanguage(Speaks speaks) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        session.beginTransaction();
+        session.delete(speaks);
+        session.getTransaction().commit();
+        session.close();
+        
+        redirectToProfile();
+    }
+
+    private void redirectToProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + profile.getUserId());
     }

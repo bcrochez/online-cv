@@ -57,7 +57,23 @@ public class SkillManagedBean implements Serializable {
         session.getTransaction().commit();
         session.close();
 
+        redirectToProfile();
+    }
+
+    private void redirectToProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + profile.getUserId());
+    }
+    
+    public void removeSkill(Skill skill) {
+        // FIXME
+        /*Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        skill.removeUser(profile.getUser());
+        session.save(skill);
+        session.getTransaction().commit();
+        session.close();*/
+        
+        redirectToProfile();
     }
 }

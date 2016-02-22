@@ -101,6 +101,10 @@ public class Skill implements Serializable {
     public void addUser(UserCv user) {
         userCvSet.add(user);
     }
+    
+    public void removeUser(UserCv user) {
+        userCvSet.remove(user);
+    }
 
     @Override
     public int hashCode() {

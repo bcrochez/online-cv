@@ -36,53 +36,53 @@
             </c:when>
             <c:otherwise>
                 <c:if test="#{profileBean.isOwnProfile()}">
-                No description set
+                    No description set
                 </c:if>
             </c:otherwise>
         </c:choose>
-        
+
         <div id="personal-infos">
             <div id="address">
                 <c:choose>
-            <c:when test="#{not empty profileBean.user.address}">
-                #{profileBean.user.address}
-            </c:when>
-            <c:otherwise>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                No address set
-                </c:if>
-            </c:otherwise>
-        </c:choose>
+                    <c:when test="#{not empty profileBean.user.address}">
+                        #{profileBean.user.address}
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="#{profileBean.isOwnProfile()}">
+                            No address set
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            
+
             <div id="telephone">
                 <c:choose>
-            <c:when test="#{not empty profileBean.user.telephoneNumber}">
-                #{profileBean.user.telephoneNumber}
-            </c:when>
-            <c:otherwise>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                No telephone number set
-                </c:if>
-            </c:otherwise>
-        </c:choose>
+                    <c:when test="#{not empty profileBean.user.telephoneNumber}">
+                        #{profileBean.user.telephoneNumber}
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="#{profileBean.isOwnProfile()}">
+                            No telephone number set
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
-        
+
             <div id="gender">
                 <c:choose>
-            <c:when test="#{not empty profileBean.user.gender}">
-                #{profileBean.user.gender}
-            </c:when>
-            <c:otherwise>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                No gender set
-                </c:if>
-            </c:otherwise>
-        </c:choose>
+                    <c:when test="#{not empty profileBean.user.gender}">
+                        #{profileBean.user.gender}
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="#{profileBean.isOwnProfile()}">
+                            No gender set
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
-        
-      
+
+
         <c:if test="#{profileBean.canSeeSection('Experience')}">
             <h2>Work Experience</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -139,9 +139,14 @@
             </c:if>
 
             <ui:repeat var="experience" value="#{profileBean.user.experienceList}">
-                <div class="education">
+                <div class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{experience.title} 
                     #{experience.companyName}
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <h:form>
+                            <h:commandButton action="#{experienceManagedBean.removeExperience(experience)}" value="x" />
+                        </h:form>
+                    </c:if>
                 </div>
             </ui:repeat>
         </c:if>
@@ -203,9 +208,14 @@
 
 
             <ui:repeat var="education" value="#{profileBean.user.educationList}">
-                <div class="education">
+                <div class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{education.title} 
                     #{education.schoolName}
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <h:form>
+                            <h:commandButton action="#{educationManagedBean.removeEducation(education)}" value="x" />
+                        </h:form>
+                    </c:if>
                 </div>
             </ui:repeat>
         </c:if>
@@ -228,8 +238,13 @@
             </c:if>
 
             <ui:repeat var="skill" value="#{profileBean.user.skillList}">
-                <div class="skill">
+                <div class="skill" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{skill.label}
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <h:form>
+                            <h:commandButton action="#{skillManagedBean.removeSkill(skill)}" value="x" />
+                        </h:form>
+                    </c:if>
                 </div>
             </ui:repeat>
         </c:if>
@@ -259,11 +274,16 @@
             </c:if>
 
             <ui:repeat var="speaks" value="#{profileBean.user.speaksList}">
-                <div class="skill">
+                <div class="skill" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{speaks.language.label}
                     <script>
                         document.write(proficiencyIdToString(#{speaks.proficiency}));
                     </script>
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <h:form>
+                            <h:commandButton action="#{languageManagedBean.removeLanguage(speaks)}" value="x" />
+                        </h:form>
+                    </c:if>
                 </div>
             </ui:repeat>
         </c:if>
