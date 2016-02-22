@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Skill implements Serializable {
     @JoinTable(name = "hasSkill", joinColumns = {
         @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserCv> userCvSet;
 
     public Skill() {

@@ -66,13 +66,13 @@ public class SkillManagedBean implements Serializable {
     }
     
     public void removeSkill(Skill skill) {
-        // FIXME
-        /*Session session = HibernateUtil.getSessionFactory().openSession();
-        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+  
+        session.beginTransaction();
         skill.removeUser(profile.getUser());
-        session.save(skill);
+        session.update(skill);
         session.getTransaction().commit();
-        session.close();*/
+        session.close();
         
         redirectToProfile();
     }
