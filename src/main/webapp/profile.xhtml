@@ -29,17 +29,21 @@
             #{profileBean.user.email}
         </div>
 
-
-        <c:choose>
-            <c:when test="#{not empty profileBean.user.description}">
-                #{profileBean.user.description}
-            </c:when>
-            <c:otherwise>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                    No description set
-                </c:if>
-            </c:otherwise>
-        </c:choose>
+        <div id='description'>
+            <c:choose>
+                <c:when test="#{not empty profileBean.user.description}">
+                    #{profileBean.user.description}
+                </c:when>
+                <c:otherwise>
+                    <c:if test="#{profileBean.isOwnProfile()}">
+                        No description set
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
+            <c:if test="#{profileBean.isOwnProfile()}">
+                <button onclick="editDescription();" >Edit</button>
+            </c:if>
+        </div>
 
         <div id="personal-infos">
             <div id="address">
