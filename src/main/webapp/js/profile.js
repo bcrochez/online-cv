@@ -4,6 +4,7 @@ var addWork;
 var addEducation;
 var addSkills;
 var addLanguages;
+
 var description;
 var descriptionEdit;
 
@@ -16,8 +17,10 @@ window.onload = function () {
     descriptionEdit = document.getElementById("description-edit");
 };
 
-var switchVisibility = function (div) {
-    div.hidden = !div.hidden;
+var switchVisibility = function () {
+    for(var i = 0; i < arguments.length; i++) {
+        arguments[i].hidden = !arguments[i].hidden;
+    }
 };
 
 var proficiencyIdToString = function (id) {

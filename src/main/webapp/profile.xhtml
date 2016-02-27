@@ -42,17 +42,15 @@
                     </c:otherwise>
                 </c:choose>
                 <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(description); switchVisibility(descriptionEdit);" >Edit</button>
+                    <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
                 </c:if>
             </div>
             <c:if test="#{profileBean.isOwnProfile()}">
                 <div id='description-edit' hidden="true">
                     <h:form>
-                        <h:inputText id="desc-value" pt:placeholder="Description" value="#{profileBean.user.description}" />
-                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}">
-                            <f:ajax execute="desc-value" />
-                        </h:commandButton>
-                        <button onclick="switchVisibility(description); switchVisibility(descriptionEdit);">Cancel</button>
+                        <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
                     </h:form>
                 </div>
             </c:if>
