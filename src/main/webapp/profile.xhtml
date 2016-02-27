@@ -5,16 +5,16 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" >
 
-    <head>
+    <h:head>
         <title>Profile | Online CV</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/style.css"/>
         <script src="js/profile.js" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
-    </head>
+    </h:head>
     <body>
         <f:metadata>
             <f:viewParam name="id" value="#{profileBean.userId}" />
@@ -30,18 +30,31 @@
         </div>
 
         <div id='description'>
-            <c:choose>
-                <c:when test="#{not empty profileBean.user.description}">
-                    #{profileBean.user.description}
-                </c:when>
-                <c:otherwise>
-                    <c:if test="#{profileBean.isOwnProfile()}">
-                        No description set
-                    </c:if>
-                </c:otherwise>
-            </c:choose>
+            <div id="desc-field" >
+                <c:choose>
+                    <c:when test="#{not empty profileBean.user.description}">
+                        #{profileBean.user.description}
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="#{profileBean.isOwnProfile()}">
+                            No description set
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <button onclick="switchVisibility(description); switchVisibility(descriptionEdit);" >Edit</button>
+                </c:if>
+            </div>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <button onclick="editDescription();" >Edit</button>
+                <div id='description-edit' hidden="true">
+                    <h:form>
+                        <h:inputText id="desc-value" pt:placeholder="Description" value="#{profileBean.user.description}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}">
+                            <f:ajax execute="desc-value" />
+                        </h:commandButton>
+                        <button onclick="switchVisibility(description); switchVisibility(descriptionEdit);">Cancel</button>
+                    </h:form>
+                </div>
             </c:if>
         </div>
 

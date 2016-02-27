@@ -87,4 +87,14 @@ public class ProfileManagedBean implements Serializable {
         }
         return false;
     }
+    
+    public void updateProfile() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+        
+        session.close();
+    }
 }

@@ -4,40 +4,16 @@ var addWork;
 var addEducation;
 var addSkills;
 var addLanguages;
+var description;
+var descriptionEdit;
 
 window.onload = function () {
     addWork = document.getElementById("add-work");
     addEducation = document.getElementById("add-education");
     addSkills = document.getElementById("add-skills");
     addLanguages = document.getElementById("add-languages");
-};
-
-var editDescription = function () {
-    var description = document.getElementById("description");
-    var oldContent = description.innerHTML;
-    description.innerHTML = "";
-
-    var inputText = document.createElement("input");
-    inputText.type = "text";
-    inputText.placeholder = "Description";
-    description.appendChild(inputText);
-
-    var saveButton = createButton("Save", function () {
-        // TODO
-    });
-    description.appendChild(saveButton);
-
-    var cancelButton = createButton("Cancel", function () {
-        description.innerHTML = oldContent;
-    });
-    description.appendChild(cancelButton);
-};
-
-var createButton = function (innerHTML, onclickFunction) {
-    var newButton = document.createElement("button");
-    newButton.innerHTML = innerHTML;
-    newButton.onclick = onclickFunction;
-    return newButton;
+    description = document.getElementById("desc-field");
+    descriptionEdit = document.getElementById("description-edit");
 };
 
 var switchVisibility = function (div) {
