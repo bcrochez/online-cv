@@ -29,32 +29,30 @@
             #{profileBean.user.email}
         </div>
 
-        <div id='description'>
-            <div id="desc-field" >
-                <c:choose>
-                    <c:when test="#{not empty profileBean.user.description}">
-                        #{profileBean.user.description}
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="#{profileBean.isOwnProfile()}">
-                            No description set
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
-                </c:if>
-            </div>
+        <div id="desc-field" >
+            <c:choose>
+                <c:when test="#{not empty profileBean.user.description}">
+                    #{profileBean.user.description}
+                </c:when>
+                <c:otherwise>
+                    <c:if test="#{profileBean.isOwnProfile()}">
+                        No description set
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
             <c:if test="#{profileBean.isOwnProfile()}">
-                <div id='description-edit' hidden="true">
-                    <h:form>
-                        <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
-                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
-                    </h:form>
-                </div>
+                <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
             </c:if>
         </div>
+        <c:if test="#{profileBean.isOwnProfile()}">
+            <div id='description-edit' hidden="true">
+                <h:form>
+                    <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
+                    <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                    <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                </h:form>
+            </div>
+        </c:if>
 
         <div id="personal-infos">
             <div id="address">
@@ -68,7 +66,19 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <button onclick="switchVisibility(address, addressEdit);" >Edit</button>
+                </c:if>
             </div>
+            <c:if test="#{profileBean.isOwnProfile()}">
+                <div id='address-edit' hidden="true">
+                    <h:form>
+                        <h:inputText pt:placeholder="Address" value="#{profileBean.user.address}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                    </h:form>
+                </div>
+            </c:if>
 
             <div id="telephone">
                 <c:choose>
@@ -81,7 +91,19 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <button onclick="switchVisibility(telephone, telephoneEdit);" >Edit</button>
+                </c:if>
             </div>
+            <c:if test="#{profileBean.isOwnProfile()}">
+                <div id='telephone-edit' hidden="true">
+                    <h:form>
+                        <h:inputText pt:placeholder="Phone number" value="#{profileBean.user.telephoneNumber}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                    </h:form>
+                </div>
+            </c:if>
 
             <div id="gender">
                 <c:choose>
@@ -94,7 +116,19 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <button onclick="switchVisibility(gender, genderEdit);" >Edit</button>
+                </c:if>
             </div>
+            <c:if test="#{profileBean.isOwnProfile()}">
+                <div id='gender-edit' hidden="true">
+                    <h:form>
+                        <h:inputText pt:placeholder="Gender" value="#{profileBean.user.gender}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                    </h:form>
+                </div>
+            </c:if>
         </div>
 
 
