@@ -354,7 +354,7 @@
                             </h:selectOneMenu>
                             <h:inputText value="#{education.endYear}" pt:placeholder="Year" />
                             <h:inputTextarea value="#{education.description}" pt:placeholder="Description" />
-                            
+
                             <h:commandButton action="#{educationManagedBean.updateEducation(education)}" value="Save" />
                             <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
                         </h:form>
@@ -416,19 +416,37 @@
                 </div>
             </c:if>
 
-            <ui:repeat var="speaks" value="#{profileBean.user.speaksList}">
-                <div class="skill" style="margin: 5px; padding: 5px; border: 1px solid black;">
+            <c:forEach var="speaks" items="#{profileBean.user.speaksList}">
+                <div id="speaks-#{speaks.speaksPK.languageId}" class="speaks" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{speaks.language.label}
                     <script>
                         document.write(proficiencyIdToString(#{speaks.proficiency}));
                     </script>
                     <c:if test="#{profileBean.isOwnProfile()}" >
+                        <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" >Edit</button>
                         <h:form>
                             <h:commandButton action="#{languageManagedBean.removeLanguage(speaks)}" value="x" />
                         </h:form>
                     </c:if>
                 </div>
-            </ui:repeat>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id="speaks-#{speaks.speaksPK.languageId}-edit" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true" >
+                        <h:form>
+                            #{speaks.language.label}
+                            <h:selectOneMenu value="#{speaks.proficiency}" required="true" requiredMessage="Select your proficiency" >
+                                <f:selectItem itemValue="1" itemLabel="Beginner" />
+                                <f:selectItem itemValue="2" itemLabel="Conversational" />
+                                <f:selectItem itemValue="3" itemLabel="Business" />
+                                <f:selectItem itemValue="4" itemLabel="Fluent" />
+                                <f:selectItem itemValue="5" itemLabel="Native" />
+                            </h:selectOneMenu>
+
+                            <h:commandButton action="#{languageManagedBean.updateSpeaks(speaks)}" value="Save" />
+                            <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                        </h:form>
+                    </div>
+                </c:if>
+            </c:forEach>
         </c:if>
     </body>
 </html>

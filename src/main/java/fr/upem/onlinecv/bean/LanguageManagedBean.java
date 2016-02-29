@@ -100,4 +100,14 @@ public class LanguageManagedBean {
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + profile.getUserId());
     }
     
+    public void updateSpeaks(Speaks speaks) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        session.beginTransaction();
+        session.update(speaks);
+        session.getTransaction().commit();
+        
+        session.close();
+    }
+    
 }
