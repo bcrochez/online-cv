@@ -8,7 +8,6 @@ package fr.upem.onlinecv.bean;
 import fr.upem.onlinecv.model.Experience;
 import fr.upem.onlinecv.model.HibernateUtil;
 import java.io.Serializable;
-import java.util.List;
 import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 

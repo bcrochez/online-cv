@@ -194,4 +194,13 @@ public class EducationManagedBean {
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id="+profile.getUserId());
     }
     
+    public void updateEducation(Education education) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        session.beginTransaction();
+        session.update(education);
+        session.getTransaction().commit();
+        
+        session.close();
+    }
 }
