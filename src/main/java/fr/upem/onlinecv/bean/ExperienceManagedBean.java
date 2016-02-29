@@ -16,20 +16,20 @@ import org.hibernate.Session;
  * @author Bastien
  */
 public class ExperienceManagedBean implements Serializable {
-    
+
     private String title;
     private String company;
     private String location;
-    
+
     private String startMonth;
     private String startYear;
-    
+
     private String endMonth;
     private String endYear;
-    
+
     private String description;
     private boolean isCurrent;
-    
+
     private ProfileManagedBean profile;
 
     /**
@@ -37,6 +37,7 @@ public class ExperienceManagedBean implements Serializable {
      */
     public ExperienceManagedBean() {
     }
+
     /**
      * @return the title
      */
@@ -162,38 +163,49 @@ public class ExperienceManagedBean implements Serializable {
     public void setIsCurrent(boolean isCurrent) {
         this.isCurrent = isCurrent;
     }
-    
+
     public void setProfile(ProfileManagedBean profile) {
         this.profile = profile;
     }
-    
+
     public void addExperience() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
-        Experience experience =  new Experience(title, company, location, startMonth, startYear, endMonth, endYear, description, isCurrent, profile.getUser());
-        
+
+        Experience experience = new Experience(title, company, location, startMonth, startYear, endMonth, endYear, description, isCurrent, profile.getUser());
+
         session.beginTransaction();
         int id = (int) session.save(experience);
         session.getTransaction().commit();
         session.close();
-        
+
         redirectToProfile();
 
     }
 
     private void redirectToProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id="+profile.getUserId());
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + profile.getUserId());
     }
-    
+
     public void removeExperience(Experience experience) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         session.beginTransaction();
         session.delete(experience);
         session.getTransaction().commit();
+
         session.close();
-        
+
         redirectToProfile();
+    }
+
+    public void updateExperience(Experience experience) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        session.beginTransaction();
+        session.update(experience);
+        session.getTransaction().commit();
+
+        session.close();
     }
 }
