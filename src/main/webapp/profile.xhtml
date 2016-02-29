@@ -23,6 +23,12 @@
 
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
+        <c:if test="#{profileBean.canSeeConnectionButton()}">
+            <h:form>
+                <h:commandButton value="Connect" actionListener="#{profileBean.addConnectionRequest()}"/>
+            </h:form>
+        </c:if>
+        
         <div id="user-infos">
             #{profileBean.user.firstName} 
             #{profileBean.user.lastName} 

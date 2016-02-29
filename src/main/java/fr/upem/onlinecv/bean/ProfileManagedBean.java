@@ -5,6 +5,7 @@ import fr.upem.onlinecv.model.Privacy;
 import fr.upem.onlinecv.model.UserCv;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.faces.context.FacesContext;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
@@ -50,6 +51,10 @@ public class ProfileManagedBean implements Serializable {
         Hibernate.initialize(user.getEducationList());
         Hibernate.initialize(user.getSkillList());
         Hibernate.initialize(user.getSpeaksList());
+        Hibernate.initialize(user.getHasConnectionSet());
+        Hibernate.initialize(user.getConnectionsSet());
+        Hibernate.initialize(user.getWantsConnectionSet());
+        Hibernate.initialize(user.getRequestsSet());
         session.close();
     }
 
@@ -87,14 +92,47 @@ public class ProfileManagedBean implements Serializable {
         }
         return false;
     }
-    
+
     public void updateProfile() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
-        
+
         session.close();
+    }
+
+    public boolean canSeeConnectionButton() {
+        if (isOwnProfile()) {
+            return false;
+        }
+        if (!connectedUser.isLogin()) {
+            return false;
+        }
+        if (user.getHasConnectionSet().contains(connectedUser.getUser())) {
+            return false;
+        }
+        if (user.getWantsConnectionSet().contains(connectedUser.getUser())) {
+            return false;
+        }
+        return true;
+    }
+
+    public void addConnectionRequest() {
+        user.getWantsConnectionSet().add(connectedUser.getUser());
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+        session.close();
+
+        refresh();
+    }
+
+    private void refresh() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + userId);
     }
 }
