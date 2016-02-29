@@ -23,17 +23,18 @@
 
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
-        <c:if test="#{profileBean.canSeeConnectionButton()}">
-            <h:form>
-                <h:commandButton value="Connect" actionListener="#{profileBean.addConnectionRequest()}"/>
-            </h:form>
-        </c:if>
+
 
         <nav>
             <button id="resume-button" onclick="displayResume();" >Resume</button>
             <button id="connections-button" onclick="displayConnections();" >Connections</button>
             <c:if test="#{profileBean.isOwnProfile()}" >
                 <button id="requests-button" onclick="displayRequests();" >Requests</button>
+            </c:if>
+            <c:if test="#{profileBean.canSeeConnectionButton()}">
+                <h:form>
+                    <h:commandButton value="Connect" actionListener="#{profileBean.addConnectionRequest()}"/>
+                </h:form>
             </c:if>
         </nav>
 

@@ -56,17 +56,17 @@ public class ProfileManagedBean implements Serializable {
         Hibernate.initialize(user.getWantsConnectionSet());
         Hibernate.initialize(user.getRequestsSet());
         session.close();
-        
-        for(UserCv user : user.getConnectionsSet()) {
+
+        for (UserCv user : user.getConnectionsSet()) {
             System.out.println("ConnectionsSet " + user.getEmail());
         }
-        for(UserCv user : user.getHasConnectionSet()) {
+        for (UserCv user : user.getHasConnectionSet()) {
             System.out.println("HasConnectionsSet " + user.getEmail());
         }
-        for(UserCv user : user.getWantsConnectionSet()) {
+        for (UserCv user : user.getWantsConnectionSet()) {
             System.out.println("WantsConnectionsSet " + user.getEmail());
         }
-        for(UserCv user : user.getRequestsSet()) {
+        for (UserCv user : user.getRequestsSet()) {
             System.out.println("RequestsSet " + user.getEmail());
         }
     }
@@ -126,7 +126,7 @@ public class ProfileManagedBean implements Serializable {
         if (user.getHasConnectionSet().contains(connectedUser.getUser()) || user.getConnectionsSet().contains(connectedUser.getUser())) {
             return false;
         }
-        if (user.getWantsConnectionSet().contains(connectedUser.getUser())) {
+        if (user.getWantsConnectionSet().contains(connectedUser.getUser()) || user.getRequestsSet().contains(connectedUser.getUser())) {
             return false;
         }
         return true;
@@ -146,25 +146,25 @@ public class ProfileManagedBean implements Serializable {
 
     public void acceptRequest(UserCv user) {
         this.user.getHasConnectionSet().add(user);
-        
+
         deleteRequest(user);
     }
-     
+
     public void deleteRequest(UserCv user) {
         this.user.getWantsConnectionSet().remove(user);
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(this.user);
         session.getTransaction().commit();
         session.close();
-        
+
         refresh();
     }
-    
+
     private void refresh() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + userId);
     }
-    
+
 }
