@@ -6,6 +6,7 @@
 package fr.upem.onlinecv.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -292,6 +293,13 @@ public class UserCv implements Serializable {
         this.educationList = educationList;
     }
     
+    public List<UserCv> getConnections() {
+        ArrayList<UserCv> connections = new ArrayList<>();
+        connections.addAll(hasConnectionSet);
+        connections.addAll(connectionsSet);
+        return connections;
+    }
+    
     @XmlTransient
     public Set<UserCv> getHasConnectionSet() {
         return hasConnectionSet;
@@ -313,6 +321,10 @@ public class UserCv implements Serializable {
     @XmlTransient
     public Set<UserCv> getWantsConnectionSet() {
         return wantsConnectionSet;
+    }
+    
+    public List<UserCv> getWantsConnectionList() {
+        return new ArrayList<UserCv>(wantsConnectionSet);
     }
 
     public void setWantsConnectionSet(Set<UserCv> wantsConnectionSet) {
