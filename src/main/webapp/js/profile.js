@@ -1,5 +1,12 @@
 "use strict";
 
+var resume;
+var resumeButton;
+var connections;
+var connectionsButton;
+var requests;
+var requestsButton;
+
 var addWork;
 var addEducation;
 var addSkills;
@@ -15,6 +22,13 @@ var gender;
 var genderEdit;
 
 window.onload = function () {
+    resume = document.getElementById("resume");
+    resumeButton = document.getElementById("resume-button");
+    connections = document.getElementById("connections");
+    connectionsButton = document.getElementById("connections-button");
+    requests = document.getElementById("requests");
+    requestsButton = document.getElementById("requests-button");
+    
     addWork = document.getElementById("add-work");
     addEducation = document.getElementById("add-education");
     addSkills = document.getElementById("add-skills");
@@ -30,11 +44,35 @@ window.onload = function () {
     genderEdit = document.getElementById("gender-edit");
 };
 
+var displayResume = function () {
+    if(resume.hidden) {
+        resume.hidden = false;
+        connections.hidden = true;
+        requests.hidden = true;
+    }
+};
+
+var displayConnections = function () {
+    if(connections.hidden) {
+        resume.hidden = true;
+        connections.hidden = false;
+        requests.hidden = true;    }
+};
+
+var displayRequests = function () {
+    if(requests.hidden) {
+        resume.hidden = true;
+        connections.hidden = true;
+        requests.hidden = false;
+    }
+};
+
 var switchVisibility = function () {
     for(var i = 0; i < arguments.length; i++) {
         arguments[i].hidden = !arguments[i].hidden;
     }
 };
+
 
 var proficiencyIdToString = function (id) {
     switch (id) {

@@ -29,6 +29,14 @@
             </h:form>
         </c:if>
 
+        <nav>
+            <button id="resume-button" onclick="displayResume();" >Resume</button>
+            <button id="connections-button" onclick="displayConnections();" >Connections</button>
+            <c:if test="#{profileBean.isOwnProfile()}" >
+                <button id="requests-button" onclick="displayRequests();" >Requests</button>
+            </c:if>
+        </nav>
+
         <div id="resume">
             <div id="user-infos">
                 #{profileBean.user.firstName} 
@@ -457,7 +465,7 @@
             </c:if>
         </div>
 
-        <div id="connections">
+        <div id="connections" hidden="true">
             <h1>Connections</h1>
             <ui:repeat var="user" value="#{profileBean.user.getConnections()}">
                 <div class="connection" style="margin: 5px; padding: 5px; border: 1px solid black;">
@@ -469,7 +477,7 @@
         </div>
 
         <c:if test="#{profileBean.isOwnProfile()}" >
-            <div id="requests">
+            <div id="requests" hidden="true">
                 <h1>Connection Requests</h1>
                 <ui:repeat var="user" value="#{profileBean.user.getWantsConnectionList()}">
                     <div class="request" style="margin: 5px; padding: 5px; border: 1px solid black;">
