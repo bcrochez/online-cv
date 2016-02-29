@@ -57,7 +57,7 @@ public class ProfileManagedBean implements Serializable {
         int privacy;
         switch (sessionName) {
             case "Education":
-                privacy = user.getFormationsPrivacy();
+                privacy = user.getEducationPrivacy();
                 break;
             case "Experience":
                 privacy = user.getExperiencesPrivacy();
