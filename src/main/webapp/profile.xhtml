@@ -187,17 +187,64 @@
                 </div>
             </c:if>
 
-            <ui:repeat var="experience" value="#{profileBean.user.experienceList}">
-                <div class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
+            <c:forEach var="experience" varStatus="status" items="#{profileBean.user.experienceList}">
+                <div id="experience-#{experience.experienceId}" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;">
                     #{experience.title} 
                     #{experience.companyName}
                     <c:if test="#{profileBean.isOwnProfile()}" >
+                        <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" >Edit</button>
                         <h:form>
                             <h:commandButton action="#{experienceManagedBean.removeExperience(experience)}" value="x" />
                         </h:form>
                     </c:if>
                 </div>
-            </ui:repeat>
+                <c:if test="#{profileBean.isOwnProfile()}" >
+                    <div id="experience-#{experience.experienceId}-edit" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true">
+                        <h:form>
+                            <h:inputText value="#{experience.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                            <h:inputText value="#{experience.companyName}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
+                            <h:inputText value="#{experience.location}" pt:placeholder="Location" />
+                            <h:selectOneMenu value="#{experience.startMonth}" >
+                                <f:selectItem itemLabel="Month" />
+                                <f:selectItem itemValue="1" itemLabel="January" />
+                                <f:selectItem itemValue="2" itemLabel="February" />
+                                <f:selectItem itemValue="3" itemLabel="March" />
+                                <f:selectItem itemValue="4" itemLabel="April" />
+                                <f:selectItem itemValue="5" itemLabel="May" />
+                                <f:selectItem itemValue="6" itemLabel="June" />
+                                <f:selectItem itemValue="7" itemLabel="July" />
+                                <f:selectItem itemValue="8" itemLabel="August" />
+                                <f:selectItem itemValue="9" itemLabel="September" />
+                                <f:selectItem itemValue="10" itemLabel="October" />
+                                <f:selectItem itemValue="11" itemLabel="November" />
+                                <f:selectItem itemValue="12" itemLabel="December" />
+                            </h:selectOneMenu>
+                            <h:inputText value="#{experience.startYear}" pt:placeholder="Year" />
+                            - 
+                            <h:selectOneMenu value="#{experience.endMonth}" >
+                                <f:selectItem itemLabel="Month" />
+                                <f:selectItem itemValue="1" itemLabel="January" />
+                                <f:selectItem itemValue="2" itemLabel="February" />
+                                <f:selectItem itemValue="3" itemLabel="March" />
+                                <f:selectItem itemValue="4" itemLabel="April" />
+                                <f:selectItem itemValue="5" itemLabel="May" />
+                                <f:selectItem itemValue="6" itemLabel="June" />
+                                <f:selectItem itemValue="7" itemLabel="July" />
+                                <f:selectItem itemValue="8" itemLabel="August" />
+                                <f:selectItem itemValue="9" itemLabel="September" />
+                                <f:selectItem itemValue="10" itemLabel="October" />
+                                <f:selectItem itemValue="11" itemLabel="November" />
+                                <f:selectItem itemValue="12" itemLabel="December" />
+                            </h:selectOneMenu>
+                            <h:inputText value="#{experience.endYear}" pt:placeholder="Year" />
+                            <h:inputTextarea value="#{experience.description}" pt:placeholder="Description" />
+
+                            <h:commandButton action="#{experienceManagedBean.updateExperience(experience)}" value="Save" />
+                            <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                        </h:form>
+                    </div>
+                </c:if>
+            </c:forEach>
         </c:if>
 
         <c:if test="#{profileBean.canSeeSection('Education')}">
