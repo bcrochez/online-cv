@@ -151,6 +151,7 @@
                             <h:inputText value="#{experienceManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                             <h:inputText value="#{experienceManagedBean.company}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
                             <h:inputText value="#{experienceManagedBean.location}" pt:placeholder="Location" />
+                            <h:selectBooleanCheckbox value="#{experienceManagedBean.isCurrent}">Is current ?</h:selectBooleanCheckbox>
                             <h:selectOneMenu value="#{experienceManagedBean.startMonth}" >
                                 <f:selectItem itemLabel="Month" />
                                 <f:selectItem itemValue="1" itemLabel="January" />
@@ -210,6 +211,7 @@
                             <h:inputText value="#{experience.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                             <h:inputText value="#{experience.companyName}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
                             <h:inputText value="#{experience.location}" pt:placeholder="Location" />
+                            <h:selectBooleanCheckbox value="#{experience.isCurrent}">Is current ?</h:selectBooleanCheckbox>
                             <h:selectOneMenu value="#{experience.startMonth}" >
                                 <f:selectItem itemLabel="Month" />
                                 <f:selectItem itemValue="1" itemLabel="January" />
@@ -266,6 +268,7 @@
                             <h:inputText value="#{educationManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                             <h:inputText value="#{educationManagedBean.school}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
                             <h:inputText value="#{educationManagedBean.location}" pt:placeholder="Location" />
+                            <h:selectBooleanCheckbox value="#{educationManagedBean.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
                             <h:selectOneMenu value="#{educationManagedBean.startMonth}">
                                 <f:selectItem itemLabel="Month" />
                                 <f:selectItem itemValue="1" itemLabel="January" />
@@ -326,6 +329,7 @@
                             <h:inputText value="#{education.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
                             <h:inputText value="#{education.schoolName}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
                             <h:inputText value="#{education.location}" pt:placeholder="Location" />
+                            <h:selectBooleanCheckbox value="#{education.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
                             <h:selectOneMenu value="#{education.startMonth}">
                                 <f:selectItem itemLabel="Month" />
                                 <f:selectItem itemValue="1" itemLabel="January" />
