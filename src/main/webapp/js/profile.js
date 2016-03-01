@@ -52,3 +52,11 @@ var proficiencyIdToString = function (id) {
             return "No proficiency";
     }
 };
+
+var genderToString = function(gender) {
+    if(gender) {
+        return "Male";
+    } else {
+        return "Female";
+    }
+};

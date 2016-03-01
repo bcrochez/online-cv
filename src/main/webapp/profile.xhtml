@@ -108,7 +108,9 @@
             <div id="gender">
                 <c:choose>
                     <c:when test="#{not empty profileBean.user.gender}">
-                        #{profileBean.user.gender}
+                        <script>
+                            document.write(genderToString(#{profileBean.user.gender}));
+                        </script>
                     </c:when>
                     <c:otherwise>
                         <c:if test="#{profileBean.isOwnProfile()}">
@@ -123,7 +125,11 @@
             <c:if test="#{profileBean.isOwnProfile()}">
                 <div id='gender-edit' hidden="true">
                     <h:form>
-                        <h:inputText pt:placeholder="Gender" value="#{profileBean.user.gender}" />
+                        <h:selectOneMenu value="#{profileBean.user.gender}" >
+                            <f:selectItem itemLabel="No selection" />
+                            <f:selectItem itemValue="true" itemLabel="Male" />
+                            <f:selectItem itemValue="false" itemLabel="Female" />
+                        </h:selectOneMenu>
                         <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
                         <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
                     </h:form>
