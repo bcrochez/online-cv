@@ -141,6 +141,14 @@
         <c:if test="#{profileBean.canSeeSection('Experience')}">
             <h2>Work Experience</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
+                <h:form>
+                    <h:selectOneMenu value="#{profileBean.user.experiencesPrivacy}" >
+                        <f:selectItem itemValue="0" itemLabel="Public" />
+                        <f:selectItem itemValue="1" itemLabel="Users" />
+                        <f:selectItem itemValue="2" itemLabel="Private" />
+                    </h:selectOneMenu>
+                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                </h:form>
                 <button value="+" name="+" onclick="switchVisibility(addWork)">+</button>
             </c:if>
 
@@ -258,6 +266,14 @@
         <c:if test="#{profileBean.canSeeSection('Education')}">
             <h2>Education</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
+                <h:form>
+                    <h:selectOneMenu value="#{profileBean.user.formationsPrivacy}" >
+                        <f:selectItem itemValue="0" itemLabel="Public" />
+                        <f:selectItem itemValue="1" itemLabel="Users" />
+                        <f:selectItem itemValue="2" itemLabel="Private" />
+                    </h:selectOneMenu>
+                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                </h:form>
                 <button value="+" name="+" onclick="switchVisibility(addEducation)">+</button>
             </c:if>
 
@@ -376,6 +392,14 @@
         <c:if test="#{profileBean.canSeeSection('Skills')}">
             <h2>Skills</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
+                <h:form>
+                    <h:selectOneMenu value="#{profileBean.user.skillsPrivacy}" >
+                        <f:selectItem itemValue="0" itemLabel="Public" />
+                        <f:selectItem itemValue="1" itemLabel="Users" />
+                        <f:selectItem itemValue="2" itemLabel="Private" />
+                    </h:selectOneMenu>
+                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                </h:form>
                 <button value="+" name="+" onclick="switchVisibility(addSkills)">+</button>
             </c:if>
 
@@ -405,6 +429,14 @@
         <c:if test="#{profileBean.canSeeSection('Languages')}">
             <h2>Languages</h2>
             <c:if test="#{profileBean.isOwnProfile()}">
+                <h:form>
+                    <h:selectOneMenu value="#{profileBean.user.languagesPrivacy}" >
+                        <f:selectItem itemValue="0" itemLabel="Public" />
+                        <f:selectItem itemValue="1" itemLabel="Users" />
+                        <f:selectItem itemValue="2" itemLabel="Private" />
+                    </h:selectOneMenu>
+                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                </h:form>
                 <button value="+" name="+" onclick="switchVisibility(addLanguages)">+</button>
             </c:if>
 

@@ -53,9 +53,9 @@ public class ProfileManagedBean implements Serializable {
         session.close();
     }
 
-    public boolean canSeeSection(String sessionName) {
+    public boolean canSeeSection(String sectionName) {
         int privacy;
-        switch (sessionName) {
+        switch (sectionName) {
             case "Education":
                 privacy = user.getFormationsPrivacy();
                 break;
