@@ -5,6 +5,7 @@ import fr.upem.onlinecv.model.Privacy;
 import fr.upem.onlinecv.model.UserCv;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.faces.context.FacesContext;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
@@ -50,14 +51,31 @@ public class ProfileManagedBean implements Serializable {
         Hibernate.initialize(user.getEducationList());
         Hibernate.initialize(user.getSkillList());
         Hibernate.initialize(user.getSpeaksList());
+        Hibernate.initialize(user.getHasConnectionSet());
+        Hibernate.initialize(user.getConnectionsSet());
+        Hibernate.initialize(user.getWantsConnectionSet());
+        Hibernate.initialize(user.getRequestsSet());
         session.close();
+
+        for (UserCv user : user.getConnectionsSet()) {
+            System.out.println("ConnectionsSet " + user.getEmail());
+        }
+        for (UserCv user : user.getHasConnectionSet()) {
+            System.out.println("HasConnectionsSet " + user.getEmail());
+        }
+        for (UserCv user : user.getWantsConnectionSet()) {
+            System.out.println("WantsConnectionsSet " + user.getEmail());
+        }
+        for (UserCv user : user.getRequestsSet()) {
+            System.out.println("RequestsSet " + user.getEmail());
+        }
     }
 
     public boolean canSeeSection(String sectionName) {
         int privacy;
         switch (sectionName) {
             case "Education":
-                privacy = user.getFormationsPrivacy();
+                privacy = user.getEducationPrivacy();
                 break;
             case "Experience":
                 privacy = user.getExperiencesPrivacy();
@@ -87,14 +105,66 @@ public class ProfileManagedBean implements Serializable {
         }
         return false;
     }
-    
+
     public void updateProfile() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
-        
+
         session.close();
     }
+
+    public boolean canSeeConnectionButton() {
+        if (isOwnProfile()) {
+            return false;
+        }
+        if (!connectedUser.isLogin()) {
+            return false;
+        }
+        if (user.getHasConnectionSet().contains(connectedUser.getUser()) || user.getConnectionsSet().contains(connectedUser.getUser())) {
+            return false;
+        }
+        if (user.getWantsConnectionSet().contains(connectedUser.getUser()) || user.getRequestsSet().contains(connectedUser.getUser())) {
+            return false;
+        }
+        return true;
+    }
+
+    public void addConnectionRequest() {
+        user.getWantsConnectionSet().add(connectedUser.getUser());
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+        session.close();
+
+        refresh();
+    }
+
+    public void acceptRequest(UserCv user) {
+        this.user.getHasConnectionSet().add(user);
+
+        deleteRequest(user);
+    }
+
+    public void deleteRequest(UserCv user) {
+        this.user.getWantsConnectionSet().remove(user);
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(this.user);
+        session.getTransaction().commit();
+        session.close();
+
+        refresh();
+    }
+
+    private void refresh() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + userId);
+    }
+
 }

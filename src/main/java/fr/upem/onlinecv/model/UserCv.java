@@ -6,7 +6,9 @@
 package fr.upem.onlinecv.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -81,8 +85,11 @@ public class UserCv implements Serializable {
     @Size(max = 255)
     @Column(name = "address")
     private String address;
-    @Column(name = "formations_privacy")
-    private Integer formationsPrivacy;
+    @Lob
+    @Column(name = "picture")
+    private byte[] picture;
+    @Column(name = "education_privacy")
+    private Integer educationPrivacy;
     @Column(name = "experiences_privacy")
     private Integer experiencesPrivacy;
     @Column(name = "skills_privacy")
@@ -97,6 +104,20 @@ public class UserCv implements Serializable {
     private List<Experience> experienceList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Education> educationList;
+    @JoinTable(name = "hasConnection", joinColumns = {
+        @JoinColumn(name = "user_id_1", referencedColumnName = "user_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user_id_2", referencedColumnName = "user_id")})
+    @ManyToMany
+    private Set<UserCv> hasConnectionSet;
+    @ManyToMany(mappedBy = "hasConnectionSet")
+    private Set<UserCv> connectionsSet;
+    @JoinTable(name = "wantsConnection", joinColumns = {
+        @JoinColumn(name = "user_id_1", referencedColumnName = "user_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user_id_2", referencedColumnName = "user_id")})
+    @ManyToMany
+    private Set<UserCv> wantsConnectionSet;
+    @ManyToMany(mappedBy = "wantsConnectionSet")
+    private Set<UserCv> requestsSet;
 
     public UserCv() {
     }
@@ -119,7 +140,7 @@ public class UserCv implements Serializable {
         this.email = email;
         this.password = password;
         this.experiencesPrivacy = Privacy.PUBLIC.ordinal();
-        this.formationsPrivacy = Privacy.PUBLIC.ordinal();
+        this.educationPrivacy = Privacy.PUBLIC.ordinal();
         this.skillsPrivacy = Privacy.PUBLIC.ordinal();
         this.languagesPrivacy = Privacy.PUBLIC.ordinal();
     }
@@ -196,12 +217,20 @@ public class UserCv implements Serializable {
         this.address = address;
     }
 
-    public Integer getFormationsPrivacy() {
-        return formationsPrivacy;
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public void setFormationsPrivacy(Integer formationsPrivacy) {
-        this.formationsPrivacy = formationsPrivacy;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+    
+    public Integer getEducationPrivacy() {
+        return educationPrivacy;
+    }
+
+    public void setEducationPrivacy(Integer educationPrivacy) {
+        this.educationPrivacy = educationPrivacy;
     }
 
     public Integer getExperiencesPrivacy() {
@@ -262,6 +291,53 @@ public class UserCv implements Serializable {
 
     public void setEducationList(List<Education> educationList) {
         this.educationList = educationList;
+    }
+    
+    public List<UserCv> getConnections() {
+        ArrayList<UserCv> connections = new ArrayList<>();
+        connections.addAll(hasConnectionSet);
+        connections.addAll(connectionsSet);
+        return connections;
+    }
+    
+    @XmlTransient
+    public Set<UserCv> getHasConnectionSet() {
+        return hasConnectionSet;
+    }
+
+    public void setHasConnectionSet(Set<UserCv> hasConnectionSet) {
+        this.hasConnectionSet = hasConnectionSet;
+    }
+
+    @XmlTransient
+    public Set<UserCv> getConnectionsSet() {
+        return connectionsSet;
+    }
+
+    public void setConnectionsSet(Set<UserCv> connectionsSet) {
+        this.connectionsSet = connectionsSet;
+    }
+
+    @XmlTransient
+    public Set<UserCv> getWantsConnectionSet() {
+        return wantsConnectionSet;
+    }
+    
+    public List<UserCv> getWantsConnectionList() {
+        return new ArrayList<UserCv>(wantsConnectionSet);
+    }
+
+    public void setWantsConnectionSet(Set<UserCv> wantsConnectionSet) {
+        this.wantsConnectionSet = wantsConnectionSet;
+    }
+
+    @XmlTransient
+    public Set<UserCv> getRequestsSet() {
+        return requestsSet;
+    }
+
+    public void setRequestsSet(Set<UserCv> requestsSet) {
+        this.requestsSet = requestsSet;
     }
 
     @Override

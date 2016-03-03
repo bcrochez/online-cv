@@ -23,472 +23,515 @@
 
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
-        <div id="user-infos">
-            #{profileBean.user.firstName} 
-            #{profileBean.user.lastName} 
-            #{profileBean.user.email}
-        </div>
+        <nav>
+            <button id="resume-button" onclick="displayResume();" >Resume</button>
+            <button id="connections-button" onclick="displayConnections();" >Connections</button>
+            <c:if test="#{profileBean.isOwnProfile()}" >
+                <button id="requests-button" onclick="displayRequests();" >Requests</button>
+            </c:if>
+            <c:if test="#{profileBean.canSeeConnectionButton()}">
+                <h:form>
+                    <h:commandButton value="Connect" actionListener="#{profileBean.addConnectionRequest()}"/>
+                </h:form>
+            </c:if>
+        </nav>
 
-        <div id="desc-field" >
-            <c:choose>
-                <c:when test="#{not empty profileBean.user.description}">
-                    #{profileBean.user.description}
-                </c:when>
-                <c:otherwise>
+        <div id="resume">
+            <div id="user-infos">
+                #{profileBean.user.firstName}
+                #{profileBean.user.lastName}
+                #{profileBean.user.email}
+            </div>
+
+            <div id="desc-field" >
+                <c:choose>
+                    <c:when test="#{not empty profileBean.user.description}">
+                        #{profileBean.user.description}
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="#{profileBean.isOwnProfile()}">
+                            No description set
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
+                </c:if>
+            </div>
+            <c:if test="#{profileBean.isOwnProfile()}">
+                <div id='description-edit' hidden="true">
+                    <h:form>
+                        <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
+                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                    </h:form>
+                </div>
+            </c:if>
+
+            <div id="personal-infos">
+                <div id="address">
+                    <c:choose>
+                        <c:when test="#{not empty profileBean.user.address}">
+                            #{profileBean.user.address}
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="#{profileBean.isOwnProfile()}">
+                                No address set
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                     <c:if test="#{profileBean.isOwnProfile()}">
-                        No description set
-                    </c:if>
-                </c:otherwise>
-            </c:choose>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
-            </c:if>
-        </div>
-        <c:if test="#{profileBean.isOwnProfile()}">
-            <div id='description-edit' hidden="true">
-                <h:form>
-                    <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
-                    <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                    <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
-                </h:form>
-            </div>
-        </c:if>
-
-        <div id="personal-infos">
-            <div id="address">
-                <c:choose>
-                    <c:when test="#{not empty profileBean.user.address}">
-                        #{profileBean.user.address}
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="#{profileBean.isOwnProfile()}">
-                            No address set
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(address, addressEdit);" >Edit</button>
-                </c:if>
-            </div>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id='address-edit' hidden="true">
-                    <h:form>
-                        <h:inputText pt:placeholder="Address" value="#{profileBean.user.address}" />
-                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
-                    </h:form>
-                </div>
-            </c:if>
-
-            <div id="telephone">
-                <c:choose>
-                    <c:when test="#{not empty profileBean.user.telephoneNumber}">
-                        #{profileBean.user.telephoneNumber}
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="#{profileBean.isOwnProfile()}">
-                            No telephone number set
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(telephone, telephoneEdit);" >Edit</button>
-                </c:if>
-            </div>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id='telephone-edit' hidden="true">
-                    <h:form>
-                        <h:inputText pt:placeholder="Phone number" value="#{profileBean.user.telephoneNumber}" />
-                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
-                    </h:form>
-                </div>
-            </c:if>
-
-            <div id="gender">
-                <c:choose>
-                    <c:when test="#{not empty profileBean.user.gender}">
-                        <script>
-                            document.write(genderToString(#{profileBean.user.gender}));
-                        </script>
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="#{profileBean.isOwnProfile()}">
-                            No gender set
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(gender, genderEdit);" >Edit</button>
-                </c:if>
-            </div>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id='gender-edit' hidden="true">
-                    <h:form>
-                        <h:selectOneMenu value="#{profileBean.user.gender}" >
-                            <f:selectItem itemLabel="No selection" />
-                            <f:selectItem itemValue="true" itemLabel="Male" />
-                            <f:selectItem itemValue="false" itemLabel="Female" />
-                        </h:selectOneMenu>
-                        <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                        <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
-                    </h:form>
-                </div>
-            </c:if>
-        </div>
-
-
-        <c:if test="#{profileBean.canSeeSection('Experience')}">
-            <h2>Work Experience</h2>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <h:form>
-                    <h:selectOneMenu value="#{profileBean.user.experiencesPrivacy}" >
-                        <f:selectItem itemValue="0" itemLabel="Public" />
-                        <f:selectItem itemValue="1" itemLabel="Users" />
-                        <f:selectItem itemValue="2" itemLabel="Private" />
-                    </h:selectOneMenu>
-                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
-                </h:form>
-                <button value="+" name="+" onclick="switchVisibility(addWork)">+</button>
-            </c:if>
-
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id="add-work" hidden="true">
-                    <h:form>
-                        <p>
-                            <h:inputText value="#{experienceManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                            <h:inputText value="#{experienceManagedBean.company}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
-                            <h:inputText value="#{experienceManagedBean.location}" pt:placeholder="Location" />
-                            <h:selectBooleanCheckbox value="#{experienceManagedBean.isCurrent}">Is current ?</h:selectBooleanCheckbox>
-                            <h:selectOneMenu value="#{experienceManagedBean.startMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{experienceManagedBean.startYear}" pt:placeholder="Year" />
-                            - 
-                            <h:selectOneMenu value="#{experienceManagedBean.endMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{experienceManagedBean.endYear}" pt:placeholder="Year" />
-                            <h:inputTextarea value="#{experienceManagedBean.description}" pt:placeholder="Description" />
-                        </p>
-                        <p>
-                            <h:commandButton action="#{experienceManagedBean.addExperience()}" value="Add it !" />
-                        </p>
-                    </h:form>
-                </div>
-            </c:if>
-
-            <c:forEach var="experience" items="#{profileBean.user.experienceList}">
-                <div id="experience-#{experience.experienceId}" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                    #{experience.title} 
-                    #{experience.companyName}
-                    <c:if test="#{profileBean.isOwnProfile()}" >
-                        <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" >Edit</button>
-                        <h:form>
-                            <h:commandButton action="#{experienceManagedBean.removeExperience(experience)}" value="x" />
-                        </h:form>
+                        <button onclick="switchVisibility(address, addressEdit);" >Edit</button>
                     </c:if>
                 </div>
-                <c:if test="#{profileBean.isOwnProfile()}" >
-                    <div id="experience-#{experience.experienceId}-edit" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true">
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id='address-edit' hidden="true">
                         <h:form>
-                            <h:inputText value="#{experience.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                            <h:inputText value="#{experience.companyName}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
-                            <h:inputText value="#{experience.location}" pt:placeholder="Location" />
-                            <h:selectBooleanCheckbox value="#{experience.isCurrent}">Is current ?</h:selectBooleanCheckbox>
-                            <h:selectOneMenu value="#{experience.startMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{experience.startYear}" pt:placeholder="Year" />
-                            - 
-                            <h:selectOneMenu value="#{experience.endMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{experience.endYear}" pt:placeholder="Year" />
-                            <h:inputTextarea value="#{experience.description}" pt:placeholder="Description" />
-
-                            <h:commandButton action="#{experienceManagedBean.updateExperience(experience)}" value="Save" />
-                            <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                            <h:inputText pt:placeholder="Address" value="#{profileBean.user.address}" />
+                            <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                            <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
                         </h:form>
                     </div>
                 </c:if>
-            </c:forEach>
-        </c:if>
 
-        <c:if test="#{profileBean.canSeeSection('Education')}">
-            <h2>Education</h2>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <h:form>
-                    <h:selectOneMenu value="#{profileBean.user.formationsPrivacy}" >
-                        <f:selectItem itemValue="0" itemLabel="Public" />
-                        <f:selectItem itemValue="1" itemLabel="Users" />
-                        <f:selectItem itemValue="2" itemLabel="Private" />
-                    </h:selectOneMenu>
-                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
-                </h:form>
-                <button value="+" name="+" onclick="switchVisibility(addEducation)">+</button>
-            </c:if>
-
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id="add-education" hidden="true">
-                    <h:form>
-                        <p>
-                            <h:inputText value="#{educationManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                            <h:inputText value="#{educationManagedBean.school}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
-                            <h:inputText value="#{educationManagedBean.location}" pt:placeholder="Location" />
-                            <h:selectBooleanCheckbox value="#{educationManagedBean.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
-                            <h:selectOneMenu value="#{educationManagedBean.startMonth}">
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{educationManagedBean.startYear}" pt:placeholder="Year" />
-                            - 
-                            <h:selectOneMenu value="#{educationManagedBean.endMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{educationManagedBean.endYear}" pt:placeholder="Year" />
-                            <h:inputTextarea value="#{educationManagedBean.description}" pt:placeholder="Description" />
-                        </p>
-                        <p>
-                            <h:commandButton action="#{educationManagedBean.addEducation()}" value="Add it !" />
-                        </p>
-                    </h:form>
-                </div>
-            </c:if>
-
-
-            <c:forEach var="education" items="#{profileBean.user.educationList}">
-                <div id="education-#{education.educationId}" class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                    #{education.title} 
-                    #{education.schoolName}
-                    <c:if test="#{profileBean.isOwnProfile()}" >
-                        <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" >Edit</button>
-                        <h:form>
-                            <h:commandButton action="#{educationManagedBean.removeEducation(education)}" value="x" />
-                        </h:form>
-                    </c:if>
-                </div>
-                <c:if test="#{profileBean.isOwnProfile()}" >
-                    <div id="education-#{education.educationId}-edit" class="education" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true">
-                        <h:form>
-                            <h:inputText value="#{education.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
-                            <h:inputText value="#{education.schoolName}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
-                            <h:inputText value="#{education.location}" pt:placeholder="Location" />
-                            <h:selectBooleanCheckbox value="#{education.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
-                            <h:selectOneMenu value="#{education.startMonth}">
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{education.startYear}" pt:placeholder="Year" />
-                            - 
-                            <h:selectOneMenu value="#{education.endMonth}" >
-                                <f:selectItem itemLabel="Month" />
-                                <f:selectItem itemValue="1" itemLabel="January" />
-                                <f:selectItem itemValue="2" itemLabel="February" />
-                                <f:selectItem itemValue="3" itemLabel="March" />
-                                <f:selectItem itemValue="4" itemLabel="April" />
-                                <f:selectItem itemValue="5" itemLabel="May" />
-                                <f:selectItem itemValue="6" itemLabel="June" />
-                                <f:selectItem itemValue="7" itemLabel="July" />
-                                <f:selectItem itemValue="8" itemLabel="August" />
-                                <f:selectItem itemValue="9" itemLabel="September" />
-                                <f:selectItem itemValue="10" itemLabel="October" />
-                                <f:selectItem itemValue="11" itemLabel="November" />
-                                <f:selectItem itemValue="12" itemLabel="December" />
-                            </h:selectOneMenu>
-                            <h:inputText value="#{education.endYear}" pt:placeholder="Year" />
-                            <h:inputTextarea value="#{education.description}" pt:placeholder="Description" />
-
-                            <h:commandButton action="#{educationManagedBean.updateEducation(education)}" value="Save" />
-                            <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
-                        </h:form>
-                    </div>
-                </c:if>
-            </c:forEach>
-        </c:if>
-
-        <c:if test="#{profileBean.canSeeSection('Skills')}">
-            <h2>Skills</h2>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <h:form>
-                    <h:selectOneMenu value="#{profileBean.user.skillsPrivacy}" >
-                        <f:selectItem itemValue="0" itemLabel="Public" />
-                        <f:selectItem itemValue="1" itemLabel="Users" />
-                        <f:selectItem itemValue="2" itemLabel="Private" />
-                    </h:selectOneMenu>
-                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
-                </h:form>
-                <button value="+" name="+" onclick="switchVisibility(addSkills)">+</button>
-            </c:if>
-
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id="add-skills" hidden="true">
-                    <h:form>
-                        <h:inputText value="#{skillManagedBean.label}" pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
-                        <p>
-                            <h:commandButton action="#{skillManagedBean.addSkill()}" value="Add it !" />
-                        </p>
-                    </h:form>
-                </div>     
-            </c:if>
-
-            <ui:repeat var="skill" value="#{profileBean.user.skillList}">
-                <div class="skill" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                    #{skill.label}
-                    <c:if test="#{profileBean.isOwnProfile()}" >
-                        <h:form>
-                            <h:commandButton action="#{skillManagedBean.removeSkill(skill)}" value="x" />
-                        </h:form>
-                    </c:if>
-                </div>
-            </ui:repeat>
-        </c:if>
-
-        <c:if test="#{profileBean.canSeeSection('Languages')}">
-            <h2>Languages</h2>
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <h:form>
-                    <h:selectOneMenu value="#{profileBean.user.languagesPrivacy}" >
-                        <f:selectItem itemValue="0" itemLabel="Public" />
-                        <f:selectItem itemValue="1" itemLabel="Users" />
-                        <f:selectItem itemValue="2" itemLabel="Private" />
-                    </h:selectOneMenu>
-                    <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
-                </h:form>
-                <button value="+" name="+" onclick="switchVisibility(addLanguages)">+</button>
-            </c:if>
-
-            <c:if test="#{profileBean.isOwnProfile()}">
-                <div id="add-languages" hidden="true">
-                    <h:form>
-                        <h:inputText value="#{languageManagedBean.label}" pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
-                        <h:selectOneMenu value="#{languageManagedBean.proficiency}" required="true" requiredMessage="Select your proficiency" >
-                            <f:selectItem itemValue="1" itemLabel="Beginner" />
-                            <f:selectItem itemValue="2" itemLabel="Conversational" />
-                            <f:selectItem itemValue="3" itemLabel="Business" />
-                            <f:selectItem itemValue="4" itemLabel="Fluent" />
-                            <f:selectItem itemValue="5" itemLabel="Native" />
-                        </h:selectOneMenu>
-                        <p>
-                            <h:commandButton action="#{languageManagedBean.addLanguage()}" value="Add it !" />
-                        </p>
-                    </h:form>
-                </div>
-            </c:if>
-
-            <c:forEach var="speaks" items="#{profileBean.user.speaksList}">
-                <div id="speaks-#{speaks.speaksPK.languageId}" class="speaks" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                    #{speaks.language.label}
-                    <script>
-                        document.write(proficiencyIdToString(#{speaks.proficiency}));
-                    </script>
-                    <c:if test="#{profileBean.isOwnProfile()}" >
-                        <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" >Edit</button>
-                        <h:form>
-                            <h:commandButton action="#{languageManagedBean.removeLanguage(speaks)}" value="x" />
-                        </h:form>
+                <div id="telephone">
+                    <c:choose>
+                        <c:when test="#{not empty profileBean.user.telephoneNumber}">
+                            #{profileBean.user.telephoneNumber}
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="#{profileBean.isOwnProfile()}">
+                                No telephone number set
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="#{profileBean.isOwnProfile()}">
+                        <button onclick="switchVisibility(telephone, telephoneEdit);" >Edit</button>
                     </c:if>
                 </div>
                 <c:if test="#{profileBean.isOwnProfile()}">
-                    <div id="speaks-#{speaks.speaksPK.languageId}-edit" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true" >
+                    <div id='telephone-edit' hidden="true">
                         <h:form>
-                            #{speaks.language.label}
-                            <h:selectOneMenu value="#{speaks.proficiency}" required="true" requiredMessage="Select your proficiency" >
+                            <h:inputText pt:placeholder="Phone number" value="#{profileBean.user.telephoneNumber}" />
+                            <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                            <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                        </h:form>
+                    </div>
+                </c:if>
+
+                <div id="gender">
+                    <c:choose>
+                        <c:when test="#{not empty profileBean.user.gender}">
+                            <script>
+                                document.write(genderToString(#{profileBean.user.gender}));
+                            </script>
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="#{profileBean.isOwnProfile()}">
+                                No gender set
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="#{profileBean.isOwnProfile()}">
+                        <button onclick="switchVisibility(gender, genderEdit);" >Edit</button>
+                    </c:if>
+                </div>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id='gender-edit' hidden="true">
+                        <h:form>
+                            <h:selectOneMenu value="#{profileBean.user.gender}" >
+                                <f:selectItem itemLabel="No selection" />
+                                <f:selectItem itemValue="true" itemLabel="Male" />
+                                <f:selectItem itemValue="false" itemLabel="Female" />
+                            </h:selectOneMenu>
+                            <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
+                            <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                        </h:form>
+                    </div>
+                </c:if>
+            </div>
+
+
+            <c:if test="#{profileBean.canSeeSection('Experience')}">
+                <h2>Work Experience</h2>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <h:form>
+                        <h:selectOneMenu value="#{profileBean.user.experiencesPrivacy}" >
+                            <f:selectItem itemValue="0" itemLabel="Public" />
+                            <f:selectItem itemValue="1" itemLabel="Users" />
+                            <f:selectItem itemValue="2" itemLabel="Private" />
+                        </h:selectOneMenu>
+                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                    </h:form>
+                    <button value="+" name="+" onclick="switchVisibility(addWork)">+</button>
+                </c:if>
+
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id="add-work" hidden="true">
+                        <h:form>
+                            <p>
+                                <h:inputText value="#{experienceManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                                <h:inputText value="#{experienceManagedBean.company}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
+                                <h:inputText value="#{experienceManagedBean.location}" pt:placeholder="Location" />
+                                <h:selectBooleanCheckbox value="#{experienceManagedBean.isCurrent}">Is current ?</h:selectBooleanCheckbox>
+                                <h:selectOneMenu value="#{experienceManagedBean.startMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{experienceManagedBean.startYear}" pt:placeholder="Year" />
+                                -
+                                <h:selectOneMenu value="#{experienceManagedBean.endMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{experienceManagedBean.endYear}" pt:placeholder="Year" />
+                                <h:inputTextarea value="#{experienceManagedBean.description}" pt:placeholder="Description" />
+                            </p>
+                            <p>
+                                <h:commandButton action="#{experienceManagedBean.addExperience()}" value="Add it !" />
+                            </p>
+                        </h:form>
+                    </div>
+                </c:if>
+
+                <c:forEach var="experience" items="#{profileBean.user.experienceList}">
+                    <div id="experience-#{experience.experienceId}" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                        #{experience.title}
+                        #{experience.companyName}
+                        <c:if test="#{profileBean.isOwnProfile()}" >
+                            <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" >Edit</button>
+                            <h:form>
+                                <h:commandButton action="#{experienceManagedBean.removeExperience(experience)}" value="x" />
+                            </h:form>
+                        </c:if>
+                    </div>
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <div id="experience-#{experience.experienceId}-edit" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true">
+                            <h:form>
+                                <h:inputText value="#{experience.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                                <h:inputText value="#{experience.companyName}" pt:placeholder="Company" required="true" requiredMessage="Enter a valid company name" />
+                                <h:inputText value="#{experience.location}" pt:placeholder="Location" />
+                                <h:selectBooleanCheckbox value="#{experience.isCurrent}">Is current ?</h:selectBooleanCheckbox>
+                                <h:selectOneMenu value="#{experience.startMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{experience.startYear}" pt:placeholder="Year" />
+                                -
+                                <h:selectOneMenu value="#{experience.endMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{experience.endYear}" pt:placeholder="Year" />
+                                <h:inputTextarea value="#{experience.description}" pt:placeholder="Description" />
+
+                                <h:commandButton action="#{experienceManagedBean.updateExperience(experience)}" value="Save" />
+                                <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                            </h:form>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:if>
+
+            <c:if test="#{profileBean.canSeeSection('Education')}">
+                <h2>Education</h2>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <h:form>
+                        <h:selectOneMenu value="#{profileBean.user.educationPrivacy}" >
+                            <f:selectItem itemValue="0" itemLabel="Public" />
+                            <f:selectItem itemValue="1" itemLabel="Users" />
+                            <f:selectItem itemValue="2" itemLabel="Private" />
+                        </h:selectOneMenu>
+                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                    </h:form>
+                    <button value="+" name="+" onclick="switchVisibility(addEducation)">+</button>
+                </c:if>
+
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id="add-education" hidden="true">
+                        <h:form>
+                            <p>
+                                <h:inputText value="#{educationManagedBean.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                                <h:inputText value="#{educationManagedBean.school}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
+                                <h:inputText value="#{educationManagedBean.location}" pt:placeholder="Location" />
+                                <h:selectBooleanCheckbox value="#{educationManagedBean.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
+                                <h:selectOneMenu value="#{educationManagedBean.startMonth}">
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{educationManagedBean.startYear}" pt:placeholder="Year" />
+                                -
+                                <h:selectOneMenu value="#{educationManagedBean.endMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{educationManagedBean.endYear}" pt:placeholder="Year" />
+                                <h:inputTextarea value="#{educationManagedBean.description}" pt:placeholder="Description" />
+                            </p>
+                            <p>
+                                <h:commandButton action="#{educationManagedBean.addEducation()}" value="Add it !" />
+                            </p>
+                        </h:form>
+                    </div>
+                </c:if>
+
+
+                <c:forEach var="education" items="#{profileBean.user.educationList}">
+                    <div id="education-#{education.educationId}" class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                        #{education.title}
+                        #{education.schoolName}
+                        <c:if test="#{profileBean.isOwnProfile()}" >
+                            <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" >Edit</button>
+                            <h:form>
+                                <h:commandButton action="#{educationManagedBean.removeEducation(education)}" value="x" />
+                            </h:form>
+                        </c:if>
+                    </div>
+                    <c:if test="#{profileBean.isOwnProfile()}" >
+                        <div id="education-#{education.educationId}-edit" class="education" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true">
+                            <h:form>
+                                <h:inputText value="#{education.title}" pt:placeholder="Title" required="true" requiredMessage="Enter a title" />
+                                <h:inputText value="#{education.schoolName}" pt:placeholder="School" required="true" requiredMessage="Enter a valid school name" />
+                                <h:inputText value="#{education.location}" pt:placeholder="Location" />
+                                <h:selectBooleanCheckbox value="#{education.isCurrent}" >Is current ?</h:selectBooleanCheckbox>
+                                <h:selectOneMenu value="#{education.startMonth}">
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{education.startYear}" pt:placeholder="Year" />
+                                -
+                                <h:selectOneMenu value="#{education.endMonth}" >
+                                    <f:selectItem itemLabel="Month" />
+                                    <f:selectItem itemValue="1" itemLabel="January" />
+                                    <f:selectItem itemValue="2" itemLabel="February" />
+                                    <f:selectItem itemValue="3" itemLabel="March" />
+                                    <f:selectItem itemValue="4" itemLabel="April" />
+                                    <f:selectItem itemValue="5" itemLabel="May" />
+                                    <f:selectItem itemValue="6" itemLabel="June" />
+                                    <f:selectItem itemValue="7" itemLabel="July" />
+                                    <f:selectItem itemValue="8" itemLabel="August" />
+                                    <f:selectItem itemValue="9" itemLabel="September" />
+                                    <f:selectItem itemValue="10" itemLabel="October" />
+                                    <f:selectItem itemValue="11" itemLabel="November" />
+                                    <f:selectItem itemValue="12" itemLabel="December" />
+                                </h:selectOneMenu>
+                                <h:inputText value="#{education.endYear}" pt:placeholder="Year" />
+                                <h:inputTextarea value="#{education.description}" pt:placeholder="Description" />
+
+                                <h:commandButton action="#{educationManagedBean.updateEducation(education)}" value="Save" />
+                                <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                            </h:form>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:if>
+
+            <c:if test="#{profileBean.canSeeSection('Skills')}">
+                <h2>Skills</h2>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <h:form>
+                        <h:selectOneMenu value="#{profileBean.user.skillsPrivacy}" >
+                            <f:selectItem itemValue="0" itemLabel="Public" />
+                            <f:selectItem itemValue="1" itemLabel="Users" />
+                            <f:selectItem itemValue="2" itemLabel="Private" />
+                        </h:selectOneMenu>
+                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                    </h:form>
+                    <button value="+" name="+" onclick="switchVisibility(addSkills)">+</button>
+                </c:if>
+
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id="add-skills" hidden="true">
+                        <h:form>
+                            <h:inputText value="#{skillManagedBean.label}" pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
+                            <p>
+                                <h:commandButton action="#{skillManagedBean.addSkill()}" value="Add it !" />
+                            </p>
+                        </h:form>
+                    </div>
+                </c:if>
+
+                <ui:repeat var="skill" value="#{profileBean.user.skillList}">
+                    <div class="skill" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                        #{skill.label}
+                        <c:if test="#{profileBean.isOwnProfile()}" >
+                            <h:form>
+                                <h:commandButton action="#{skillManagedBean.removeSkill(skill)}" value="x" />
+                            </h:form>
+                        </c:if>
+                    </div>
+                </ui:repeat>
+            </c:if>
+
+            <c:if test="#{profileBean.canSeeSection('Languages')}">
+                <h2>Languages</h2>
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <h:form>
+                        <h:selectOneMenu value="#{profileBean.user.languagesPrivacy}" >
+                            <f:selectItem itemValue="0" itemLabel="Public" />
+                            <f:selectItem itemValue="1" itemLabel="Users" />
+                            <f:selectItem itemValue="2" itemLabel="Private" />
+                        </h:selectOneMenu>
+                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                    </h:form>
+                    <button value="+" name="+" onclick="switchVisibility(addLanguages)">+</button>
+                </c:if>
+
+                <c:if test="#{profileBean.isOwnProfile()}">
+                    <div id="add-languages" hidden="true">
+                        <h:form>
+                            <h:inputText value="#{languageManagedBean.label}" pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
+                            <h:selectOneMenu value="#{languageManagedBean.proficiency}" required="true" requiredMessage="Select your proficiency" >
                                 <f:selectItem itemValue="1" itemLabel="Beginner" />
                                 <f:selectItem itemValue="2" itemLabel="Conversational" />
                                 <f:selectItem itemValue="3" itemLabel="Business" />
                                 <f:selectItem itemValue="4" itemLabel="Fluent" />
                                 <f:selectItem itemValue="5" itemLabel="Native" />
                             </h:selectOneMenu>
-
-                            <h:commandButton action="#{languageManagedBean.updateSpeaks(speaks)}" value="Save" />
-                            <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                            <p>
+                                <h:commandButton action="#{languageManagedBean.addLanguage()}" value="Add it !" />
+                            </p>
                         </h:form>
                     </div>
                 </c:if>
-            </c:forEach>
+
+                <c:forEach var="speaks" items="#{profileBean.user.speaksList}">
+                    <div id="speaks-#{speaks.speaksPK.languageId}" class="speaks" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                        #{speaks.language.label}
+                        <script>
+                            document.write(proficiencyIdToString(#{speaks.proficiency}));
+                        </script>
+                        <c:if test="#{profileBean.isOwnProfile()}" >
+                            <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" >Edit</button>
+                            <h:form>
+                                <h:commandButton action="#{languageManagedBean.removeLanguage(speaks)}" value="x" />
+                            </h:form>
+                        </c:if>
+                    </div>
+                    <c:if test="#{profileBean.isOwnProfile()}">
+                        <div id="speaks-#{speaks.speaksPK.languageId}-edit" style="margin: 5px; padding: 5px; border: 1px solid black;" hidden="true" >
+                            <h:form>
+                                #{speaks.language.label}
+                                <h:selectOneMenu value="#{speaks.proficiency}" required="true" requiredMessage="Select your proficiency" >
+                                    <f:selectItem itemValue="1" itemLabel="Beginner" />
+                                    <f:selectItem itemValue="2" itemLabel="Conversational" />
+                                    <f:selectItem itemValue="3" itemLabel="Business" />
+                                    <f:selectItem itemValue="4" itemLabel="Fluent" />
+                                    <f:selectItem itemValue="5" itemLabel="Native" />
+                                </h:selectOneMenu>
+
+                                <h:commandButton action="#{languageManagedBean.updateSpeaks(speaks)}" value="Save" />
+                                <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                            </h:form>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:if>
+        </div>
+        
+        <div id="connections" hidden="true">
+            <h1>Connections</h1>
+            <ui:repeat var="user" value="#{profileBean.user.getConnections()}">
+                <div class="connection" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                    #{user.firstName}
+                    #{user.lastName}
+                    #{user.email}
+                </div>
+            </ui:repeat>
+        </div>
+
+        <c:if test="#{profileBean.isOwnProfile()}" >
+            <div id="requests" hidden="true">
+                <h1>Connection Requests</h1>
+                <ui:repeat var="user" value="#{profileBean.user.getWantsConnectionList()}">
+                    <div class="request" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                        #{user.firstName}
+                        #{user.lastName}
+                        #{user.email}
+                        <h:form>
+                            <h:commandButton action="#{profileBean.acceptRequest(user)}" value="Accept" />
+                            <h:commandButton action="#{profileBean.deleteRequest(user)}" value="Decline" />
+                        </h:form>
+                    </div>
+                </ui:repeat>
+            </div>
         </c:if>
     </body>
 </html>
