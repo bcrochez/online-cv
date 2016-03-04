@@ -40,7 +40,6 @@
             <div id="user-infos">
                 #{profileBean.user.firstName}
                 #{profileBean.user.lastName}
-                #{profileBean.user.email}
             </div>
 
             <div id="desc-field" >
@@ -151,7 +150,6 @@
                 </c:if>
             </div>
 
-
             <c:if test="#{profileBean.canSeeSection('Experience')}">
                 <h2>Work Experience</h2>
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -218,8 +216,25 @@
 
                 <c:forEach var="experience" items="#{profileBean.user.experienceList}">
                     <div id="experience-#{experience.experienceId}" class="experience" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                        #{experience.title}
-                        #{experience.companyName}
+                        #{experience.title} <br/>
+                        #{experience.companyName} <br/>
+                        <script>
+                            document.write(monthIdToString(#{experience.startMonth}));
+                        </script>
+                        #{experience.startYear} - 
+                        <c:choose>
+                            <c:when test="#{experience.isCurrent}">
+                                Now <br/>
+                            </c:when>
+                            <c:otherwise>
+                                <script>
+                                    document.write(monthIdToString(#{experience.endMonth}));
+                                </script>
+                                 #{experience.endYear} <br/>
+                            </c:otherwise>
+                        </c:choose>
+                        #{experience.location} <br/>
+                        #{experience.description} <br/>
                         <c:if test="#{profileBean.isOwnProfile()}" >
                             <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" >Edit</button>
                             <h:form>
@@ -344,8 +359,25 @@
 
                 <c:forEach var="education" items="#{profileBean.user.educationList}">
                     <div id="education-#{education.educationId}" class="education" style="margin: 5px; padding: 5px; border: 1px solid black;">
-                        #{education.title}
-                        #{education.schoolName}
+                        #{education.title} <br/>
+                        #{education.schoolName} <br/>
+                        <script>
+                            document.write(monthIdToString(#{education.startMonth}));
+                        </script>
+                        #{education.startYear} - 
+                        <c:choose>
+                            <c:when test="#{education.isCurrent}">
+                                Now <br/>
+                            </c:when>
+                            <c:otherwise>
+                                <script>
+                                    document.write(monthIdToString(#{education.endMonth}));
+                                </script>
+                                 #{education.endYear} <br/>
+                            </c:otherwise>
+                        </c:choose>
+                        #{education.location} <br/>
+                        #{education.description} <br/>
                         <c:if test="#{profileBean.isOwnProfile()}" >
                             <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" >Edit</button>
                             <h:form>
@@ -505,7 +537,7 @@
                 </c:forEach>
             </c:if>
         </div>
-        
+
         <div id="connections" hidden="true">
             <h1>Connections</h1>
             <ui:repeat var="user" value="#{profileBean.user.getConnections()}">
