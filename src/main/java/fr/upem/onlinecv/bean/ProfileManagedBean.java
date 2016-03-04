@@ -45,7 +45,17 @@ public class ProfileManagedBean implements Serializable {
 
     public void onload() {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        if(userId == null) {
+            redirectToIndex();
+        }
+        
         user = (UserCv) (session.getNamedQuery("UserCv.findByUserId").setInteger("userId", userId).uniqueResult());
+        
+        if(user == null) {
+            redirectToIndex();
+        }
+        
         Hibernate.initialize(user);
         Hibernate.initialize(user.getExperienceList());
         Hibernate.initialize(user.getEducationList());
@@ -167,4 +177,9 @@ public class ProfileManagedBean implements Serializable {
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/profile.xhtml?faces-redirect=true&id=" + userId);
     }
 
+    private void redirectToIndex() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+    }
+    
 }
