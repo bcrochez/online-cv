@@ -37,3 +37,19 @@ a {
     margin: auto;
     width: 78%;
 }
+
+#nav-resume {
+    margin: auto;
+}
+
+.nav-button {
+    margin: auto;
+    border: none;
+    background-color: white;
+}
+
+section {
+    max-width: 900px;
+    padding: 20px;
+    margin: auto;
+}
