@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/style.css"/>
         <script src="js/profile.js" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
     </h:head>
     <body>
@@ -24,14 +25,16 @@
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
         <nav>
-            <button id="resume-button" onclick="displayResume();" >Resume</button>
-            <button id="connections-button" onclick="displayConnections();" >Connections</button>
+            <button id="resume-button" onclick="displayResume();" ><i class="fa fa-home"></i></button>
+            <button id="connections-button" onclick="displayConnections();" ><i class="fa fa-users"></i></button>
             <c:if test="#{profileBean.isOwnProfile()}" >
-                <button id="requests-button" onclick="displayRequests();" >Requests</button>
+                <button id="requests-button" onclick="displayRequests();" ><i class="fa fa-inbox"></i></button>
             </c:if>
             <c:if test="#{profileBean.canSeeConnectionButton()}">
                 <h:form>
-                    <h:commandButton value="Connect" actionListener="#{profileBean.addConnectionRequest()}"/>
+                    <h:commandLink value="" actionListener="#{profileBean.addConnectionRequest()}">
+                        <i class="fa fa-user-plus"></i>
+                    </h:commandLink>
                 </h:form>
             </c:if>
         </nav>
@@ -54,7 +57,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:if test="#{profileBean.isOwnProfile()}">
-                    <button onclick="switchVisibility(description, descriptionEdit);" >Edit</button>
+                    <button onclick="switchVisibility(description, descriptionEdit);" ><i class="fa fa-pencil-square-o"></i></button>
                 </c:if>
             </div>
             <c:if test="#{profileBean.isOwnProfile()}">
@@ -80,7 +83,7 @@
                         </c:otherwise>
                     </c:choose>
                     <c:if test="#{profileBean.isOwnProfile()}">
-                        <button onclick="switchVisibility(address, addressEdit);" >Edit</button>
+                        <button onclick="switchVisibility(address, addressEdit);" ><i class="fa fa-pencil-square-o"></i></button>
                     </c:if>
                 </div>
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -105,7 +108,7 @@
                         </c:otherwise>
                     </c:choose>
                     <c:if test="#{profileBean.isOwnProfile()}">
-                        <button onclick="switchVisibility(telephone, telephoneEdit);" >Edit</button>
+                        <button onclick="switchVisibility(telephone, telephoneEdit);" ><i class="fa fa-pencil-square-o"></i></button>
                     </c:if>
                 </div>
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -132,7 +135,7 @@
                         </c:otherwise>
                     </c:choose>
                     <c:if test="#{profileBean.isOwnProfile()}">
-                        <button onclick="switchVisibility(gender, genderEdit);" >Edit</button>
+                        <button onclick="switchVisibility(gender, genderEdit);" ><i class="fa fa-pencil-square-o"></i></button>
                     </c:if>
                 </div>
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -159,9 +162,9 @@
                             <f:selectItem itemValue="1" itemLabel="Users" />
                             <f:selectItem itemValue="2" itemLabel="Private" />
                         </h:selectOneMenu>
-                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
                     </h:form>
-                    <button value="+" name="+" onclick="switchVisibility(addWork)">+</button>
+                    <button onclick="switchVisibility(addWork)"><i class="fa fa-plus"></i></button>
                 </c:if>
 
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -236,9 +239,11 @@
                         #{experience.location} <br/>
                         #{experience.description} <br/>
                         <c:if test="#{profileBean.isOwnProfile()}" >
-                            <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" >Edit</button>
+                            <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
                             <h:form>
-                                <h:commandButton action="#{experienceManagedBean.removeExperience(experience)}" value="x" />
+                                <h:commandLink action="#{experienceManagedBean.removeExperience(experience)}" value="" >
+                                    <i class="fa fa-times"></i>
+                                </h:commandLink>
                             </h:form>
                         </c:if>
                     </div>
@@ -301,9 +306,9 @@
                             <f:selectItem itemValue="1" itemLabel="Users" />
                             <f:selectItem itemValue="2" itemLabel="Private" />
                         </h:selectOneMenu>
-                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
                     </h:form>
-                    <button value="+" name="+" onclick="switchVisibility(addEducation)">+</button>
+                    <button onclick="switchVisibility(addEducation)"><i class="fa fa-plus"></i></button>
                 </c:if>
 
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -379,9 +384,11 @@
                         #{education.location} <br/>
                         #{education.description} <br/>
                         <c:if test="#{profileBean.isOwnProfile()}" >
-                            <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" >Edit</button>
+                            <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
                             <h:form>
-                                <h:commandButton action="#{educationManagedBean.removeEducation(education)}" value="x" />
+                                <h:commandLink action="#{educationManagedBean.removeEducation(education)}" value="" >
+                                    <i class="fa fa-times"></i>
+                                </h:commandLink>
                             </h:form>
                         </c:if>
                     </div>
@@ -444,9 +451,9 @@
                             <f:selectItem itemValue="1" itemLabel="Users" />
                             <f:selectItem itemValue="2" itemLabel="Private" />
                         </h:selectOneMenu>
-                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
                     </h:form>
-                    <button value="+" name="+" onclick="switchVisibility(addSkills)">+</button>
+                    <button onclick="switchVisibility(addSkills)"><i class="fa fa-plus"></i></button>
                 </c:if>
 
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -465,7 +472,9 @@
                         #{skill.label}
                         <c:if test="#{profileBean.isOwnProfile()}" >
                             <h:form>
-                                <h:commandButton action="#{skillManagedBean.removeSkill(skill)}" value="x" />
+                                <h:commandLink action="#{skillManagedBean.removeSkill(skill)}" value="" >
+                                    <i class="fa fa-times"></i>
+                                </h:commandLink>
                             </h:form>
                         </c:if>
                     </div>
@@ -481,9 +490,9 @@
                             <f:selectItem itemValue="1" itemLabel="Users" />
                             <f:selectItem itemValue="2" itemLabel="Private" />
                         </h:selectOneMenu>
-                        <h:commandButton value="Edit privacy" action="#{profileBean.updateProfile()}" />
+                        <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
                     </h:form>
-                    <button value="+" name="+" onclick="switchVisibility(addLanguages)">+</button>
+                    <button onclick="switchVisibility(addLanguages)"><i class="fa fa-plus"></i></button>
                 </c:if>
 
                 <c:if test="#{profileBean.isOwnProfile()}">
@@ -511,9 +520,11 @@
                             document.write(proficiencyIdToString(#{speaks.proficiency}));
                         </script>
                         <c:if test="#{profileBean.isOwnProfile()}" >
-                            <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" >Edit</button>
+                            <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
                             <h:form>
-                                <h:commandButton action="#{languageManagedBean.removeLanguage(speaks)}" value="x" />
+                                <h:commandLink action="#{languageManagedBean.removeLanguage(speaks)}" value="" >
+                                    <i class="fa fa-times"></i>
+                                </h:commandLink>
                             </h:form>
                         </c:if>
                     </div>
