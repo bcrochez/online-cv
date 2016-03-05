@@ -26,6 +26,20 @@ a {
     text-decoration: none;
 }
 
+#user-infos {
+    padding: 10px;
+    text-align: center;
+}
+
+#user-infos > h1 > form {
+    display: inline-block;
+}
+
+#desc-field {
+    margin: 40px 0;
+    font-style: italic;
+}
+
 #search-box {
     padding: 15px;
     width: 300px;
@@ -39,7 +53,11 @@ a {
 }
 
 #nav-resume {
-    margin: auto;
+    text-align: center;
+}
+
+#nav-resume > * {
+    margin: 0 10px;
 }
 
 .nav-button {
@@ -52,4 +70,8 @@ section {
     max-width: 900px;
     padding: 20px;
     margin: auto;
+}
+
+section > h2 {
+    text-align: center;
 }
