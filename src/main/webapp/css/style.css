@@ -40,6 +40,10 @@ a {
     font-style: italic;
 }
 
+input, select {
+    height: 34px !important;
+}
+
 #search-box {
     padding: 15px;
     width: 300px;

@@ -62,9 +62,13 @@
                 <c:if test="#{profileBean.isOwnProfile()}">
                     <div id='description-edit' hidden="true">
                         <h:form>
-                            <h:inputText pt:placeholder="Description" value="#{profileBean.user.description}" />
-                            <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                            <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                            <div class="input-group">
+                                <h:inputText class="form-control" pt:placeholder="Description" value="#{profileBean.user.description}" />
+                                <div class="input-group-btn">
+                                    <h:commandButton class="btn btn-default" value="Save" action="#{profileBean.updateProfile()}" />
+                                    <h:commandButton class="btn btn-default" value="Cancel" action="#{profileBean.onload()}" />  
+                                </div>
+                            </div>
                         </h:form>
                     </div>
                 </c:if>
@@ -88,9 +92,13 @@
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <div id='address-edit' hidden="true">
                             <h:form>
-                                <h:inputText pt:placeholder="Address" value="#{profileBean.user.address}" />
-                                <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                                <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                                <div class="input-group">
+                                    <h:inputText class="form-control" pt:placeholder="Address" value="#{profileBean.user.address}" />
+                                    <div class="input-group-btn">
+                                        <h:commandButton class="btn btn-default" value="Save" action="#{profileBean.updateProfile()}" />
+                                        <h:commandButton class="btn btn-default" value="Cancel" action="#{profileBean.onload()}" />
+                                    </div>
+                                </div>
                             </h:form>
                         </div>
                     </c:if>
@@ -113,9 +121,13 @@
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <div id='telephone-edit' hidden="true">
                             <h:form>
-                                <h:inputText pt:placeholder="Phone number" value="#{profileBean.user.telephoneNumber}" />
-                                <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                                <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                                <div class="input-group">
+                                    <h:inputText class="form-control" pt:placeholder="Phone number" value="#{profileBean.user.telephoneNumber}" />
+                                    <div class="input-group-btn">
+                                        <h:commandButton class="btn btn-default" value="Save" action="#{profileBean.updateProfile()}" />
+                                        <h:commandButton class="btn btn-default" value="Cancel" action="#{profileBean.onload()}" />
+                                    </div>
+                                </div>
                             </h:form>
                         </div>
                     </c:if>
@@ -141,13 +153,17 @@
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <div id='gender-edit' hidden="true">
                             <h:form>
-                                <h:selectOneMenu value="#{profileBean.user.gender}" >
-                                    <f:selectItem itemLabel="No selection" />
-                                    <f:selectItem itemValue="true" itemLabel="Male" />
-                                    <f:selectItem itemValue="false" itemLabel="Female" />
-                                </h:selectOneMenu>
-                                <h:commandButton value="Save" action="#{profileBean.updateProfile()}" />
-                                <h:commandButton value="Cancel" action="#{profileBean.onload()}" />
+                                <div class="input-group">
+                                    <h:selectOneMenu class="form-control" value="#{profileBean.user.gender}" >
+                                        <f:selectItem itemLabel="No selection" />
+                                        <f:selectItem itemValue="true" itemLabel="Male" />
+                                        <f:selectItem itemValue="false" itemLabel="Female" />
+                                    </h:selectOneMenu>
+                                    <div class="input-group-btn">
+                                        <h:commandButton class="btn btn-default" value="Save" action="#{profileBean.updateProfile()}" />
+                                        <h:commandButton class="btn btn-default" value="Cancel" action="#{profileBean.onload()}" />
+                                    </div>
+                                </div>
                             </h:form>
                         </div>
                     </c:if>
@@ -159,12 +175,16 @@
                     <h2><i class="fa fa-briefcase"></i> Work Experience</h2>
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <h:form>
-                            <h:selectOneMenu value="#{profileBean.user.experiencesPrivacy}" >
-                                <f:selectItem itemValue="0" itemLabel="Public" />
-                                <f:selectItem itemValue="1" itemLabel="Users" />
-                                <f:selectItem itemValue="2" itemLabel="Private" />
-                            </h:selectOneMenu>
-                            <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
+                            <div class="input-group">
+                                <h:selectOneMenu class="form-control" value="#{profileBean.user.experiencesPrivacy}" >
+                                    <f:selectItem itemValue="0" itemLabel="Public" />
+                                    <f:selectItem itemValue="1" itemLabel="Users" />
+                                    <f:selectItem itemValue="2" itemLabel="Private" />
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-default" value="Update privacy" action="#{profileBean.updateProfile()}" />
+                                </span>
+                            </div>
                         </h:form>
                         <button onclick="switchVisibility(addWork)"><i class="fa fa-plus"></i></button>
                     </c:if>
@@ -213,7 +233,7 @@
                                     <h:inputTextarea value="#{experienceManagedBean.description}" pt:placeholder="Description" />
                                 </p>
                                 <p>
-                                    <h:commandButton action="#{experienceManagedBean.addExperience()}" value="Add it !" />
+                                    <h:commandButton class="btn btn-default" action="#{experienceManagedBean.addExperience()}" value="Add it !" />
                                 </p>
                             </h:form>
                         </div>
@@ -291,8 +311,8 @@
                                     <h:inputText value="#{experience.endYear}" pt:placeholder="Year" />
                                     <h:inputTextarea value="#{experience.description}" pt:placeholder="Description" />
 
-                                    <h:commandButton action="#{experienceManagedBean.updateExperience(experience)}" value="Save" />
-                                    <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                                    <h:commandButton class="btn btn-default" action="#{experienceManagedBean.updateExperience(experience)}" value="Save" />
+                                    <h:commandButton class="btn btn-default" action="#{profileBean.onload()}" value="Cancel" />
                                 </h:form>
                             </div>
                         </c:if>
@@ -305,12 +325,16 @@
                     <h2><i class="fa fa-graduation-cap"></i> Education</h2>
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <h:form>
-                            <h:selectOneMenu value="#{profileBean.user.educationPrivacy}" >
-                                <f:selectItem itemValue="0" itemLabel="Public" />
-                                <f:selectItem itemValue="1" itemLabel="Users" />
-                                <f:selectItem itemValue="2" itemLabel="Private" />
-                            </h:selectOneMenu>
-                            <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
+                            <div class="input-group">
+                                <h:selectOneMenu class="form-control" value="#{profileBean.user.educationPrivacy}" >
+                                    <f:selectItem itemValue="0" itemLabel="Public" />
+                                    <f:selectItem itemValue="1" itemLabel="Users" />
+                                    <f:selectItem itemValue="2" itemLabel="Private" />
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-default" value="Update privacy" action="#{profileBean.updateProfile()}" />
+                                </span> 
+                            </div>
                         </h:form>
                         <button onclick="switchVisibility(addEducation)"><i class="fa fa-plus"></i></button>
                     </c:if>
@@ -359,7 +383,7 @@
                                     <h:inputTextarea value="#{educationManagedBean.description}" pt:placeholder="Description" />
                                 </p>
                                 <p>
-                                    <h:commandButton action="#{educationManagedBean.addEducation()}" value="Add it !" />
+                                    <h:commandButton class="btn btn-default" action="#{educationManagedBean.addEducation()}" value="Add it !" />
                                 </p>
                             </h:form>
                         </div>
@@ -438,8 +462,8 @@
                                     <h:inputText value="#{education.endYear}" pt:placeholder="Year" />
                                     <h:inputTextarea value="#{education.description}" pt:placeholder="Description" />
 
-                                    <h:commandButton action="#{educationManagedBean.updateEducation(education)}" value="Save" />
-                                    <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                                    <h:commandButton class="btn btn-default" action="#{educationManagedBean.updateEducation(education)}" value="Save" />
+                                    <h:commandButton class="btn btn-default" action="#{profileBean.onload()}" value="Cancel" />
                                 </h:form>
                             </div>
                         </c:if>
@@ -452,12 +476,16 @@
                     <h2><i class="fa fa-trophy"></i> Skills</h2>
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <h:form>
-                            <h:selectOneMenu value="#{profileBean.user.skillsPrivacy}" >
-                                <f:selectItem itemValue="0" itemLabel="Public" />
-                                <f:selectItem itemValue="1" itemLabel="Users" />
-                                <f:selectItem itemValue="2" itemLabel="Private" />
-                            </h:selectOneMenu>
-                            <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
+                            <div class="input-group">
+                                <h:selectOneMenu class="form-control" value="#{profileBean.user.skillsPrivacy}" >
+                                    <f:selectItem itemValue="0" itemLabel="Public" />
+                                    <f:selectItem itemValue="1" itemLabel="Users" />
+                                    <f:selectItem itemValue="2" itemLabel="Private" />
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-default" value="Update privacy" action="#{profileBean.updateProfile()}" />
+                                </span>
+                            </div>
                         </h:form>
                         <button onclick="switchVisibility(addSkills)"><i class="fa fa-plus"></i></button>
                     </c:if>
@@ -465,10 +493,13 @@
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <div id="add-skills" hidden="true">
                             <h:form>
-                                <h:inputText value="#{skillManagedBean.label}" pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
-                                <p>
-                                    <h:commandButton action="#{skillManagedBean.addSkill()}" value="Add it !" />
-                                </p>
+                                <div class="input-group">
+                                    <h:inputText class="form-control" value="#{skillManagedBean.label}" pt:placeholder="Skill" required="true" requiredMessage="Enter a skill" />
+                                    <span class="input-group-btn">
+                                        <h:commandButton class="btn btn-default" action="#{skillManagedBean.addSkill()}" value="Add it !" />
+                                    </span>
+                                </div>
+
                             </h:form>
                         </div>
                     </c:if>
@@ -493,12 +524,16 @@
                     <h2><i class="fa fa-globe"></i> Languages</h2>
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <h:form>
-                            <h:selectOneMenu value="#{profileBean.user.languagesPrivacy}" >
-                                <f:selectItem itemValue="0" itemLabel="Public" />
-                                <f:selectItem itemValue="1" itemLabel="Users" />
-                                <f:selectItem itemValue="2" itemLabel="Private" />
-                            </h:selectOneMenu>
-                            <h:commandButton value="Update privacy" action="#{profileBean.updateProfile()}" />
+                            <div class="input-group">
+                                <h:selectOneMenu class="form-control" value="#{profileBean.user.languagesPrivacy}" >
+                                    <f:selectItem itemValue="0" itemLabel="Public" />
+                                    <f:selectItem itemValue="1" itemLabel="Users" />
+                                    <f:selectItem itemValue="2" itemLabel="Private" />
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-default" value="Update privacy" action="#{profileBean.updateProfile()}" />
+                                </span>
+                            </div>
                         </h:form>
                         <button onclick="switchVisibility(addLanguages)"><i class="fa fa-plus"></i></button>
                     </c:if>
@@ -506,8 +541,8 @@
                     <c:if test="#{profileBean.isOwnProfile()}">
                         <div id="add-languages" hidden="true">
                             <h:form>
-                                <h:inputText value="#{languageManagedBean.label}" pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
-                                <h:selectOneMenu value="#{languageManagedBean.proficiency}" required="true" requiredMessage="Select your proficiency" >
+                                <h:inputText class="form-control" value="#{languageManagedBean.label}" pt:placeholder="Language" required="true" requiredMessage="Enter a language" />
+                                <h:selectOneMenu class="form-control" value="#{languageManagedBean.proficiency}" required="true" requiredMessage="Select your proficiency" >
                                     <f:selectItem itemValue="1" itemLabel="Beginner" />
                                     <f:selectItem itemValue="2" itemLabel="Conversational" />
                                     <f:selectItem itemValue="3" itemLabel="Business" />
@@ -515,7 +550,7 @@
                                     <f:selectItem itemValue="5" itemLabel="Native" />
                                 </h:selectOneMenu>
                                 <p>
-                                    <h:commandButton action="#{languageManagedBean.addLanguage()}" value="Add it !" />
+                                    <h:commandButton class="btn btn-default" action="#{languageManagedBean.addLanguage()}" value="Add it !" />
                                 </p>
                             </h:form>
                         </div>
@@ -548,8 +583,8 @@
                                         <f:selectItem itemValue="5" itemLabel="Native" />
                                     </h:selectOneMenu>
 
-                                    <h:commandButton action="#{languageManagedBean.updateSpeaks(speaks)}" value="Save" />
-                                    <h:commandButton action="#{profileBean.onload()}" value="Cancel" />
+                                    <h:commandButton class="btn btn-default" action="#{languageManagedBean.updateSpeaks(speaks)}" value="Save" />
+                                    <h:commandButton class="btn btn-default" action="#{profileBean.onload()}" value="Cancel" />
                                 </h:form>
                             </div>
                         </c:if>
