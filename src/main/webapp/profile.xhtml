@@ -600,6 +600,9 @@
                     #{user.firstName}
                     #{user.lastName}
                     #{user.email}
+                    <h:button class="submit" outcome="profile" value="View Profile">
+                        <f:param name="id" value="#{user.userId}"/>
+                    </h:button>
                 </div>
             </ui:repeat>
         </div>
@@ -612,6 +615,9 @@
                         #{user.firstName}
                         #{user.lastName}
                         #{user.email}
+                        <h:button class="submit" outcome="profile" value="View Profile">
+                            <f:param name="id" value="#{user.userId}"/>
+                        </h:button>
                         <h:form>
                             <h:commandButton action="#{profileBean.acceptRequest(user)}" value="Accept" />
                             <h:commandButton action="#{profileBean.deleteRequest(user)}" value="Decline" />
