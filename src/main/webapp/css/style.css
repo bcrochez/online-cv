@@ -45,15 +45,14 @@ input, select {
 }
 
 #search-box {
-    padding: 15px;
-    width: 300px;
+    padding: 30px;
+    max-width: 750px;
     margin: 200px auto;
     background-color: white;
 }
 
-#search-box .search-field {
-    margin: auto;
-    width: 78%;
+#search-box > * > * {
+    margin-bottom: 0 !important;
 }
 
 #nav-resume {

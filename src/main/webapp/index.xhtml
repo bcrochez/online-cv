@@ -16,18 +16,27 @@
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
         <div id="search-box">
-            <h:form>
-                <h:inputText class="search-field" value='#{searchBean.query}' autocomplete="on">
-                    <f:ajax event="keyup" listener="#{searchBean.search}" render=":suggestion-box"></f:ajax>
-                </h:inputText>
-                <h:selectOneMenu value="#{searchBean.type}" required="true" >
-                    <f:selectItem itemValue="0" itemLabel="By Name" />
-                    <f:selectItem itemValue="1" itemLabel="By Skill" />
-                    <f:ajax listener="#{searchBean.search}" render=":suggestion-box"></f:ajax>
-                </h:selectOneMenu>
-                <h:commandButton value="Search" actionListener="#{searchBean.searchAndNavigate()}"/>
+            <h:form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <h:inputText class="form-control" value='#{searchBean.query}' autocomplete="on">
+                            <f:ajax event="keyup" listener="#{searchBean.search}" render=":suggestion-box"></f:ajax>
+                        </h:inputText>
+                    </div>
+                    <div class="col-sm-3">
+                        <h:selectOneMenu class="form-control" value="#{searchBean.type}" required="true" >
+                            <f:selectItem itemValue="0" itemLabel="By Name" />
+                            <f:selectItem itemValue="1" itemLabel="By Skill" />
+                            <f:ajax listener="#{searchBean.search}" render=":suggestion-box"></f:ajax>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="col-sm-2">
+                        <h:commandButton  class="btn btn-default" value="Search" actionListener="#{searchBean.searchAndNavigate()}"/>
+                    </div>
+                </div>
             </h:form>
         </div>
+
 
         <h:panelGroup id="suggestion-box">
             <ui:repeat var="user" value="#{searchBean.previewUsers}">
