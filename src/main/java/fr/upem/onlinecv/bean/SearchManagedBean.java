@@ -21,9 +21,12 @@ public class SearchManagedBean {
         NAME, SKILL;
     }
 
+    private static final int LIMIT = 10;
+
     private String query;
     private int type;
-    private ArrayList<UserCv> users = new ArrayList();
+    private Set<UserCv> users = new HashSet<>();
+    private Set<UserCv> previewUsers = new HashSet<>();
 
     /**
      * Creates a new instance of SearchManagedBean
@@ -48,11 +51,16 @@ public class SearchManagedBean {
     }
 
     public ArrayList<UserCv> getUsers() {
-        return users;
+        return new ArrayList<>(users);
+    }
+
+    public ArrayList<UserCv> getPreviewUsers() {
+        return new ArrayList<>(previewUsers);
     }
 
     public void search() {
         users.clear();
+        previewUsers.clear();
 
         List<String> tokens = query.length() != 0 ? Arrays.asList(query.split(" ")) : Collections.EMPTY_LIST; // FIXME if query is empty shows nothing
         Set<UserCv> userSet = new HashSet<>();
@@ -60,18 +68,31 @@ public class SearchManagedBean {
         Session session = HibernateUtil.getSessionFactory().openSession();
         if (type == SearchType.NAME.ordinal()) {
             for (String token : tokens) {
-                userSet.addAll(session.getNamedQuery("UserCv.findByName").setString("name", "%" + token + "%").list());
+                if (!token.equals("") && !token.equals(" ")) {
+                    userSet.addAll(session.getNamedQuery("UserCv.findByName").setString("name", "%" + token + "%").list());
+                }
             }
         } else if (type == SearchType.SKILL.ordinal()) {
             for (String token : tokens) {
-                userSet.addAll(session.getNamedQuery("UserCv.findBySkill").setString("label", "%" + token + "%").list());
+                if (!token.equals("") && !token.equals(" ")) {
+                    userSet.addAll(session.getNamedQuery("UserCv.findBySkill").setString("label", "%" + token + "%").list());
+                }
             }
         }
         session.close();
 
         users.addAll(userSet);
-        query = "";
 
+        if (users.size() > LIMIT) {
+            ArrayList<UserCv> userList = new ArrayList<>(users);
+            previewUsers = new HashSet<>(userList.subList(0, LIMIT));
+        } else {
+            previewUsers = users;
+        }
+    }
+
+    public void searchAndNavigate() {
+        search();
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/search.xhtml?faces-redirect=true");
     }
