@@ -47,12 +47,13 @@ input, select {
 #search-box {
     padding: 30px;
     max-width: 750px;
-    margin: 200px auto;
+    margin: 200px auto 0 auto;
     background-color: white;
 }
 
-#search-box > * > * {
-    margin-bottom: 0 !important;
+#search-box > #suggestion-box > * > .panel {
+    padding: 10px;
+    margin-bottom: 3px;
 }
 
 #nav-resume {

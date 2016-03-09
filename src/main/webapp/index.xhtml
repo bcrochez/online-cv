@@ -35,21 +35,19 @@
                     </div>
                 </div>
             </h:form>
+            <h:panelGroup id="suggestion-box">
+                <ui:repeat var="user" value="#{searchBean.previewUsers}">
+                    <h:link outcome="profile">
+                        <div class="panel panel-default">
+                            #{user.firstName}
+                            #{user.lastName}
+                            #{user.email}
+                        </div>
+                        <f:param name="id" value="#{user.userId}"/>
+                    </h:link>
+                </ui:repeat>
+            </h:panelGroup>
         </div>
-
-
-        <h:panelGroup id="suggestion-box">
-            <ui:repeat var="user" value="#{searchBean.previewUsers}">
-                <h:link outcome="profile">
-                    <div class="search-result">
-                        #{user.firstName}
-                        #{user.lastName}
-                        #{user.email}
-                    </div>
-                    <f:param name="id" value="#{user.userId}"/>
-                </h:link>
-            </ui:repeat>
-        </h:panelGroup>
 
         <script>
             window.alert = function () {};
