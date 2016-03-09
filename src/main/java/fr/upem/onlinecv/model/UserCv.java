@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UserCv.findByEmail", query = "SELECT u FROM UserCv u WHERE u.email = :email"),
     @NamedQuery(name = "UserCv.findByFirstName", query = "SELECT u FROM UserCv u WHERE u.firstName LIKE :firstName"),
     @NamedQuery(name = "UserCv.findByLastName", query = "SELECT u FROM UserCv u WHERE u.lastName LIKE :lastName"),
-    @NamedQuery(name = "UserCv.findByName", query = "SELECT u FROM UserCv u WHERE u.firstName LIKE :name OR u.lastName LIKE :name")
+    @NamedQuery(name = "UserCv.findByName", query = "SELECT u FROM UserCv u WHERE u.firstName LIKE :name OR u.lastName LIKE :name"),
+    @NamedQuery(name = "UserCv.findBySkill", query = "SELECT u FROM UserCv u INNER JOIN u.skillList s WHERE s.label LIKE :label")
 })
 public class UserCv implements Serializable {
 

@@ -18,6 +18,10 @@
         <div id="search-box">
             <h:form>
                 <h:inputText class="search-field" value='#{searchBean.query}' autocomplete="on" />
+                <h:selectOneMenu value="#{searchBean.type}" required="true" >
+                    <f:selectItem itemValue="0" itemLabel="By Name" />
+                    <f:selectItem itemValue="1" itemLabel="By Skill" />
+                </h:selectOneMenu>
                 <h:commandButton value="Search" actionListener="#{searchBean.search()}"/>
             </h:form>
         </div>
