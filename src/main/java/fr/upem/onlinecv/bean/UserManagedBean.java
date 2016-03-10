@@ -39,7 +39,7 @@ public class UserManagedBean implements Serializable {
     public void setUser(UserCv user) {
         this.user = user;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -83,17 +83,14 @@ public class UserManagedBean implements Serializable {
     public boolean isLogin() {
         return isLogin;
     }
-    
+
     public void setIsLogin(boolean isLogin) {
         this.isLogin = isLogin;
     }
 
     public void logOut() {
-        if (isLogin) {
-            isLogin = false;
-            user = null;
-            redirectToIndex();
-        }
+        reset();
+        redirectToIndex();
     }
 
     public void checkLogin() {
@@ -112,7 +109,7 @@ public class UserManagedBean implements Serializable {
         if (user == null) {
             // si l'utilisateur n'existe pas c'est bon
             session.beginTransaction();
-            
+
             // on crypte le mot de passe
             digestPassword();
             // on insère l'utilisateur dans la base
@@ -171,12 +168,22 @@ public class UserManagedBean implements Serializable {
             messageDigest.update(password.getBytes());
             password = new String(messageDigest.digest());
         } catch (NoSuchAlgorithmException ex) {
-            
+
         }
     }
 
     private void redirectToIndex() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().getNavigationHandler().handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+    }
+
+    private void reset() {
+        user = null;
+        id = null;
+        firstName = "";
+        lastName = "";
+        email = "";
+        password = "";
+        isLogin = false;
     }
 }
