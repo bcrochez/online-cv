@@ -82,6 +82,10 @@ public class ProfileManagedBean implements Serializable {
     }
 
     public boolean canSeeSection(String sectionName) {
+        if (isOwnProfile()) {
+            return true;
+        }
+        
         int privacy;
         switch (sectionName) {
             case "Education":
@@ -100,10 +104,13 @@ public class ProfileManagedBean implements Serializable {
                 return false;
         }
 
+        
         if (privacy == Privacy.PRIVATE.getValue()) {
             return isOwnProfile();
         } else if (privacy == Privacy.USERS.getValue()) {
             return connectedUser.isLogin();
+        } else if (privacy == Privacy.CONNECTIONS.getValue()) {
+            return (user.getHasConnectionSet().contains(connectedUser.getUser()) || user.getConnectionsSet().contains(connectedUser.getUser()));
         } else {
             return true;
         }
