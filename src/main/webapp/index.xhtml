@@ -27,6 +27,8 @@
                         <h:selectOneMenu class="form-control" value="#{searchBean.type}" required="true" >
                             <f:selectItem itemValue="0" itemLabel="By Name" />
                             <f:selectItem itemValue="1" itemLabel="By Skill" />
+                            <f:selectItem itemValue="2" itemLabel="By Position" />
+                            <f:selectItem itemValue="3" itemLabel="By Education" />
                             <f:ajax listener="#{searchBean.search}" render=":suggestion-box"></f:ajax>
                         </h:selectOneMenu>
                     </div>
