@@ -44,6 +44,10 @@ input, select {
     height: 34px !important;
 }
 
+textarea { 
+    resize: vertical; 
+}
+
 #search-box {
     padding: 30px;
     max-width: 750px;
