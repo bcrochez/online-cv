@@ -27,16 +27,28 @@ a {
 }
 
 #user-infos {
+    margin: auto;
+    max-width: 750px;
     padding: 10px;
     text-align: center;
 }
 
-#user-infos > h1 > form {
-    display: inline-block;
+#desc-field, #description-edit {
+    margin: 40px 0;
+}
+
+#personal-infos {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px -2px #2f2e2e;
+}
+
+#personal-infos  > * {
+    margin: 10px;
 }
 
 #desc-field {
-    margin: 40px 0;
     font-style: italic;
 }
 
@@ -76,10 +88,30 @@ textarea {
 
 section {
     max-width: 900px;
-    padding: 20px;
-    margin: auto;
+    padding: 30px 30px;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 0 5px -2px #2f2e2e;
+}
+
+.experience, .education {
+    margin-top: 30px;
+    padding: 15px;
+    border-top: 1px solid #8bbbcc;
+}
+
+.skill, .speaks {
+    margin-top: 5px;
+    padding: 10px;
 }
 
 section > h2 {
+    text-align: center;
+}
+
+.add-area {
+    margin-top: 30px;
+    margin-bottom: 10px;
     text-align: center;
 }
