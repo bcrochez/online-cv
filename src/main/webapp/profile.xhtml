@@ -782,13 +782,10 @@
         <div id="connections" hidden="true">
             <h1>Connections</h1>
             <ui:repeat var="user" value="#{profileBean.user.getConnections()}">
-                <div class="connection" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                <div class="connection">
                     #{user.firstName}
                     #{user.lastName}
                     #{user.email}
-                    <h:button class="submit" outcome="profile" value="View Profile">
-                        <f:param name="id" value="#{user.userId}"/>
-                    </h:button>
                 </div>
             </ui:repeat>
         </div>
@@ -797,16 +794,13 @@
             <div id="requests" hidden="true">
                 <h1>Connection Requests</h1>
                 <ui:repeat var="user" value="#{profileBean.user.getWantsConnectionList()}">
-                    <div class="request" style="margin: 5px; padding: 5px; border: 1px solid black;">
+                    <div class="request">
                         #{user.firstName}
                         #{user.lastName}
                         #{user.email}
-                        <h:button class="submit" outcome="profile" value="View Profile">
-                            <f:param name="id" value="#{user.userId}"/>
-                        </h:button>
                         <h:form>
-                            <h:commandButton action="#{profileBean.acceptRequest(user)}" value="Accept" />
-                            <h:commandButton action="#{profileBean.deleteRequest(user)}" value="Decline" />
+                            <h:commandButton class="btn btn-default" action="#{profileBean.acceptRequest(user)}" value="Accept" />
+                            <h:commandButton class="btn btn-default" action="#{profileBean.deleteRequest(user)}" value="Decline" />
                         </h:form>
                     </div>
                 </ui:repeat>

@@ -26,6 +26,19 @@ a {
     text-decoration: none;
 }
 
+#connections, #requests {
+    text-align: center;
+}
+
+.connection, .request, .search-result {
+    max-width: 900px;
+    padding: 15px 15px;
+    margin: 25px auto;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 0 5px -2px #2f2e2e;
+}
+
 #user-infos {
     margin: auto;
     max-width: 750px;

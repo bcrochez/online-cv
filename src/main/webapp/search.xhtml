@@ -13,18 +13,24 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
     </head>
     <body>
-        
+
         <ui:include src="/WEB-INF/include/header.xhtml"/>
 
         <div id="result">
             <ui:repeat var="user" value="#{searchBean.users}">
                 <div class="search-result">
-                    #{user.firstName}
-                    #{user.lastName}
-                    #{user.email}
-                    <h:button class="submit" outcome="profile" value="View Profile">
+                    <div class="row">
+                        <div class="col-xs-7 col-sm-10">
+                            #{user.firstName}
+                            #{user.lastName}
+                        </div>
+                        <div class="col-xs-5 col-sm-2">
+                            <h:button class="btn btn-default" outcome="profile" value="View Profile">
                         <f:param name="id" value="#{user.userId}"/>
                     </h:button>
+                        </div>
+                    </div>
+                    #{user.email}
                 </div>
             </ui:repeat>
         </div>
