@@ -43,7 +43,7 @@
                         </h:form>
                     </c:if>
                 </h1>
-                
+
                 <div id="desc-field">
                     <c:choose>
                         <c:when test="#{not empty profileBean.user.description}">
@@ -191,7 +191,25 @@
 
                     <c:forEach var="experience" items="#{profileBean.user.experienceList}">
                         <div id="experience-#{experience.experienceId}" class="experience">
-                            #{experience.title} <br/>
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-10">
+                                    <h3>#{experience.title}</h3>
+                                </div>
+                                <c:if test="#{profileBean.isOwnProfile()}" >
+                                    <div class="col-xs-2 col-sm-1">
+                                        <h3><button class="nav-button" onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button></h3>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-1">
+
+                                        <h:form>
+                                            <h3><h:commandLink action="#{experienceManagedBean.removeExperience(experience)}" value="" >
+                                                    <i class="fa fa-times"></i>
+                                                </h:commandLink></h3>
+                                        </h:form>
+                                    </div>
+                                </c:if>
+                            </div>
+
                             #{experience.companyName} <br/>
                             <script>
                                 document.write(monthIdToString(#{experience.startMonth}));
@@ -210,14 +228,6 @@
                             </c:choose>
                             #{experience.location} <br/>
                             #{experience.description} <br/>
-                            <c:if test="#{profileBean.isOwnProfile()}" >
-                                <button onclick="switchVisibility(document.getElementById('experience-' + #{experience.experienceId}), document.getElementById('experience-' + #{experience.experienceId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
-                                <h:form>
-                                    <h:commandLink action="#{experienceManagedBean.removeExperience(experience)}" value="" >
-                                        <i class="fa fa-times"></i>
-                                    </h:commandLink>
-                                </h:form>
-                            </c:if>
                         </div>
                         <c:if test="#{profileBean.isOwnProfile()}" >
                             <div id="experience-#{experience.experienceId}-edit" class="experience" hidden="true">
@@ -404,7 +414,23 @@
 
                     <c:forEach var="education" items="#{profileBean.user.educationList}">
                         <div id="education-#{education.educationId}" class="education">
-                            #{education.title} <br/>
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-10">
+                                    <h3>#{education.title}</h3>
+                                </div>
+                                <c:if test="#{profileBean.isOwnProfile()}" >
+                                    <div class="col-xs-2 col-sm-1">
+                                        <h3><button class="nav-button" onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button></h3>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-1">
+                                        <h:form>
+                                            <h3><h:commandLink class="h3-like" action="#{educationManagedBean.removeEducation(education)}" value="" >
+                                                    <i class="fa fa-times"></i>
+                                                </h:commandLink></h3>
+                                        </h:form>
+                                    </div>
+                                </c:if>
+                            </div>
                             #{education.schoolName} <br/>
                             <script>
                                 document.write(monthIdToString(#{education.startMonth}));
@@ -423,14 +449,6 @@
                             </c:choose>
                             #{education.location} <br/>
                             #{education.description} <br/>
-                            <c:if test="#{profileBean.isOwnProfile()}" >
-                                <button onclick="switchVisibility(document.getElementById('education-' + #{education.educationId}), document.getElementById('education-' + #{education.educationId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
-                                <h:form>
-                                    <h:commandLink action="#{educationManagedBean.removeEducation(education)}" value="" >
-                                        <i class="fa fa-times"></i>
-                                    </h:commandLink>
-                                </h:form>
-                            </c:if>
                         </div>
                         <c:if test="#{profileBean.isOwnProfile()}" >
                             <div id="education-#{education.educationId}-edit" class="education" hidden="true">
@@ -617,14 +635,20 @@
 
                     <ui:repeat var="skill" value="#{profileBean.user.skillList}">
                         <div class="skill">
-                            #{skill.label}
-                            <c:if test="#{profileBean.isOwnProfile()}" >
-                                <h:form>
-                                    <h:commandLink action="#{skillManagedBean.removeSkill(skill)}" value="" >
-                                        <i class="fa fa-times"></i>
-                                    </h:commandLink>
-                                </h:form>
-                            </c:if>
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <h4>#{skill.label}</h4>
+                                </div>
+                                <div class="col-xs-1">
+                                    <c:if test="#{profileBean.isOwnProfile()}" >
+                                        <h:form>
+                                            <h4><h:commandLink action="#{skillManagedBean.removeSkill(skill)}" value="" >
+                                                    <i class="fa fa-times"></i>
+                                                </h:commandLink></h4>
+                                        </h:form>
+                                    </c:if>
+                                </div>
+                            </div>
                         </div>
                     </ui:repeat>
 
@@ -669,18 +693,28 @@
 
                     <c:forEach var="speaks" items="#{profileBean.user.speaksList}">
                         <div id="speaks-#{speaks.speaksPK.languageId}" class="speaks">
-                            #{speaks.language.label}
-                            <script>
-                                document.write(proficiencyIdToString(#{speaks.proficiency}));
-                            </script>
-                            <c:if test="#{profileBean.isOwnProfile()}" >
-                                <button onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button>
-                                <h:form>
-                                    <h:commandLink action="#{languageManagedBean.removeLanguage(speaks)}" value="" >
-                                        <i class="fa fa-times"></i>
-                                    </h:commandLink>
-                                </h:form>
-                            </c:if>
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-10">
+                                    <h4>#{speaks.language.label} : 
+                                        <script>
+                                            document.write(proficiencyIdToString(#{speaks.proficiency}));
+                                        </script>
+                                    </h4>   
+                                </div>
+
+                                <c:if test="#{profileBean.isOwnProfile()}" >
+                                    <div class="col-xs-2 col-sm-1">
+                                        <h4><button class="nav-button" onclick="switchVisibility(document.getElementById('speaks-' +#{speaks.speaksPK.languageId}), document.getElementById('speaks-' +#{speaks.speaksPK.languageId} + '-edit'));" ><i class="fa fa-pencil-square-o"></i></button></h4>
+                                    </div>
+                                    <h:form>
+                                        <div class="col-xs-2 col-sm-1">
+                                            <h4><h:commandLink action="#{languageManagedBean.removeLanguage(speaks)}" value="" >
+                                                    <i class="fa fa-times"></i>
+                                                </h:commandLink></h4>
+                                        </div>
+                                    </h:form>
+                                </c:if>
+                            </div>
                         </div>
                         <c:if test="#{profileBean.isOwnProfile()}">
                             <div id="speaks-#{speaks.speaksPK.languageId}-edit" hidden="true" >
