@@ -785,7 +785,6 @@
                 <div class="connection">
                     #{user.firstName}
                     #{user.lastName}
-                    #{user.email}
                 </div>
             </ui:repeat>
         </div>
@@ -797,7 +796,6 @@
                     <div class="request">
                         #{user.firstName}
                         #{user.lastName}
-                        #{user.email}
                         <h:form>
                             <h:commandButton class="btn btn-default" action="#{profileBean.acceptRequest(user)}" value="Accept" />
                             <h:commandButton class="btn btn-default" action="#{profileBean.deleteRequest(user)}" value="Decline" />
